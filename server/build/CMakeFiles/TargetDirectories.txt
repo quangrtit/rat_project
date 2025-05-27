@@ -1,0 +1,3 @@
+/home/quang/rat_project/server/build/CMakeFiles/rat_server.dir
+/home/quang/rat_project/server/build/CMakeFiles/edit_cache.dir
+/home/quang/rat_project/server/build/CMakeFiles/rebuild_cache.dir

@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     try 
     {
         std::cout << "Client starting, connecting to " << server_ip << ":" << port << std::endl;
-        std::cout << "Enter messages to send to server (Ctrl+D or empty line to quit)." << std::endl;
+        std::cout << "Enter packet type to send to server (Ctrl+D or empty line to quit)." << std::endl;
         Rat::Client client(server_ip, port);
         client.start();
     } 

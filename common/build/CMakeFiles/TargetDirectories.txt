@@ -3,3 +3,15 @@
 /home/quang/rat_project/common/build/CMakeFiles/test.dir
 /home/quang/rat_project/common/build/CMakeFiles/edit_cache.dir
 /home/quang/rat_project/common/build/CMakeFiles/rebuild_cache.dir
+/home/quang/rat_project/common/build/CMakeFiles/list_install_components.dir
+/home/quang/rat_project/common/build/CMakeFiles/install.dir
+/home/quang/rat_project/common/build/CMakeFiles/install/local.dir
+/home/quang/rat_project/common/build/CMakeFiles/install/strip.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/proto.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/test.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/edit_cache.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/rebuild_cache.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/list_install_components.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/install.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/install/local.dir
+/home/quang/rat_project/common/build/proto/CMakeFiles/install/strip.dir

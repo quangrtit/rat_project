@@ -4,14 +4,6 @@
 #include <string>
 #include <csignal>
 
-// namespace {
-//     volatile std::sig_atomic_t g_signal_status = 0;
-
-//     void signal_handler(int signal) {
-//         g_signal_status = signal;
-//     }
-// }
-
 int main(int argc, char* argv[]) 
 {
     uint16_t port = Rat::DEFAULT_PORT;
@@ -37,19 +29,10 @@ int main(int argc, char* argv[])
 
     try 
     {
-        // Đăng ký xử lý tín hiệu Ctrl+C
-        // std::signal(SIGINT, signal_handler);
-
         std::cout << "Server starting on port " << port << std::endl;
-        std::cout << "Enter messages to broadcast to all clients (Ctrl+C to quit)." << std::endl;
+        std::cout << "Enter packet type to broadcast to all clients (Ctrl+C to quit)." << std::endl;
         Rat::Server server(port);
         server.start();
-
-        // Kiểm tra tín hiệu Ctrl+C
-        // if (g_signal_status == SIGINT) {
-        //     std::cout << "\nReceived Ctrl+C, shutting down server..." << std::endl;
-        //     server.stop();
-        // }
     } 
     catch (const std::exception& e) 
     {

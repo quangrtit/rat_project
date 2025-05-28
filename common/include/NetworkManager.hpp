@@ -8,7 +8,7 @@
 #include <boost/thread/mutex.hpp>
 #include <memory>
 #include "Constants.hpp"
-
+#include "Packet.pb.h"
 
 namespace Rat 
 {
@@ -23,10 +23,10 @@ namespace Rat
         NetworkManager();
         ~NetworkManager();
         IoContext& get_io_context();
-        void send(std::shared_ptr<TcpSocket> socket, const Command& command, boost::function<void(const ErrorCode&)> callback);
-        void receive(std::shared_ptr<TcpSocket> socket, boost::function<void(const Response&, const ErrorCode&)> callback);
-        // void enqueue_command(const Command& command);
-        // bool dequeue_command(Command& command);
+        void send(std::shared_ptr<TcpSocket> socket, const rat::Packet& packet,
+                 boost::function<void(const ErrorCode&)> callback);
+        void receive(std::shared_ptr<TcpSocket> socket,
+                     boost::function<void(const rat::Packet&, const ErrorCode&)> callback);
     
     private:
         IoContext io_context_;

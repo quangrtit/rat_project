@@ -9,6 +9,7 @@
 #include <string>
 #include <thread>
 #include "NetworkManager.hpp"
+#include "Packet.pb.h" // Thêm header Protobuf
 
 namespace Rat 
 {
@@ -20,11 +21,13 @@ class Client
         ~Client();
         void start();
     private:
+        void initClientID(const std::string &path = "../config/client_id.txt");
         void tryConnect();
         void scheduleReconnect();
         void handleCommands();
         void handleUserInput(); 
 
+        uint64_t this_id_ = -1;
         boost::asio::io_context io_context_;
         std::shared_ptr<boost::asio::ip::tcp::socket> socket_;
         boost::asio::deadline_timer timer_;

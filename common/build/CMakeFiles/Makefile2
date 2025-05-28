@@ -65,30 +65,47 @@ CMAKE_BINARY_DIR = /home/quang/rat_project/common/build
 # The main recursive "all" target.
 all: CMakeFiles/rat_common.dir/all
 all: CMakeFiles/rat_tests.dir/all
+all: proto/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: proto/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/rat_common.dir/clean
 clean: CMakeFiles/rat_tests.dir/clean
+clean: proto/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory proto
+
+# Recursive "all" directory target.
+proto/all: proto/CMakeFiles/proto.dir/all
+.PHONY : proto/all
+
+# Recursive "preinstall" directory target.
+proto/preinstall:
+.PHONY : proto/preinstall
+
+# Recursive "clean" directory target.
+proto/clean: proto/CMakeFiles/proto.dir/clean
+.PHONY : proto/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/rat_common.dir
 
 # All Build rule for target.
-CMakeFiles/rat_common.dir/all:
+CMakeFiles/rat_common.dir/all: proto/CMakeFiles/proto.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_common.dir/build.make CMakeFiles/rat_common.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_common.dir/build.make CMakeFiles/rat_common.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=1,2 "Built target rat_common"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=4,5 "Built target rat_common"
 .PHONY : CMakeFiles/rat_common.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rat_common.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rat_common.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 0
 .PHONY : CMakeFiles/rat_common.dir/rule
@@ -106,15 +123,16 @@ CMakeFiles/rat_common.dir/clean:
 # Target rules for target CMakeFiles/rat_tests.dir
 
 # All Build rule for target.
+CMakeFiles/rat_tests.dir/all: proto/CMakeFiles/proto.dir/all
 CMakeFiles/rat_tests.dir/all: CMakeFiles/rat_common.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_tests.dir/build.make CMakeFiles/rat_tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_tests.dir/build.make CMakeFiles/rat_tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=3,4 "Built target rat_tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=6,7 "Built target rat_tests"
 .PHONY : CMakeFiles/rat_tests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rat_tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rat_tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 0
 .PHONY : CMakeFiles/rat_tests.dir/rule
@@ -127,6 +145,32 @@ rat_tests: CMakeFiles/rat_tests.dir/rule
 CMakeFiles/rat_tests.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_tests.dir/build.make CMakeFiles/rat_tests.dir/clean
 .PHONY : CMakeFiles/rat_tests.dir/clean
+
+#=============================================================================
+# Target rules for target proto/CMakeFiles/proto.dir
+
+# All Build rule for target.
+proto/CMakeFiles/proto.dir/all:
+	$(MAKE) $(MAKESILENT) -f proto/CMakeFiles/proto.dir/build.make proto/CMakeFiles/proto.dir/depend
+	$(MAKE) $(MAKESILENT) -f proto/CMakeFiles/proto.dir/build.make proto/CMakeFiles/proto.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=1,2,3 "Built target proto"
+.PHONY : proto/CMakeFiles/proto.dir/all
+
+# Build rule for subdir invocation for target.
+proto/CMakeFiles/proto.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 proto/CMakeFiles/proto.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/common/build/CMakeFiles 0
+.PHONY : proto/CMakeFiles/proto.dir/rule
+
+# Convenience name for target.
+proto: proto/CMakeFiles/proto.dir/rule
+.PHONY : proto
+
+# clean rule for target.
+proto/CMakeFiles/proto.dir/clean:
+	$(MAKE) $(MAKESILENT) -f proto/CMakeFiles/proto.dir/build.make proto/CMakeFiles/proto.dir/clean
+.PHONY : proto/CMakeFiles/proto.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -108,10 +108,12 @@ rat_server_EXTERNAL_OBJECTS =
 rat_server: CMakeFiles/rat_server.dir/src/main.cpp.o
 rat_server: CMakeFiles/rat_server.dir/src/Server.cpp.o
 rat_server: CMakeFiles/rat_server.dir/build.make
-rat_server: /home/quang/rat_project/common/build/librat_common.a
+rat_server: /home/quang/rat_project/server/../common/build/librat_common.a
+rat_server: /home/quang/rat_project/server/../common/build/proto/libproto.a
 rat_server: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.83.0
 rat_server: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.83.0
 rat_server: /usr/lib/x86_64-linux-gnu/libcrypto.so
+rat_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 rat_server: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
 rat_server: CMakeFiles/rat_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable rat_server"

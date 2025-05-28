@@ -93,8 +93,10 @@ rat_tests_EXTERNAL_OBJECTS =
 rat_tests: CMakeFiles/rat_tests.dir/tests/test_network_manager.cpp.o
 rat_tests: CMakeFiles/rat_tests.dir/build.make
 rat_tests: librat_common.a
+rat_tests: proto/libproto.a
 rat_tests: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.83.0
 rat_tests: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.83.0
+rat_tests: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 rat_tests: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
 rat_tests: CMakeFiles/rat_tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable rat_tests"

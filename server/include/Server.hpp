@@ -9,8 +9,9 @@
 #include <set>
 #include <unordered_map>
 #include <cstdint>
+#include <mutex>
 #include "NetworkManager.hpp"
-#include "Packet.pb.h" // Thêm header Protobuf
+#include "Packet.pb.h" 
 
 namespace Rat 
 {
@@ -23,18 +24,31 @@ namespace Rat
         void start();
         void stop();
     private:
-        void initListClientID(const std::string &path = "../config/list_client.txt");
+        void initListClientID(const std::string &path ="./list_client.txt");
         void acceptConnections();
         void handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> client);
         void sendCommandToClient(std::shared_ptr<boost::asio::ip::tcp::socket> client, const rat::Packet& packet);
         void handleUserInput();
+        
+        void addClient(std::shared_ptr<boost::asio::ip::tcp::socket> client, uint64_t client_id = uint64_t(-1));
+        void removeClient(std::shared_ptr<boost::asio::ip::tcp::socket> client);
+
+        uint64_t parseStaticIdPayload(const std::string& payload);
+        void updateClientWithExistingId(std::shared_ptr<boost::asio::ip::tcp::socket> client, uint64_t source_id);
+        void assignNewClientId(std::shared_ptr<boost::asio::ip::tcp::socket> client, uint64_t& source_id);
+        void saveClientIdsToFile(const uint64_t &source_id, const std::string &path ="./list_client.txt");
 
         std::set<uint64_t> client_id_;
+        std::unordered_map<std::shared_ptr<boost::asio::ip::tcp::socket>, uint64_t> clients_;
+
         boost::asio::io_context io_context_;
         boost::asio::ip::tcp::acceptor acceptor_;
-        std::unordered_map<std::shared_ptr<boost::asio::ip::tcp::socket>, uint64_t> clients_;
         NetworkManager networkManager_;
         std::thread input_thread_;
+
+        std::mutex file_save_mutex;
+        std::mutex client_mutex_;
+        std::mutex client_id_mutex_;
     };
 
 } // namespace Rat

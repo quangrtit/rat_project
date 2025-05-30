@@ -13,33 +13,26 @@ message Packet {
     IDENTIFY = 6;
     ACK = 7;
     ERROR = 8;
+    COMMAND = 9;
+    STATIC_ID = 10;
   }
+
   Type type = 1;
   string packet_id = 2;
   string source_id = 3;
   string destination_id = 4;
   bool encrypted = 5;
-  oneof payload {
-    FileChunk file_chunk = 6;
-    CommandData command_data = 7;
-    ResponseData response_data = 8;
-  }
+
+  ChunkedData chunked_data = 6;
 }
 
-message FileChunk {
-  string file_id = 1;
-  uint64 sequence_number = 2;
-  uint64 total_packets = 3;
-  string file_name = 4;
-  bytes data = 5;
-}
+message ChunkedData {
+  string data_id = 1;            
+  uint64 sequence_number = 2;     
+  uint64 total_chunks = 3;     
 
-message CommandData {
-  string command = 1;
-}
+  bytes payload = 4;            
 
-message ResponseData {
-  bool success = 1;
-  bytes data = 2;
-  string error_message = 3;
+  bool success = 5;               
+  string error_message = 6;   
 }

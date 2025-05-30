@@ -46,24 +46,16 @@ struct TableStruct_Packet_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Packet_2eproto;
 namespace rat {
-class CommandData;
-struct CommandDataDefaultTypeInternal;
-extern CommandDataDefaultTypeInternal _CommandData_default_instance_;
-class FileChunk;
-struct FileChunkDefaultTypeInternal;
-extern FileChunkDefaultTypeInternal _FileChunk_default_instance_;
+class ChunkedData;
+struct ChunkedDataDefaultTypeInternal;
+extern ChunkedDataDefaultTypeInternal _ChunkedData_default_instance_;
 class Packet;
 struct PacketDefaultTypeInternal;
 extern PacketDefaultTypeInternal _Packet_default_instance_;
-class ResponseData;
-struct ResponseDataDefaultTypeInternal;
-extern ResponseDataDefaultTypeInternal _ResponseData_default_instance_;
 }  // namespace rat
 PROTOBUF_NAMESPACE_OPEN
-template<> ::rat::CommandData* Arena::CreateMaybeMessage<::rat::CommandData>(Arena*);
-template<> ::rat::FileChunk* Arena::CreateMaybeMessage<::rat::FileChunk>(Arena*);
+template<> ::rat::ChunkedData* Arena::CreateMaybeMessage<::rat::ChunkedData>(Arena*);
 template<> ::rat::Packet* Arena::CreateMaybeMessage<::rat::Packet>(Arena*);
-template<> ::rat::ResponseData* Arena::CreateMaybeMessage<::rat::ResponseData>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace rat {
 
@@ -77,12 +69,14 @@ enum Packet_Type : int {
   Packet_Type_IDENTIFY = 6,
   Packet_Type_ACK = 7,
   Packet_Type_ERROR = 8,
+  Packet_Type_COMMAND = 9,
+  Packet_Type_STATIC_ID = 10,
   Packet_Type_Packet_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   Packet_Type_Packet_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool Packet_Type_IsValid(int value);
 constexpr Packet_Type Packet_Type_Type_MIN = Packet_Type_UNKNOWN;
-constexpr Packet_Type Packet_Type_Type_MAX = Packet_Type_ERROR;
+constexpr Packet_Type Packet_Type_Type_MAX = Packet_Type_STATIC_ID;
 constexpr int Packet_Type_Type_ARRAYSIZE = Packet_Type_Type_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Packet_Type_descriptor();
@@ -144,13 +138,6 @@ class Packet final :
   static const Packet& default_instance() {
     return *internal_default_instance();
   }
-  enum PayloadCase {
-    kFileChunk = 6,
-    kCommandData = 7,
-    kResponseData = 8,
-    PAYLOAD_NOT_SET = 0,
-  };
-
   static inline const Packet* internal_default_instance() {
     return reinterpret_cast<const Packet*>(
                &_Packet_default_instance_);
@@ -245,6 +232,10 @@ class Packet final :
     Packet_Type_ACK;
   static constexpr Type ERROR =
     Packet_Type_ERROR;
+  static constexpr Type COMMAND =
+    Packet_Type_COMMAND;
+  static constexpr Type STATIC_ID =
+    Packet_Type_STATIC_ID;
   static inline bool Type_IsValid(int value) {
     return Packet_Type_IsValid(value);
   }
@@ -276,11 +267,9 @@ class Packet final :
     kPacketIdFieldNumber = 2,
     kSourceIdFieldNumber = 3,
     kDestinationIdFieldNumber = 4,
+    kChunkedDataFieldNumber = 6,
     kTypeFieldNumber = 1,
     kEncryptedFieldNumber = 5,
-    kFileChunkFieldNumber = 6,
-    kCommandDataFieldNumber = 7,
-    kResponseDataFieldNumber = 8,
   };
   // string packet_id = 2;
   void clear_packet_id();
@@ -324,6 +313,24 @@ class Packet final :
   std::string* _internal_mutable_destination_id();
   public:
 
+  // .rat.ChunkedData chunked_data = 6;
+  bool has_chunked_data() const;
+  private:
+  bool _internal_has_chunked_data() const;
+  public:
+  void clear_chunked_data();
+  const ::rat::ChunkedData& chunked_data() const;
+  PROTOBUF_NODISCARD ::rat::ChunkedData* release_chunked_data();
+  ::rat::ChunkedData* mutable_chunked_data();
+  void set_allocated_chunked_data(::rat::ChunkedData* chunked_data);
+  private:
+  const ::rat::ChunkedData& _internal_chunked_data() const;
+  ::rat::ChunkedData* _internal_mutable_chunked_data();
+  public:
+  void unsafe_arena_set_allocated_chunked_data(
+      ::rat::ChunkedData* chunked_data);
+  ::rat::ChunkedData* unsafe_arena_release_chunked_data();
+
   // .rat.Packet.Type type = 1;
   void clear_type();
   ::rat::Packet_Type type() const;
@@ -342,71 +349,9 @@ class Packet final :
   void _internal_set_encrypted(bool value);
   public:
 
-  // .rat.FileChunk file_chunk = 6;
-  bool has_file_chunk() const;
-  private:
-  bool _internal_has_file_chunk() const;
-  public:
-  void clear_file_chunk();
-  const ::rat::FileChunk& file_chunk() const;
-  PROTOBUF_NODISCARD ::rat::FileChunk* release_file_chunk();
-  ::rat::FileChunk* mutable_file_chunk();
-  void set_allocated_file_chunk(::rat::FileChunk* file_chunk);
-  private:
-  const ::rat::FileChunk& _internal_file_chunk() const;
-  ::rat::FileChunk* _internal_mutable_file_chunk();
-  public:
-  void unsafe_arena_set_allocated_file_chunk(
-      ::rat::FileChunk* file_chunk);
-  ::rat::FileChunk* unsafe_arena_release_file_chunk();
-
-  // .rat.CommandData command_data = 7;
-  bool has_command_data() const;
-  private:
-  bool _internal_has_command_data() const;
-  public:
-  void clear_command_data();
-  const ::rat::CommandData& command_data() const;
-  PROTOBUF_NODISCARD ::rat::CommandData* release_command_data();
-  ::rat::CommandData* mutable_command_data();
-  void set_allocated_command_data(::rat::CommandData* command_data);
-  private:
-  const ::rat::CommandData& _internal_command_data() const;
-  ::rat::CommandData* _internal_mutable_command_data();
-  public:
-  void unsafe_arena_set_allocated_command_data(
-      ::rat::CommandData* command_data);
-  ::rat::CommandData* unsafe_arena_release_command_data();
-
-  // .rat.ResponseData response_data = 8;
-  bool has_response_data() const;
-  private:
-  bool _internal_has_response_data() const;
-  public:
-  void clear_response_data();
-  const ::rat::ResponseData& response_data() const;
-  PROTOBUF_NODISCARD ::rat::ResponseData* release_response_data();
-  ::rat::ResponseData* mutable_response_data();
-  void set_allocated_response_data(::rat::ResponseData* response_data);
-  private:
-  const ::rat::ResponseData& _internal_response_data() const;
-  ::rat::ResponseData* _internal_mutable_response_data();
-  public:
-  void unsafe_arena_set_allocated_response_data(
-      ::rat::ResponseData* response_data);
-  ::rat::ResponseData* unsafe_arena_release_response_data();
-
-  void clear_payload();
-  PayloadCase payload_case() const;
   // @@protoc_insertion_point(class_scope:rat.Packet)
  private:
   class _Internal;
-  void set_has_file_chunk();
-  void set_has_command_data();
-  void set_has_response_data();
-
-  inline bool has_payload() const;
-  inline void clear_has_payload();
 
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
@@ -415,42 +360,34 @@ class Packet final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr packet_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr source_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr destination_id_;
+    ::rat::ChunkedData* chunked_data_;
     int type_;
     bool encrypted_;
-    union PayloadUnion {
-      constexpr PayloadUnion() : _constinit_{} {}
-        ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized _constinit_;
-      ::rat::FileChunk* file_chunk_;
-      ::rat::CommandData* command_data_;
-      ::rat::ResponseData* response_data_;
-    } payload_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-    uint32_t _oneof_case_[1];
-
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_Packet_2eproto;
 };
 // -------------------------------------------------------------------
 
-class FileChunk final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rat.FileChunk) */ {
+class ChunkedData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rat.ChunkedData) */ {
  public:
-  inline FileChunk() : FileChunk(nullptr) {}
-  ~FileChunk() override;
-  explicit PROTOBUF_CONSTEXPR FileChunk(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline ChunkedData() : ChunkedData(nullptr) {}
+  ~ChunkedData() override;
+  explicit PROTOBUF_CONSTEXPR ChunkedData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  FileChunk(const FileChunk& from);
-  FileChunk(FileChunk&& from) noexcept
-    : FileChunk() {
+  ChunkedData(const ChunkedData& from);
+  ChunkedData(ChunkedData&& from) noexcept
+    : ChunkedData() {
     *this = ::std::move(from);
   }
 
-  inline FileChunk& operator=(const FileChunk& from) {
+  inline ChunkedData& operator=(const ChunkedData& from) {
     CopyFrom(from);
     return *this;
   }
-  inline FileChunk& operator=(FileChunk&& from) noexcept {
+  inline ChunkedData& operator=(ChunkedData&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -473,20 +410,20 @@ class FileChunk final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const FileChunk& default_instance() {
+  static const ChunkedData& default_instance() {
     return *internal_default_instance();
   }
-  static inline const FileChunk* internal_default_instance() {
-    return reinterpret_cast<const FileChunk*>(
-               &_FileChunk_default_instance_);
+  static inline const ChunkedData* internal_default_instance() {
+    return reinterpret_cast<const ChunkedData*>(
+               &_ChunkedData_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     1;
 
-  friend void swap(FileChunk& a, FileChunk& b) {
+  friend void swap(ChunkedData& a, ChunkedData& b) {
     a.Swap(&b);
   }
-  inline void Swap(FileChunk* other) {
+  inline void Swap(ChunkedData* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -499,7 +436,7 @@ class FileChunk final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(FileChunk* other) {
+  void UnsafeArenaSwap(ChunkedData* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -507,14 +444,14 @@ class FileChunk final :
 
   // implements Message ----------------------------------------------
 
-  FileChunk* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<FileChunk>(arena);
+  ChunkedData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChunkedData>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const FileChunk& from);
+  void CopyFrom(const ChunkedData& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const FileChunk& from) {
-    FileChunk::MergeImpl(*this, from);
+  void MergeFrom( const ChunkedData& from) {
+    ChunkedData::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -532,15 +469,15 @@ class FileChunk final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(FileChunk* other);
+  void InternalSwap(ChunkedData* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rat.FileChunk";
+    return "rat.ChunkedData";
   }
   protected:
-  explicit FileChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit ChunkedData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -554,385 +491,42 @@ class FileChunk final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kFileIdFieldNumber = 1,
-    kFileNameFieldNumber = 4,
-    kDataFieldNumber = 5,
+    kDataIdFieldNumber = 1,
+    kPayloadFieldNumber = 4,
+    kErrorMessageFieldNumber = 6,
     kSequenceNumberFieldNumber = 2,
-    kTotalPacketsFieldNumber = 3,
+    kTotalChunksFieldNumber = 3,
+    kSuccessFieldNumber = 5,
   };
-  // string file_id = 1;
-  void clear_file_id();
-  const std::string& file_id() const;
+  // string data_id = 1;
+  void clear_data_id();
+  const std::string& data_id() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_file_id(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_file_id();
-  PROTOBUF_NODISCARD std::string* release_file_id();
-  void set_allocated_file_id(std::string* file_id);
+  void set_data_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data_id();
+  PROTOBUF_NODISCARD std::string* release_data_id();
+  void set_allocated_data_id(std::string* data_id);
   private:
-  const std::string& _internal_file_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_id(const std::string& value);
-  std::string* _internal_mutable_file_id();
+  const std::string& _internal_data_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data_id(const std::string& value);
+  std::string* _internal_mutable_data_id();
   public:
 
-  // string file_name = 4;
-  void clear_file_name();
-  const std::string& file_name() const;
+  // bytes payload = 4;
+  void clear_payload();
+  const std::string& payload() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_file_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_file_name();
-  PROTOBUF_NODISCARD std::string* release_file_name();
-  void set_allocated_file_name(std::string* file_name);
+  void set_payload(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_payload();
+  PROTOBUF_NODISCARD std::string* release_payload();
+  void set_allocated_payload(std::string* payload);
   private:
-  const std::string& _internal_file_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_name(const std::string& value);
-  std::string* _internal_mutable_file_name();
+  const std::string& _internal_payload() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_payload(const std::string& value);
+  std::string* _internal_mutable_payload();
   public:
 
-  // bytes data = 5;
-  void clear_data();
-  const std::string& data() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_data(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_data();
-  PROTOBUF_NODISCARD std::string* release_data();
-  void set_allocated_data(std::string* data);
-  private:
-  const std::string& _internal_data() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
-  std::string* _internal_mutable_data();
-  public:
-
-  // uint64 sequence_number = 2;
-  void clear_sequence_number();
-  uint64_t sequence_number() const;
-  void set_sequence_number(uint64_t value);
-  private:
-  uint64_t _internal_sequence_number() const;
-  void _internal_set_sequence_number(uint64_t value);
-  public:
-
-  // uint64 total_packets = 3;
-  void clear_total_packets();
-  uint64_t total_packets() const;
-  void set_total_packets(uint64_t value);
-  private:
-  uint64_t _internal_total_packets() const;
-  void _internal_set_total_packets(uint64_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:rat.FileChunk)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_id_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_name_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
-    uint64_t sequence_number_;
-    uint64_t total_packets_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_Packet_2eproto;
-};
-// -------------------------------------------------------------------
-
-class CommandData final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rat.CommandData) */ {
- public:
-  inline CommandData() : CommandData(nullptr) {}
-  ~CommandData() override;
-  explicit PROTOBUF_CONSTEXPR CommandData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  CommandData(const CommandData& from);
-  CommandData(CommandData&& from) noexcept
-    : CommandData() {
-    *this = ::std::move(from);
-  }
-
-  inline CommandData& operator=(const CommandData& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CommandData& operator=(CommandData&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const CommandData& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const CommandData* internal_default_instance() {
-    return reinterpret_cast<const CommandData*>(
-               &_CommandData_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    2;
-
-  friend void swap(CommandData& a, CommandData& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CommandData* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(CommandData* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  CommandData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<CommandData>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const CommandData& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const CommandData& from) {
-    CommandData::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CommandData* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rat.CommandData";
-  }
-  protected:
-  explicit CommandData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kCommandFieldNumber = 1,
-  };
-  // string command = 1;
-  void clear_command();
-  const std::string& command() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_command(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_command();
-  PROTOBUF_NODISCARD std::string* release_command();
-  void set_allocated_command(std::string* command);
-  private:
-  const std::string& _internal_command() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_command(const std::string& value);
-  std::string* _internal_mutable_command();
-  public:
-
-  // @@protoc_insertion_point(class_scope:rat.CommandData)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr command_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_Packet_2eproto;
-};
-// -------------------------------------------------------------------
-
-class ResponseData final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:rat.ResponseData) */ {
- public:
-  inline ResponseData() : ResponseData(nullptr) {}
-  ~ResponseData() override;
-  explicit PROTOBUF_CONSTEXPR ResponseData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  ResponseData(const ResponseData& from);
-  ResponseData(ResponseData&& from) noexcept
-    : ResponseData() {
-    *this = ::std::move(from);
-  }
-
-  inline ResponseData& operator=(const ResponseData& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline ResponseData& operator=(ResponseData&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const ResponseData& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const ResponseData* internal_default_instance() {
-    return reinterpret_cast<const ResponseData*>(
-               &_ResponseData_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    3;
-
-  friend void swap(ResponseData& a, ResponseData& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(ResponseData* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(ResponseData* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  ResponseData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<ResponseData>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const ResponseData& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const ResponseData& from) {
-    ResponseData::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(ResponseData* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "rat.ResponseData";
-  }
-  protected:
-  explicit ResponseData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kDataFieldNumber = 2,
-    kErrorMessageFieldNumber = 3,
-    kSuccessFieldNumber = 1,
-  };
-  // bytes data = 2;
-  void clear_data();
-  const std::string& data() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_data(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_data();
-  PROTOBUF_NODISCARD std::string* release_data();
-  void set_allocated_data(std::string* data);
-  private:
-  const std::string& _internal_data() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
-  std::string* _internal_mutable_data();
-  public:
-
-  // string error_message = 3;
+  // string error_message = 6;
   void clear_error_message();
   const std::string& error_message() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -946,7 +540,25 @@ class ResponseData final :
   std::string* _internal_mutable_error_message();
   public:
 
-  // bool success = 1;
+  // uint64 sequence_number = 2;
+  void clear_sequence_number();
+  uint64_t sequence_number() const;
+  void set_sequence_number(uint64_t value);
+  private:
+  uint64_t _internal_sequence_number() const;
+  void _internal_set_sequence_number(uint64_t value);
+  public:
+
+  // uint64 total_chunks = 3;
+  void clear_total_chunks();
+  uint64_t total_chunks() const;
+  void set_total_chunks(uint64_t value);
+  private:
+  uint64_t _internal_total_chunks() const;
+  void _internal_set_total_chunks(uint64_t value);
+  public:
+
+  // bool success = 5;
   void clear_success();
   bool success() const;
   void set_success(bool value);
@@ -955,7 +567,7 @@ class ResponseData final :
   void _internal_set_success(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:rat.ResponseData)
+  // @@protoc_insertion_point(class_scope:rat.ChunkedData)
  private:
   class _Internal;
 
@@ -963,8 +575,11 @@ class ResponseData final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr payload_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr error_message_;
+    uint64_t sequence_number_;
+    uint64_t total_chunks_;
     bool success_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1172,595 +787,296 @@ inline void Packet::set_encrypted(bool value) {
   // @@protoc_insertion_point(field_set:rat.Packet.encrypted)
 }
 
-// .rat.FileChunk file_chunk = 6;
-inline bool Packet::_internal_has_file_chunk() const {
-  return payload_case() == kFileChunk;
+// .rat.ChunkedData chunked_data = 6;
+inline bool Packet::_internal_has_chunked_data() const {
+  return this != internal_default_instance() && _impl_.chunked_data_ != nullptr;
 }
-inline bool Packet::has_file_chunk() const {
-  return _internal_has_file_chunk();
+inline bool Packet::has_chunked_data() const {
+  return _internal_has_chunked_data();
 }
-inline void Packet::set_has_file_chunk() {
-  _impl_._oneof_case_[0] = kFileChunk;
-}
-inline void Packet::clear_file_chunk() {
-  if (_internal_has_file_chunk()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete _impl_.payload_.file_chunk_;
-    }
-    clear_has_payload();
+inline void Packet::clear_chunked_data() {
+  if (GetArenaForAllocation() == nullptr && _impl_.chunked_data_ != nullptr) {
+    delete _impl_.chunked_data_;
   }
+  _impl_.chunked_data_ = nullptr;
 }
-inline ::rat::FileChunk* Packet::release_file_chunk() {
-  // @@protoc_insertion_point(field_release:rat.Packet.file_chunk)
-  if (_internal_has_file_chunk()) {
-    clear_has_payload();
-    ::rat::FileChunk* temp = _impl_.payload_.file_chunk_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    _impl_.payload_.file_chunk_ = nullptr;
-    return temp;
+inline const ::rat::ChunkedData& Packet::_internal_chunked_data() const {
+  const ::rat::ChunkedData* p = _impl_.chunked_data_;
+  return p != nullptr ? *p : reinterpret_cast<const ::rat::ChunkedData&>(
+      ::rat::_ChunkedData_default_instance_);
+}
+inline const ::rat::ChunkedData& Packet::chunked_data() const {
+  // @@protoc_insertion_point(field_get:rat.Packet.chunked_data)
+  return _internal_chunked_data();
+}
+inline void Packet::unsafe_arena_set_allocated_chunked_data(
+    ::rat::ChunkedData* chunked_data) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.chunked_data_);
+  }
+  _impl_.chunked_data_ = chunked_data;
+  if (chunked_data) {
+    
   } else {
-    return nullptr;
+    
   }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rat.Packet.chunked_data)
 }
-inline const ::rat::FileChunk& Packet::_internal_file_chunk() const {
-  return _internal_has_file_chunk()
-      ? *_impl_.payload_.file_chunk_
-      : reinterpret_cast< ::rat::FileChunk&>(::rat::_FileChunk_default_instance_);
-}
-inline const ::rat::FileChunk& Packet::file_chunk() const {
-  // @@protoc_insertion_point(field_get:rat.Packet.file_chunk)
-  return _internal_file_chunk();
-}
-inline ::rat::FileChunk* Packet::unsafe_arena_release_file_chunk() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:rat.Packet.file_chunk)
-  if (_internal_has_file_chunk()) {
-    clear_has_payload();
-    ::rat::FileChunk* temp = _impl_.payload_.file_chunk_;
-    _impl_.payload_.file_chunk_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
+inline ::rat::ChunkedData* Packet::release_chunked_data() {
+  
+  ::rat::ChunkedData* temp = _impl_.chunked_data_;
+  _impl_.chunked_data_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
   }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-inline void Packet::unsafe_arena_set_allocated_file_chunk(::rat::FileChunk* file_chunk) {
-  clear_payload();
-  if (file_chunk) {
-    set_has_file_chunk();
-    _impl_.payload_.file_chunk_ = file_chunk;
+inline ::rat::ChunkedData* Packet::unsafe_arena_release_chunked_data() {
+  // @@protoc_insertion_point(field_release:rat.Packet.chunked_data)
+  
+  ::rat::ChunkedData* temp = _impl_.chunked_data_;
+  _impl_.chunked_data_ = nullptr;
+  return temp;
+}
+inline ::rat::ChunkedData* Packet::_internal_mutable_chunked_data() {
+  
+  if (_impl_.chunked_data_ == nullptr) {
+    auto* p = CreateMaybeMessage<::rat::ChunkedData>(GetArenaForAllocation());
+    _impl_.chunked_data_ = p;
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rat.Packet.file_chunk)
+  return _impl_.chunked_data_;
 }
-inline ::rat::FileChunk* Packet::_internal_mutable_file_chunk() {
-  if (!_internal_has_file_chunk()) {
-    clear_payload();
-    set_has_file_chunk();
-    _impl_.payload_.file_chunk_ = CreateMaybeMessage< ::rat::FileChunk >(GetArenaForAllocation());
-  }
-  return _impl_.payload_.file_chunk_;
-}
-inline ::rat::FileChunk* Packet::mutable_file_chunk() {
-  ::rat::FileChunk* _msg = _internal_mutable_file_chunk();
-  // @@protoc_insertion_point(field_mutable:rat.Packet.file_chunk)
+inline ::rat::ChunkedData* Packet::mutable_chunked_data() {
+  ::rat::ChunkedData* _msg = _internal_mutable_chunked_data();
+  // @@protoc_insertion_point(field_mutable:rat.Packet.chunked_data)
   return _msg;
 }
-
-// .rat.CommandData command_data = 7;
-inline bool Packet::_internal_has_command_data() const {
-  return payload_case() == kCommandData;
-}
-inline bool Packet::has_command_data() const {
-  return _internal_has_command_data();
-}
-inline void Packet::set_has_command_data() {
-  _impl_._oneof_case_[0] = kCommandData;
-}
-inline void Packet::clear_command_data() {
-  if (_internal_has_command_data()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete _impl_.payload_.command_data_;
+inline void Packet::set_allocated_chunked_data(::rat::ChunkedData* chunked_data) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.chunked_data_;
+  }
+  if (chunked_data) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(chunked_data);
+    if (message_arena != submessage_arena) {
+      chunked_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, chunked_data, submessage_arena);
     }
-    clear_has_payload();
-  }
-}
-inline ::rat::CommandData* Packet::release_command_data() {
-  // @@protoc_insertion_point(field_release:rat.Packet.command_data)
-  if (_internal_has_command_data()) {
-    clear_has_payload();
-    ::rat::CommandData* temp = _impl_.payload_.command_data_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    _impl_.payload_.command_data_ = nullptr;
-    return temp;
+    
   } else {
-    return nullptr;
+    
   }
-}
-inline const ::rat::CommandData& Packet::_internal_command_data() const {
-  return _internal_has_command_data()
-      ? *_impl_.payload_.command_data_
-      : reinterpret_cast< ::rat::CommandData&>(::rat::_CommandData_default_instance_);
-}
-inline const ::rat::CommandData& Packet::command_data() const {
-  // @@protoc_insertion_point(field_get:rat.Packet.command_data)
-  return _internal_command_data();
-}
-inline ::rat::CommandData* Packet::unsafe_arena_release_command_data() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:rat.Packet.command_data)
-  if (_internal_has_command_data()) {
-    clear_has_payload();
-    ::rat::CommandData* temp = _impl_.payload_.command_data_;
-    _impl_.payload_.command_data_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void Packet::unsafe_arena_set_allocated_command_data(::rat::CommandData* command_data) {
-  clear_payload();
-  if (command_data) {
-    set_has_command_data();
-    _impl_.payload_.command_data_ = command_data;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rat.Packet.command_data)
-}
-inline ::rat::CommandData* Packet::_internal_mutable_command_data() {
-  if (!_internal_has_command_data()) {
-    clear_payload();
-    set_has_command_data();
-    _impl_.payload_.command_data_ = CreateMaybeMessage< ::rat::CommandData >(GetArenaForAllocation());
-  }
-  return _impl_.payload_.command_data_;
-}
-inline ::rat::CommandData* Packet::mutable_command_data() {
-  ::rat::CommandData* _msg = _internal_mutable_command_data();
-  // @@protoc_insertion_point(field_mutable:rat.Packet.command_data)
-  return _msg;
+  _impl_.chunked_data_ = chunked_data;
+  // @@protoc_insertion_point(field_set_allocated:rat.Packet.chunked_data)
 }
 
-// .rat.ResponseData response_data = 8;
-inline bool Packet::_internal_has_response_data() const {
-  return payload_case() == kResponseData;
-}
-inline bool Packet::has_response_data() const {
-  return _internal_has_response_data();
-}
-inline void Packet::set_has_response_data() {
-  _impl_._oneof_case_[0] = kResponseData;
-}
-inline void Packet::clear_response_data() {
-  if (_internal_has_response_data()) {
-    if (GetArenaForAllocation() == nullptr) {
-      delete _impl_.payload_.response_data_;
-    }
-    clear_has_payload();
-  }
-}
-inline ::rat::ResponseData* Packet::release_response_data() {
-  // @@protoc_insertion_point(field_release:rat.Packet.response_data)
-  if (_internal_has_response_data()) {
-    clear_has_payload();
-    ::rat::ResponseData* temp = _impl_.payload_.response_data_;
-    if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-    }
-    _impl_.payload_.response_data_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline const ::rat::ResponseData& Packet::_internal_response_data() const {
-  return _internal_has_response_data()
-      ? *_impl_.payload_.response_data_
-      : reinterpret_cast< ::rat::ResponseData&>(::rat::_ResponseData_default_instance_);
-}
-inline const ::rat::ResponseData& Packet::response_data() const {
-  // @@protoc_insertion_point(field_get:rat.Packet.response_data)
-  return _internal_response_data();
-}
-inline ::rat::ResponseData* Packet::unsafe_arena_release_response_data() {
-  // @@protoc_insertion_point(field_unsafe_arena_release:rat.Packet.response_data)
-  if (_internal_has_response_data()) {
-    clear_has_payload();
-    ::rat::ResponseData* temp = _impl_.payload_.response_data_;
-    _impl_.payload_.response_data_ = nullptr;
-    return temp;
-  } else {
-    return nullptr;
-  }
-}
-inline void Packet::unsafe_arena_set_allocated_response_data(::rat::ResponseData* response_data) {
-  clear_payload();
-  if (response_data) {
-    set_has_response_data();
-    _impl_.payload_.response_data_ = response_data;
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:rat.Packet.response_data)
-}
-inline ::rat::ResponseData* Packet::_internal_mutable_response_data() {
-  if (!_internal_has_response_data()) {
-    clear_payload();
-    set_has_response_data();
-    _impl_.payload_.response_data_ = CreateMaybeMessage< ::rat::ResponseData >(GetArenaForAllocation());
-  }
-  return _impl_.payload_.response_data_;
-}
-inline ::rat::ResponseData* Packet::mutable_response_data() {
-  ::rat::ResponseData* _msg = _internal_mutable_response_data();
-  // @@protoc_insertion_point(field_mutable:rat.Packet.response_data)
-  return _msg;
-}
-
-inline bool Packet::has_payload() const {
-  return payload_case() != PAYLOAD_NOT_SET;
-}
-inline void Packet::clear_has_payload() {
-  _impl_._oneof_case_[0] = PAYLOAD_NOT_SET;
-}
-inline Packet::PayloadCase Packet::payload_case() const {
-  return Packet::PayloadCase(_impl_._oneof_case_[0]);
-}
 // -------------------------------------------------------------------
 
-// FileChunk
+// ChunkedData
 
-// string file_id = 1;
-inline void FileChunk::clear_file_id() {
-  _impl_.file_id_.ClearToEmpty();
+// string data_id = 1;
+inline void ChunkedData::clear_data_id() {
+  _impl_.data_id_.ClearToEmpty();
 }
-inline const std::string& FileChunk::file_id() const {
-  // @@protoc_insertion_point(field_get:rat.FileChunk.file_id)
-  return _internal_file_id();
+inline const std::string& ChunkedData::data_id() const {
+  // @@protoc_insertion_point(field_get:rat.ChunkedData.data_id)
+  return _internal_data_id();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void FileChunk::set_file_id(ArgT0&& arg0, ArgT... args) {
+void ChunkedData::set_data_id(ArgT0&& arg0, ArgT... args) {
  
- _impl_.file_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rat.FileChunk.file_id)
+ _impl_.data_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rat.ChunkedData.data_id)
 }
-inline std::string* FileChunk::mutable_file_id() {
-  std::string* _s = _internal_mutable_file_id();
-  // @@protoc_insertion_point(field_mutable:rat.FileChunk.file_id)
+inline std::string* ChunkedData::mutable_data_id() {
+  std::string* _s = _internal_mutable_data_id();
+  // @@protoc_insertion_point(field_mutable:rat.ChunkedData.data_id)
   return _s;
 }
-inline const std::string& FileChunk::_internal_file_id() const {
-  return _impl_.file_id_.Get();
+inline const std::string& ChunkedData::_internal_data_id() const {
+  return _impl_.data_id_.Get();
 }
-inline void FileChunk::_internal_set_file_id(const std::string& value) {
+inline void ChunkedData::_internal_set_data_id(const std::string& value) {
   
-  _impl_.file_id_.Set(value, GetArenaForAllocation());
+  _impl_.data_id_.Set(value, GetArenaForAllocation());
 }
-inline std::string* FileChunk::_internal_mutable_file_id() {
+inline std::string* ChunkedData::_internal_mutable_data_id() {
   
-  return _impl_.file_id_.Mutable(GetArenaForAllocation());
+  return _impl_.data_id_.Mutable(GetArenaForAllocation());
 }
-inline std::string* FileChunk::release_file_id() {
-  // @@protoc_insertion_point(field_release:rat.FileChunk.file_id)
-  return _impl_.file_id_.Release();
+inline std::string* ChunkedData::release_data_id() {
+  // @@protoc_insertion_point(field_release:rat.ChunkedData.data_id)
+  return _impl_.data_id_.Release();
 }
-inline void FileChunk::set_allocated_file_id(std::string* file_id) {
-  if (file_id != nullptr) {
+inline void ChunkedData::set_allocated_data_id(std::string* data_id) {
+  if (data_id != nullptr) {
     
   } else {
     
   }
-  _impl_.file_id_.SetAllocated(file_id, GetArenaForAllocation());
+  _impl_.data_id_.SetAllocated(data_id, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.file_id_.IsDefault()) {
-    _impl_.file_id_.Set("", GetArenaForAllocation());
+  if (_impl_.data_id_.IsDefault()) {
+    _impl_.data_id_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rat.FileChunk.file_id)
+  // @@protoc_insertion_point(field_set_allocated:rat.ChunkedData.data_id)
 }
 
 // uint64 sequence_number = 2;
-inline void FileChunk::clear_sequence_number() {
+inline void ChunkedData::clear_sequence_number() {
   _impl_.sequence_number_ = uint64_t{0u};
 }
-inline uint64_t FileChunk::_internal_sequence_number() const {
+inline uint64_t ChunkedData::_internal_sequence_number() const {
   return _impl_.sequence_number_;
 }
-inline uint64_t FileChunk::sequence_number() const {
-  // @@protoc_insertion_point(field_get:rat.FileChunk.sequence_number)
+inline uint64_t ChunkedData::sequence_number() const {
+  // @@protoc_insertion_point(field_get:rat.ChunkedData.sequence_number)
   return _internal_sequence_number();
 }
-inline void FileChunk::_internal_set_sequence_number(uint64_t value) {
+inline void ChunkedData::_internal_set_sequence_number(uint64_t value) {
   
   _impl_.sequence_number_ = value;
 }
-inline void FileChunk::set_sequence_number(uint64_t value) {
+inline void ChunkedData::set_sequence_number(uint64_t value) {
   _internal_set_sequence_number(value);
-  // @@protoc_insertion_point(field_set:rat.FileChunk.sequence_number)
+  // @@protoc_insertion_point(field_set:rat.ChunkedData.sequence_number)
 }
 
-// uint64 total_packets = 3;
-inline void FileChunk::clear_total_packets() {
-  _impl_.total_packets_ = uint64_t{0u};
+// uint64 total_chunks = 3;
+inline void ChunkedData::clear_total_chunks() {
+  _impl_.total_chunks_ = uint64_t{0u};
 }
-inline uint64_t FileChunk::_internal_total_packets() const {
-  return _impl_.total_packets_;
+inline uint64_t ChunkedData::_internal_total_chunks() const {
+  return _impl_.total_chunks_;
 }
-inline uint64_t FileChunk::total_packets() const {
-  // @@protoc_insertion_point(field_get:rat.FileChunk.total_packets)
-  return _internal_total_packets();
+inline uint64_t ChunkedData::total_chunks() const {
+  // @@protoc_insertion_point(field_get:rat.ChunkedData.total_chunks)
+  return _internal_total_chunks();
 }
-inline void FileChunk::_internal_set_total_packets(uint64_t value) {
+inline void ChunkedData::_internal_set_total_chunks(uint64_t value) {
   
-  _impl_.total_packets_ = value;
+  _impl_.total_chunks_ = value;
 }
-inline void FileChunk::set_total_packets(uint64_t value) {
-  _internal_set_total_packets(value);
-  // @@protoc_insertion_point(field_set:rat.FileChunk.total_packets)
+inline void ChunkedData::set_total_chunks(uint64_t value) {
+  _internal_set_total_chunks(value);
+  // @@protoc_insertion_point(field_set:rat.ChunkedData.total_chunks)
 }
 
-// string file_name = 4;
-inline void FileChunk::clear_file_name() {
-  _impl_.file_name_.ClearToEmpty();
+// bytes payload = 4;
+inline void ChunkedData::clear_payload() {
+  _impl_.payload_.ClearToEmpty();
 }
-inline const std::string& FileChunk::file_name() const {
-  // @@protoc_insertion_point(field_get:rat.FileChunk.file_name)
-  return _internal_file_name();
+inline const std::string& ChunkedData::payload() const {
+  // @@protoc_insertion_point(field_get:rat.ChunkedData.payload)
+  return _internal_payload();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void FileChunk::set_file_name(ArgT0&& arg0, ArgT... args) {
+void ChunkedData::set_payload(ArgT0&& arg0, ArgT... args) {
  
- _impl_.file_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rat.FileChunk.file_name)
+ _impl_.payload_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rat.ChunkedData.payload)
 }
-inline std::string* FileChunk::mutable_file_name() {
-  std::string* _s = _internal_mutable_file_name();
-  // @@protoc_insertion_point(field_mutable:rat.FileChunk.file_name)
+inline std::string* ChunkedData::mutable_payload() {
+  std::string* _s = _internal_mutable_payload();
+  // @@protoc_insertion_point(field_mutable:rat.ChunkedData.payload)
   return _s;
 }
-inline const std::string& FileChunk::_internal_file_name() const {
-  return _impl_.file_name_.Get();
+inline const std::string& ChunkedData::_internal_payload() const {
+  return _impl_.payload_.Get();
 }
-inline void FileChunk::_internal_set_file_name(const std::string& value) {
+inline void ChunkedData::_internal_set_payload(const std::string& value) {
   
-  _impl_.file_name_.Set(value, GetArenaForAllocation());
+  _impl_.payload_.Set(value, GetArenaForAllocation());
 }
-inline std::string* FileChunk::_internal_mutable_file_name() {
+inline std::string* ChunkedData::_internal_mutable_payload() {
   
-  return _impl_.file_name_.Mutable(GetArenaForAllocation());
+  return _impl_.payload_.Mutable(GetArenaForAllocation());
 }
-inline std::string* FileChunk::release_file_name() {
-  // @@protoc_insertion_point(field_release:rat.FileChunk.file_name)
-  return _impl_.file_name_.Release();
+inline std::string* ChunkedData::release_payload() {
+  // @@protoc_insertion_point(field_release:rat.ChunkedData.payload)
+  return _impl_.payload_.Release();
 }
-inline void FileChunk::set_allocated_file_name(std::string* file_name) {
-  if (file_name != nullptr) {
+inline void ChunkedData::set_allocated_payload(std::string* payload) {
+  if (payload != nullptr) {
     
   } else {
     
   }
-  _impl_.file_name_.SetAllocated(file_name, GetArenaForAllocation());
+  _impl_.payload_.SetAllocated(payload, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.file_name_.IsDefault()) {
-    _impl_.file_name_.Set("", GetArenaForAllocation());
+  if (_impl_.payload_.IsDefault()) {
+    _impl_.payload_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rat.FileChunk.file_name)
+  // @@protoc_insertion_point(field_set_allocated:rat.ChunkedData.payload)
 }
 
-// bytes data = 5;
-inline void FileChunk::clear_data() {
-  _impl_.data_.ClearToEmpty();
-}
-inline const std::string& FileChunk::data() const {
-  // @@protoc_insertion_point(field_get:rat.FileChunk.data)
-  return _internal_data();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void FileChunk::set_data(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rat.FileChunk.data)
-}
-inline std::string* FileChunk::mutable_data() {
-  std::string* _s = _internal_mutable_data();
-  // @@protoc_insertion_point(field_mutable:rat.FileChunk.data)
-  return _s;
-}
-inline const std::string& FileChunk::_internal_data() const {
-  return _impl_.data_.Get();
-}
-inline void FileChunk::_internal_set_data(const std::string& value) {
-  
-  _impl_.data_.Set(value, GetArenaForAllocation());
-}
-inline std::string* FileChunk::_internal_mutable_data() {
-  
-  return _impl_.data_.Mutable(GetArenaForAllocation());
-}
-inline std::string* FileChunk::release_data() {
-  // @@protoc_insertion_point(field_release:rat.FileChunk.data)
-  return _impl_.data_.Release();
-}
-inline void FileChunk::set_allocated_data(std::string* data) {
-  if (data != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.data_.IsDefault()) {
-    _impl_.data_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rat.FileChunk.data)
-}
-
-// -------------------------------------------------------------------
-
-// CommandData
-
-// string command = 1;
-inline void CommandData::clear_command() {
-  _impl_.command_.ClearToEmpty();
-}
-inline const std::string& CommandData::command() const {
-  // @@protoc_insertion_point(field_get:rat.CommandData.command)
-  return _internal_command();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CommandData::set_command(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.command_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rat.CommandData.command)
-}
-inline std::string* CommandData::mutable_command() {
-  std::string* _s = _internal_mutable_command();
-  // @@protoc_insertion_point(field_mutable:rat.CommandData.command)
-  return _s;
-}
-inline const std::string& CommandData::_internal_command() const {
-  return _impl_.command_.Get();
-}
-inline void CommandData::_internal_set_command(const std::string& value) {
-  
-  _impl_.command_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CommandData::_internal_mutable_command() {
-  
-  return _impl_.command_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CommandData::release_command() {
-  // @@protoc_insertion_point(field_release:rat.CommandData.command)
-  return _impl_.command_.Release();
-}
-inline void CommandData::set_allocated_command(std::string* command) {
-  if (command != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.command_.SetAllocated(command, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.command_.IsDefault()) {
-    _impl_.command_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rat.CommandData.command)
-}
-
-// -------------------------------------------------------------------
-
-// ResponseData
-
-// bool success = 1;
-inline void ResponseData::clear_success() {
+// bool success = 5;
+inline void ChunkedData::clear_success() {
   _impl_.success_ = false;
 }
-inline bool ResponseData::_internal_success() const {
+inline bool ChunkedData::_internal_success() const {
   return _impl_.success_;
 }
-inline bool ResponseData::success() const {
-  // @@protoc_insertion_point(field_get:rat.ResponseData.success)
+inline bool ChunkedData::success() const {
+  // @@protoc_insertion_point(field_get:rat.ChunkedData.success)
   return _internal_success();
 }
-inline void ResponseData::_internal_set_success(bool value) {
+inline void ChunkedData::_internal_set_success(bool value) {
   
   _impl_.success_ = value;
 }
-inline void ResponseData::set_success(bool value) {
+inline void ChunkedData::set_success(bool value) {
   _internal_set_success(value);
-  // @@protoc_insertion_point(field_set:rat.ResponseData.success)
+  // @@protoc_insertion_point(field_set:rat.ChunkedData.success)
 }
 
-// bytes data = 2;
-inline void ResponseData::clear_data() {
-  _impl_.data_.ClearToEmpty();
-}
-inline const std::string& ResponseData::data() const {
-  // @@protoc_insertion_point(field_get:rat.ResponseData.data)
-  return _internal_data();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void ResponseData::set_data(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rat.ResponseData.data)
-}
-inline std::string* ResponseData::mutable_data() {
-  std::string* _s = _internal_mutable_data();
-  // @@protoc_insertion_point(field_mutable:rat.ResponseData.data)
-  return _s;
-}
-inline const std::string& ResponseData::_internal_data() const {
-  return _impl_.data_.Get();
-}
-inline void ResponseData::_internal_set_data(const std::string& value) {
-  
-  _impl_.data_.Set(value, GetArenaForAllocation());
-}
-inline std::string* ResponseData::_internal_mutable_data() {
-  
-  return _impl_.data_.Mutable(GetArenaForAllocation());
-}
-inline std::string* ResponseData::release_data() {
-  // @@protoc_insertion_point(field_release:rat.ResponseData.data)
-  return _impl_.data_.Release();
-}
-inline void ResponseData::set_allocated_data(std::string* data) {
-  if (data != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.data_.IsDefault()) {
-    _impl_.data_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rat.ResponseData.data)
-}
-
-// string error_message = 3;
-inline void ResponseData::clear_error_message() {
+// string error_message = 6;
+inline void ChunkedData::clear_error_message() {
   _impl_.error_message_.ClearToEmpty();
 }
-inline const std::string& ResponseData::error_message() const {
-  // @@protoc_insertion_point(field_get:rat.ResponseData.error_message)
+inline const std::string& ChunkedData::error_message() const {
+  // @@protoc_insertion_point(field_get:rat.ChunkedData.error_message)
   return _internal_error_message();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void ResponseData::set_error_message(ArgT0&& arg0, ArgT... args) {
+void ChunkedData::set_error_message(ArgT0&& arg0, ArgT... args) {
  
  _impl_.error_message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:rat.ResponseData.error_message)
+  // @@protoc_insertion_point(field_set:rat.ChunkedData.error_message)
 }
-inline std::string* ResponseData::mutable_error_message() {
+inline std::string* ChunkedData::mutable_error_message() {
   std::string* _s = _internal_mutable_error_message();
-  // @@protoc_insertion_point(field_mutable:rat.ResponseData.error_message)
+  // @@protoc_insertion_point(field_mutable:rat.ChunkedData.error_message)
   return _s;
 }
-inline const std::string& ResponseData::_internal_error_message() const {
+inline const std::string& ChunkedData::_internal_error_message() const {
   return _impl_.error_message_.Get();
 }
-inline void ResponseData::_internal_set_error_message(const std::string& value) {
+inline void ChunkedData::_internal_set_error_message(const std::string& value) {
   
   _impl_.error_message_.Set(value, GetArenaForAllocation());
 }
-inline std::string* ResponseData::_internal_mutable_error_message() {
+inline std::string* ChunkedData::_internal_mutable_error_message() {
   
   return _impl_.error_message_.Mutable(GetArenaForAllocation());
 }
-inline std::string* ResponseData::release_error_message() {
-  // @@protoc_insertion_point(field_release:rat.ResponseData.error_message)
+inline std::string* ChunkedData::release_error_message() {
+  // @@protoc_insertion_point(field_release:rat.ChunkedData.error_message)
   return _impl_.error_message_.Release();
 }
-inline void ResponseData::set_allocated_error_message(std::string* error_message) {
+inline void ChunkedData::set_allocated_error_message(std::string* error_message) {
   if (error_message != nullptr) {
     
   } else {
@@ -1772,16 +1088,12 @@ inline void ResponseData::set_allocated_error_message(std::string* error_message
     _impl_.error_message_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:rat.ResponseData.error_message)
+  // @@protoc_insertion_point(field_set_allocated:rat.ChunkedData.error_message)
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 

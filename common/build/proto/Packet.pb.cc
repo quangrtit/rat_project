@@ -26,11 +26,10 @@ PROTOBUF_CONSTEXPR Packet::Packet(
     /*decltype(_impl_.packet_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.source_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.destination_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.chunked_data_)*/nullptr
   , /*decltype(_impl_.type_)*/0
   , /*decltype(_impl_.encrypted_)*/false
-  , /*decltype(_impl_.payload_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}
-  , /*decltype(_impl_._oneof_case_)*/{}} {}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PacketDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PacketDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -40,53 +39,26 @@ struct PacketDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PacketDefaultTypeInternal _Packet_default_instance_;
-PROTOBUF_CONSTEXPR FileChunk::FileChunk(
+PROTOBUF_CONSTEXPR ChunkedData::ChunkedData(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.file_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.file_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.data_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.sequence_number_)*/uint64_t{0u}
-  , /*decltype(_impl_.total_packets_)*/uint64_t{0u}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct FileChunkDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR FileChunkDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~FileChunkDefaultTypeInternal() {}
-  union {
-    FileChunk _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FileChunkDefaultTypeInternal _FileChunk_default_instance_;
-PROTOBUF_CONSTEXPR CommandData::CommandData(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.command_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct CommandDataDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR CommandDataDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~CommandDataDefaultTypeInternal() {}
-  union {
-    CommandData _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CommandDataDefaultTypeInternal _CommandData_default_instance_;
-PROTOBUF_CONSTEXPR ResponseData::ResponseData(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.data_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.data_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.payload_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.error_message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.sequence_number_)*/uint64_t{0u}
+  , /*decltype(_impl_.total_chunks_)*/uint64_t{0u}
   , /*decltype(_impl_.success_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
-struct ResponseDataDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ResponseDataDefaultTypeInternal()
+struct ChunkedDataDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChunkedDataDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ResponseDataDefaultTypeInternal() {}
+  ~ChunkedDataDefaultTypeInternal() {}
   union {
-    ResponseData _instance;
+    ChunkedData _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseDataDefaultTypeInternal _ResponseData_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChunkedDataDefaultTypeInternal _ChunkedData_default_instance_;
 }  // namespace rat
-static ::_pb::Metadata file_level_metadata_Packet_2eproto[4];
+static ::_pb::Metadata file_level_metadata_Packet_2eproto[2];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Packet_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Packet_2eproto = nullptr;
 
@@ -94,7 +66,7 @@ const uint32_t TableStruct_Packet_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _internal_metadata_),
   ~0u,  // no _extensions_
-  PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_._oneof_case_[0]),
+  ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.type_),
@@ -102,76 +74,50 @@ const uint32_t TableStruct_Packet_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.source_id_),
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.destination_id_),
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.encrypted_),
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.payload_),
+  PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.chunked_data_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rat::FileChunk, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::rat::FileChunk, _impl_.file_id_),
-  PROTOBUF_FIELD_OFFSET(::rat::FileChunk, _impl_.sequence_number_),
-  PROTOBUF_FIELD_OFFSET(::rat::FileChunk, _impl_.total_packets_),
-  PROTOBUF_FIELD_OFFSET(::rat::FileChunk, _impl_.file_name_),
-  PROTOBUF_FIELD_OFFSET(::rat::FileChunk, _impl_.data_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rat::CommandData, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::rat::CommandData, _impl_.command_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::rat::ResponseData, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::rat::ResponseData, _impl_.success_),
-  PROTOBUF_FIELD_OFFSET(::rat::ResponseData, _impl_.data_),
-  PROTOBUF_FIELD_OFFSET(::rat::ResponseData, _impl_.error_message_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _impl_.data_id_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _impl_.sequence_number_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _impl_.total_chunks_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _impl_.payload_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _impl_.success_),
+  PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _impl_.error_message_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::rat::Packet)},
-  { 15, -1, -1, sizeof(::rat::FileChunk)},
-  { 26, -1, -1, sizeof(::rat::CommandData)},
-  { 33, -1, -1, sizeof(::rat::ResponseData)},
+  { 12, -1, -1, sizeof(::rat::ChunkedData)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::rat::_Packet_default_instance_._instance,
-  &::rat::_FileChunk_default_instance_._instance,
-  &::rat::_CommandData_default_instance_._instance,
-  &::rat::_ResponseData_default_instance_._instance,
+  &::rat::_ChunkedData_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Packet_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014Packet.proto\022\003rat\"\220\003\n\006Packet\022\036\n\004type\030\001"
+  "\n\014Packet.proto\022\003rat\"\315\002\n\006Packet\022\036\n\004type\030\001"
   " \001(\0162\020.rat.Packet.Type\022\021\n\tpacket_id\030\002 \001("
   "\t\022\021\n\tsource_id\030\003 \001(\t\022\026\n\016destination_id\030\004"
-  " \001(\t\022\021\n\tencrypted\030\005 \001(\010\022$\n\nfile_chunk\030\006 "
-  "\001(\0132\016.rat.FileChunkH\000\022(\n\014command_data\030\007 "
-  "\001(\0132\020.rat.CommandDataH\000\022*\n\rresponse_data"
-  "\030\010 \001(\0132\021.rat.ResponseDataH\000\"\215\001\n\004Type\022\013\n\007"
-  "UNKNOWN\020\000\022\016\n\nLIST_FILES\020\001\022\r\n\tREAD_FILE\020\002"
-  "\022\021\n\rTRANSFER_FILE\020\003\022\022\n\016LIST_PROCESSES\020\004\022"
-  "\020\n\014KILL_PROCESS\020\005\022\014\n\010IDENTIFY\020\006\022\007\n\003ACK\020\007"
-  "\022\t\n\005ERROR\020\010B\t\n\007payload\"m\n\tFileChunk\022\017\n\007f"
-  "ile_id\030\001 \001(\t\022\027\n\017sequence_number\030\002 \001(\004\022\025\n"
-  "\rtotal_packets\030\003 \001(\004\022\021\n\tfile_name\030\004 \001(\t\022"
-  "\014\n\004data\030\005 \001(\014\"\036\n\013CommandData\022\017\n\007command\030"
-  "\001 \001(\t\"D\n\014ResponseData\022\017\n\007success\030\001 \001(\010\022\014"
-  "\n\004data\030\002 \001(\014\022\025\n\rerror_message\030\003 \001(\tb\006pro"
-  "to3"
+  " \001(\t\022\021\n\tencrypted\030\005 \001(\010\022&\n\014chunked_data\030"
+  "\006 \001(\0132\020.rat.ChunkedData\"\251\001\n\004Type\022\013\n\007UNKN"
+  "OWN\020\000\022\016\n\nLIST_FILES\020\001\022\r\n\tREAD_FILE\020\002\022\021\n\r"
+  "TRANSFER_FILE\020\003\022\022\n\016LIST_PROCESSES\020\004\022\020\n\014K"
+  "ILL_PROCESS\020\005\022\014\n\010IDENTIFY\020\006\022\007\n\003ACK\020\007\022\t\n\005"
+  "ERROR\020\010\022\013\n\007COMMAND\020\t\022\r\n\tSTATIC_ID\020\n\"\206\001\n\013"
+  "ChunkedData\022\017\n\007data_id\030\001 \001(\t\022\027\n\017sequence"
+  "_number\030\002 \001(\004\022\024\n\014total_chunks\030\003 \001(\004\022\017\n\007p"
+  "ayload\030\004 \001(\014\022\017\n\007success\030\005 \001(\010\022\025\n\rerror_m"
+  "essage\030\006 \001(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Packet_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Packet_2eproto = {
-    false, false, 643, descriptor_table_protodef_Packet_2eproto,
+    false, false, 500, descriptor_table_protodef_Packet_2eproto,
     "Packet.proto",
-    &descriptor_table_Packet_2eproto_once, nullptr, 0, 4,
+    &descriptor_table_Packet_2eproto_once, nullptr, 0, 2,
     schemas, file_default_instances, TableStruct_Packet_2eproto::offsets,
     file_level_metadata_Packet_2eproto, file_level_enum_descriptors_Packet_2eproto,
     file_level_service_descriptors_Packet_2eproto,
@@ -198,6 +144,8 @@ bool Packet_Type_IsValid(int value) {
     case 6:
     case 7:
     case 8:
+    case 9:
+    case 10:
       return true;
     default:
       return false;
@@ -214,6 +162,8 @@ constexpr Packet_Type Packet::KILL_PROCESS;
 constexpr Packet_Type Packet::IDENTIFY;
 constexpr Packet_Type Packet::ACK;
 constexpr Packet_Type Packet::ERROR;
+constexpr Packet_Type Packet::COMMAND;
+constexpr Packet_Type Packet::STATIC_ID;
 constexpr Packet_Type Packet::Type_MIN;
 constexpr Packet_Type Packet::Type_MAX;
 constexpr int Packet::Type_ARRAYSIZE;
@@ -223,67 +173,12 @@ constexpr int Packet::Type_ARRAYSIZE;
 
 class Packet::_Internal {
  public:
-  static const ::rat::FileChunk& file_chunk(const Packet* msg);
-  static const ::rat::CommandData& command_data(const Packet* msg);
-  static const ::rat::ResponseData& response_data(const Packet* msg);
+  static const ::rat::ChunkedData& chunked_data(const Packet* msg);
 };
 
-const ::rat::FileChunk&
-Packet::_Internal::file_chunk(const Packet* msg) {
-  return *msg->_impl_.payload_.file_chunk_;
-}
-const ::rat::CommandData&
-Packet::_Internal::command_data(const Packet* msg) {
-  return *msg->_impl_.payload_.command_data_;
-}
-const ::rat::ResponseData&
-Packet::_Internal::response_data(const Packet* msg) {
-  return *msg->_impl_.payload_.response_data_;
-}
-void Packet::set_allocated_file_chunk(::rat::FileChunk* file_chunk) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (file_chunk) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(file_chunk);
-    if (message_arena != submessage_arena) {
-      file_chunk = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, file_chunk, submessage_arena);
-    }
-    set_has_file_chunk();
-    _impl_.payload_.file_chunk_ = file_chunk;
-  }
-  // @@protoc_insertion_point(field_set_allocated:rat.Packet.file_chunk)
-}
-void Packet::set_allocated_command_data(::rat::CommandData* command_data) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (command_data) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(command_data);
-    if (message_arena != submessage_arena) {
-      command_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, command_data, submessage_arena);
-    }
-    set_has_command_data();
-    _impl_.payload_.command_data_ = command_data;
-  }
-  // @@protoc_insertion_point(field_set_allocated:rat.Packet.command_data)
-}
-void Packet::set_allocated_response_data(::rat::ResponseData* response_data) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  clear_payload();
-  if (response_data) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-      ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(response_data);
-    if (message_arena != submessage_arena) {
-      response_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, response_data, submessage_arena);
-    }
-    set_has_response_data();
-    _impl_.payload_.response_data_ = response_data;
-  }
-  // @@protoc_insertion_point(field_set_allocated:rat.Packet.response_data)
+const ::rat::ChunkedData&
+Packet::_Internal::chunked_data(const Packet* msg) {
+  return *msg->_impl_.chunked_data_;
 }
 Packet::Packet(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -298,11 +193,10 @@ Packet::Packet(const Packet& from)
       decltype(_impl_.packet_id_){}
     , decltype(_impl_.source_id_){}
     , decltype(_impl_.destination_id_){}
+    , decltype(_impl_.chunked_data_){nullptr}
     , decltype(_impl_.type_){}
     , decltype(_impl_.encrypted_){}
-    , decltype(_impl_.payload_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-    , /*decltype(_impl_._oneof_case_)*/{}};
+    , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   _impl_.packet_id_.InitDefault();
@@ -329,30 +223,12 @@ Packet::Packet(const Packet& from)
     _this->_impl_.destination_id_.Set(from._internal_destination_id(), 
       _this->GetArenaForAllocation());
   }
+  if (from._internal_has_chunked_data()) {
+    _this->_impl_.chunked_data_ = new ::rat::ChunkedData(*from._impl_.chunked_data_);
+  }
   ::memcpy(&_impl_.type_, &from._impl_.type_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.encrypted_) -
     reinterpret_cast<char*>(&_impl_.type_)) + sizeof(_impl_.encrypted_));
-  clear_has_payload();
-  switch (from.payload_case()) {
-    case kFileChunk: {
-      _this->_internal_mutable_file_chunk()->::rat::FileChunk::MergeFrom(
-          from._internal_file_chunk());
-      break;
-    }
-    case kCommandData: {
-      _this->_internal_mutable_command_data()->::rat::CommandData::MergeFrom(
-          from._internal_command_data());
-      break;
-    }
-    case kResponseData: {
-      _this->_internal_mutable_response_data()->::rat::ResponseData::MergeFrom(
-          from._internal_response_data());
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
   // @@protoc_insertion_point(copy_constructor:rat.Packet)
 }
 
@@ -364,11 +240,10 @@ inline void Packet::SharedCtor(
       decltype(_impl_.packet_id_){}
     , decltype(_impl_.source_id_){}
     , decltype(_impl_.destination_id_){}
+    , decltype(_impl_.chunked_data_){nullptr}
     , decltype(_impl_.type_){0}
     , decltype(_impl_.encrypted_){false}
-    , decltype(_impl_.payload_){}
     , /*decltype(_impl_._cached_size_)*/{}
-    , /*decltype(_impl_._oneof_case_)*/{}
   };
   _impl_.packet_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -382,7 +257,6 @@ inline void Packet::SharedCtor(
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.destination_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  clear_has_payload();
 }
 
 Packet::~Packet() {
@@ -399,43 +273,12 @@ inline void Packet::SharedDtor() {
   _impl_.packet_id_.Destroy();
   _impl_.source_id_.Destroy();
   _impl_.destination_id_.Destroy();
-  if (has_payload()) {
-    clear_payload();
-  }
+  if (this != internal_default_instance()) delete _impl_.chunked_data_;
 }
 
 void Packet::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
-
-void Packet::clear_payload() {
-// @@protoc_insertion_point(one_of_clear_start:rat.Packet)
-  switch (payload_case()) {
-    case kFileChunk: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.file_chunk_;
-      }
-      break;
-    }
-    case kCommandData: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.command_data_;
-      }
-      break;
-    }
-    case kResponseData: {
-      if (GetArenaForAllocation() == nullptr) {
-        delete _impl_.payload_.response_data_;
-      }
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
-  _impl_._oneof_case_[0] = PAYLOAD_NOT_SET;
-}
-
 
 void Packet::Clear() {
 // @@protoc_insertion_point(message_clear_start:rat.Packet)
@@ -446,10 +289,13 @@ void Packet::Clear() {
   _impl_.packet_id_.ClearToEmpty();
   _impl_.source_id_.ClearToEmpty();
   _impl_.destination_id_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.chunked_data_ != nullptr) {
+    delete _impl_.chunked_data_;
+  }
+  _impl_.chunked_data_ = nullptr;
   ::memset(&_impl_.type_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.encrypted_) -
       reinterpret_cast<char*>(&_impl_.type_)) + sizeof(_impl_.encrypted_));
-  clear_payload();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -506,26 +352,10 @@ const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // .rat.FileChunk file_chunk = 6;
+      // .rat.ChunkedData chunked_data = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          ptr = ctx->ParseMessage(_internal_mutable_file_chunk(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .rat.CommandData command_data = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          ptr = ctx->ParseMessage(_internal_mutable_command_data(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .rat.ResponseData response_data = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
-          ptr = ctx->ParseMessage(_internal_mutable_response_data(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_chunked_data(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -602,25 +432,11 @@ uint8_t* Packet::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteBoolToArray(5, this->_internal_encrypted(), target);
   }
 
-  // .rat.FileChunk file_chunk = 6;
-  if (_internal_has_file_chunk()) {
+  // .rat.ChunkedData chunked_data = 6;
+  if (this->_internal_has_chunked_data()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(6, _Internal::file_chunk(this),
-        _Internal::file_chunk(this).GetCachedSize(), target, stream);
-  }
-
-  // .rat.CommandData command_data = 7;
-  if (_internal_has_command_data()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(7, _Internal::command_data(this),
-        _Internal::command_data(this).GetCachedSize(), target, stream);
-  }
-
-  // .rat.ResponseData response_data = 8;
-  if (_internal_has_response_data()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(8, _Internal::response_data(this),
-        _Internal::response_data(this).GetCachedSize(), target, stream);
+      InternalWriteMessage(6, _Internal::chunked_data(this),
+        _Internal::chunked_data(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -660,6 +476,13 @@ size_t Packet::ByteSizeLong() const {
         this->_internal_destination_id());
   }
 
+  // .rat.ChunkedData chunked_data = 6;
+  if (this->_internal_has_chunked_data()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.chunked_data_);
+  }
+
   // .rat.Packet.Type type = 1;
   if (this->_internal_type() != 0) {
     total_size += 1 +
@@ -671,32 +494,6 @@ size_t Packet::ByteSizeLong() const {
     total_size += 1 + 1;
   }
 
-  switch (payload_case()) {
-    // .rat.FileChunk file_chunk = 6;
-    case kFileChunk: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.file_chunk_);
-      break;
-    }
-    // .rat.CommandData command_data = 7;
-    case kCommandData: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.command_data_);
-      break;
-    }
-    // .rat.ResponseData response_data = 8;
-    case kResponseData: {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          *_impl_.payload_.response_data_);
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
-  }
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -724,31 +521,15 @@ void Packet::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   if (!from._internal_destination_id().empty()) {
     _this->_internal_set_destination_id(from._internal_destination_id());
   }
+  if (from._internal_has_chunked_data()) {
+    _this->_internal_mutable_chunked_data()->::rat::ChunkedData::MergeFrom(
+        from._internal_chunked_data());
+  }
   if (from._internal_type() != 0) {
     _this->_internal_set_type(from._internal_type());
   }
   if (from._internal_encrypted() != 0) {
     _this->_internal_set_encrypted(from._internal_encrypted());
-  }
-  switch (from.payload_case()) {
-    case kFileChunk: {
-      _this->_internal_mutable_file_chunk()->::rat::FileChunk::MergeFrom(
-          from._internal_file_chunk());
-      break;
-    }
-    case kCommandData: {
-      _this->_internal_mutable_command_data()->::rat::CommandData::MergeFrom(
-          from._internal_command_data());
-      break;
-    }
-    case kResponseData: {
-      _this->_internal_mutable_response_data()->::rat::ResponseData::MergeFrom(
-          from._internal_response_data());
-      break;
-    }
-    case PAYLOAD_NOT_SET: {
-      break;
-    }
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -784,11 +565,9 @@ void Packet::InternalSwap(Packet* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Packet, _impl_.encrypted_)
       + sizeof(Packet::_impl_.encrypted_)
-      - PROTOBUF_FIELD_OFFSET(Packet, _impl_.type_)>(
-          reinterpret_cast<char*>(&_impl_.type_),
-          reinterpret_cast<char*>(&other->_impl_.type_));
-  swap(_impl_.payload_, other->_impl_.payload_);
-  swap(_impl_._oneof_case_[0], other->_impl_._oneof_case_[0]);
+      - PROTOBUF_FIELD_OFFSET(Packet, _impl_.chunked_data_)>(
+          reinterpret_cast<char*>(&_impl_.chunked_data_),
+          reinterpret_cast<char*>(&other->_impl_.chunked_data_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Packet::GetMetadata() const {
@@ -799,86 +578,88 @@ void Packet::InternalSwap(Packet* other) {
 
 // ===================================================================
 
-class FileChunk::_Internal {
+class ChunkedData::_Internal {
  public:
 };
 
-FileChunk::FileChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+ChunkedData::ChunkedData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:rat.FileChunk)
+  // @@protoc_insertion_point(arena_constructor:rat.ChunkedData)
 }
-FileChunk::FileChunk(const FileChunk& from)
+ChunkedData::ChunkedData(const ChunkedData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
-  FileChunk* const _this = this; (void)_this;
+  ChunkedData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.file_id_){}
-    , decltype(_impl_.file_name_){}
-    , decltype(_impl_.data_){}
+      decltype(_impl_.data_id_){}
+    , decltype(_impl_.payload_){}
+    , decltype(_impl_.error_message_){}
     , decltype(_impl_.sequence_number_){}
-    , decltype(_impl_.total_packets_){}
+    , decltype(_impl_.total_chunks_){}
+    , decltype(_impl_.success_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.file_id_.InitDefault();
+  _impl_.data_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.file_id_.Set("", GetArenaForAllocation());
+    _impl_.data_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_file_id().empty()) {
-    _this->_impl_.file_id_.Set(from._internal_file_id(), 
+  if (!from._internal_data_id().empty()) {
+    _this->_impl_.data_id_.Set(from._internal_data_id(), 
       _this->GetArenaForAllocation());
   }
-  _impl_.file_name_.InitDefault();
+  _impl_.payload_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.file_name_.Set("", GetArenaForAllocation());
+    _impl_.payload_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_file_name().empty()) {
-    _this->_impl_.file_name_.Set(from._internal_file_name(), 
+  if (!from._internal_payload().empty()) {
+    _this->_impl_.payload_.Set(from._internal_payload(), 
       _this->GetArenaForAllocation());
   }
-  _impl_.data_.InitDefault();
+  _impl_.error_message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.data_.Set("", GetArenaForAllocation());
+    _impl_.error_message_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_data().empty()) {
-    _this->_impl_.data_.Set(from._internal_data(), 
+  if (!from._internal_error_message().empty()) {
+    _this->_impl_.error_message_.Set(from._internal_error_message(), 
       _this->GetArenaForAllocation());
   }
   ::memcpy(&_impl_.sequence_number_, &from._impl_.sequence_number_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.total_packets_) -
-    reinterpret_cast<char*>(&_impl_.sequence_number_)) + sizeof(_impl_.total_packets_));
-  // @@protoc_insertion_point(copy_constructor:rat.FileChunk)
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.success_) -
+    reinterpret_cast<char*>(&_impl_.sequence_number_)) + sizeof(_impl_.success_));
+  // @@protoc_insertion_point(copy_constructor:rat.ChunkedData)
 }
 
-inline void FileChunk::SharedCtor(
+inline void ChunkedData::SharedCtor(
     ::_pb::Arena* arena, bool is_message_owned) {
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.file_id_){}
-    , decltype(_impl_.file_name_){}
-    , decltype(_impl_.data_){}
+      decltype(_impl_.data_id_){}
+    , decltype(_impl_.payload_){}
+    , decltype(_impl_.error_message_){}
     , decltype(_impl_.sequence_number_){uint64_t{0u}}
-    , decltype(_impl_.total_packets_){uint64_t{0u}}
+    , decltype(_impl_.total_chunks_){uint64_t{0u}}
+    , decltype(_impl_.success_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.file_id_.InitDefault();
+  _impl_.data_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.file_id_.Set("", GetArenaForAllocation());
+    _impl_.data_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.file_name_.InitDefault();
+  _impl_.payload_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.file_name_.Set("", GetArenaForAllocation());
+    _impl_.payload_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.data_.InitDefault();
+  _impl_.error_message_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.data_.Set("", GetArenaForAllocation());
+    _impl_.error_message_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
-FileChunk::~FileChunk() {
-  // @@protoc_insertion_point(destructor:rat.FileChunk)
+ChunkedData::~ChunkedData() {
+  // @@protoc_insertion_point(destructor:rat.ChunkedData)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -886,45 +667,45 @@ FileChunk::~FileChunk() {
   SharedDtor();
 }
 
-inline void FileChunk::SharedDtor() {
+inline void ChunkedData::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.file_id_.Destroy();
-  _impl_.file_name_.Destroy();
-  _impl_.data_.Destroy();
+  _impl_.data_id_.Destroy();
+  _impl_.payload_.Destroy();
+  _impl_.error_message_.Destroy();
 }
 
-void FileChunk::SetCachedSize(int size) const {
+void ChunkedData::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
 }
 
-void FileChunk::Clear() {
-// @@protoc_insertion_point(message_clear_start:rat.FileChunk)
+void ChunkedData::Clear() {
+// @@protoc_insertion_point(message_clear_start:rat.ChunkedData)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.file_id_.ClearToEmpty();
-  _impl_.file_name_.ClearToEmpty();
-  _impl_.data_.ClearToEmpty();
+  _impl_.data_id_.ClearToEmpty();
+  _impl_.payload_.ClearToEmpty();
+  _impl_.error_message_.ClearToEmpty();
   ::memset(&_impl_.sequence_number_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.total_packets_) -
-      reinterpret_cast<char*>(&_impl_.sequence_number_)) + sizeof(_impl_.total_packets_));
+      reinterpret_cast<char*>(&_impl_.success_) -
+      reinterpret_cast<char*>(&_impl_.sequence_number_)) + sizeof(_impl_.success_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* FileChunk::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* ChunkedData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string file_id = 1;
+      // string data_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_file_id();
+          auto str = _internal_mutable_data_id();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "rat.FileChunk.file_id"));
+          CHK_(::_pbi::VerifyUTF8(str, "rat.ChunkedData.data_id"));
         } else
           goto handle_unusual;
         continue;
@@ -936,30 +717,38 @@ const char* FileChunk::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         } else
           goto handle_unusual;
         continue;
-      // uint64 total_packets = 3;
+      // uint64 total_chunks = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.total_packets_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _impl_.total_chunks_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // string file_name = 4;
+      // bytes payload = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_file_name();
+          auto str = _internal_mutable_payload();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "rat.FileChunk.file_name"));
         } else
           goto handle_unusual;
         continue;
-      // bytes data = 5;
+      // bool success = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          auto str = _internal_mutable_data();
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          _impl_.success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string error_message = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+          auto str = _internal_mutable_error_message();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "rat.ChunkedData.error_message"));
         } else
           goto handle_unusual;
         continue;
@@ -986,20 +775,20 @@ failure:
 #undef CHK_
 }
 
-uint8_t* FileChunk::_InternalSerialize(
+uint8_t* ChunkedData::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rat.FileChunk)
+  // @@protoc_insertion_point(serialize_to_array_start:rat.ChunkedData)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string file_id = 1;
-  if (!this->_internal_file_id().empty()) {
+  // string data_id = 1;
+  if (!this->_internal_data_id().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_file_id().data(), static_cast<int>(this->_internal_file_id().length()),
+      this->_internal_data_id().data(), static_cast<int>(this->_internal_data_id().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rat.FileChunk.file_id");
+      "rat.ChunkedData.data_id");
     target = stream->WriteStringMaybeAliased(
-        1, this->_internal_file_id(), target);
+        1, this->_internal_data_id(), target);
   }
 
   // uint64 sequence_number = 2;
@@ -1008,63 +797,69 @@ uint8_t* FileChunk::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_sequence_number(), target);
   }
 
-  // uint64 total_packets = 3;
-  if (this->_internal_total_packets() != 0) {
+  // uint64 total_chunks = 3;
+  if (this->_internal_total_chunks() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_total_packets(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_total_chunks(), target);
   }
 
-  // string file_name = 4;
-  if (!this->_internal_file_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_file_name().data(), static_cast<int>(this->_internal_file_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rat.FileChunk.file_name");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_file_name(), target);
-  }
-
-  // bytes data = 5;
-  if (!this->_internal_data().empty()) {
+  // bytes payload = 4;
+  if (!this->_internal_payload().empty()) {
     target = stream->WriteBytesMaybeAliased(
-        5, this->_internal_data(), target);
+        4, this->_internal_payload(), target);
+  }
+
+  // bool success = 5;
+  if (this->_internal_success() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(5, this->_internal_success(), target);
+  }
+
+  // string error_message = 6;
+  if (!this->_internal_error_message().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_error_message().data(), static_cast<int>(this->_internal_error_message().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "rat.ChunkedData.error_message");
+    target = stream->WriteStringMaybeAliased(
+        6, this->_internal_error_message(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:rat.FileChunk)
+  // @@protoc_insertion_point(serialize_to_array_end:rat.ChunkedData)
   return target;
 }
 
-size_t FileChunk::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rat.FileChunk)
+size_t ChunkedData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:rat.ChunkedData)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string file_id = 1;
-  if (!this->_internal_file_id().empty()) {
+  // string data_id = 1;
+  if (!this->_internal_data_id().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_file_id());
+        this->_internal_data_id());
   }
 
-  // string file_name = 4;
-  if (!this->_internal_file_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_file_name());
-  }
-
-  // bytes data = 5;
-  if (!this->_internal_data().empty()) {
+  // bytes payload = 4;
+  if (!this->_internal_payload().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_data());
+        this->_internal_payload());
+  }
+
+  // string error_message = 6;
+  if (!this->_internal_error_message().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_error_message());
   }
 
   // uint64 sequence_number = 2;
@@ -1072,500 +867,12 @@ size_t FileChunk::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_sequence_number());
   }
 
-  // uint64 total_packets = 3;
-  if (this->_internal_total_packets() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_total_packets());
+  // uint64 total_chunks = 3;
+  if (this->_internal_total_chunks() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_total_chunks());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileChunk::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    FileChunk::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileChunk::GetClassData() const { return &_class_data_; }
-
-
-void FileChunk::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<FileChunk*>(&to_msg);
-  auto& from = static_cast<const FileChunk&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:rat.FileChunk)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_file_id().empty()) {
-    _this->_internal_set_file_id(from._internal_file_id());
-  }
-  if (!from._internal_file_name().empty()) {
-    _this->_internal_set_file_name(from._internal_file_name());
-  }
-  if (!from._internal_data().empty()) {
-    _this->_internal_set_data(from._internal_data());
-  }
-  if (from._internal_sequence_number() != 0) {
-    _this->_internal_set_sequence_number(from._internal_sequence_number());
-  }
-  if (from._internal_total_packets() != 0) {
-    _this->_internal_set_total_packets(from._internal_total_packets());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void FileChunk::CopyFrom(const FileChunk& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rat.FileChunk)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool FileChunk::IsInitialized() const {
-  return true;
-}
-
-void FileChunk::InternalSwap(FileChunk* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.file_id_, lhs_arena,
-      &other->_impl_.file_id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.file_name_, lhs_arena,
-      &other->_impl_.file_name_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.data_, lhs_arena,
-      &other->_impl_.data_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(FileChunk, _impl_.total_packets_)
-      + sizeof(FileChunk::_impl_.total_packets_)
-      - PROTOBUF_FIELD_OFFSET(FileChunk, _impl_.sequence_number_)>(
-          reinterpret_cast<char*>(&_impl_.sequence_number_),
-          reinterpret_cast<char*>(&other->_impl_.sequence_number_));
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata FileChunk::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_Packet_2eproto_getter, &descriptor_table_Packet_2eproto_once,
-      file_level_metadata_Packet_2eproto[1]);
-}
-
-// ===================================================================
-
-class CommandData::_Internal {
- public:
-};
-
-CommandData::CommandData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:rat.CommandData)
-}
-CommandData::CommandData(const CommandData& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  CommandData* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.command_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.command_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.command_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_command().empty()) {
-    _this->_impl_.command_.Set(from._internal_command(), 
-      _this->GetArenaForAllocation());
-  }
-  // @@protoc_insertion_point(copy_constructor:rat.CommandData)
-}
-
-inline void CommandData::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.command_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.command_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.command_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-CommandData::~CommandData() {
-  // @@protoc_insertion_point(destructor:rat.CommandData)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void CommandData::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.command_.Destroy();
-}
-
-void CommandData::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void CommandData::Clear() {
-// @@protoc_insertion_point(message_clear_start:rat.CommandData)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.command_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* CommandData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string command = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_command();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "rat.CommandData.command"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* CommandData::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rat.CommandData)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string command = 1;
-  if (!this->_internal_command().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_command().data(), static_cast<int>(this->_internal_command().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rat.CommandData.command");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_command(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:rat.CommandData)
-  return target;
-}
-
-size_t CommandData::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rat.CommandData)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string command = 1;
-  if (!this->_internal_command().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_command());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData CommandData::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    CommandData::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*CommandData::GetClassData() const { return &_class_data_; }
-
-
-void CommandData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<CommandData*>(&to_msg);
-  auto& from = static_cast<const CommandData&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:rat.CommandData)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_command().empty()) {
-    _this->_internal_set_command(from._internal_command());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void CommandData::CopyFrom(const CommandData& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rat.CommandData)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool CommandData::IsInitialized() const {
-  return true;
-}
-
-void CommandData::InternalSwap(CommandData* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.command_, lhs_arena,
-      &other->_impl_.command_, rhs_arena
-  );
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata CommandData::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_Packet_2eproto_getter, &descriptor_table_Packet_2eproto_once,
-      file_level_metadata_Packet_2eproto[2]);
-}
-
-// ===================================================================
-
-class ResponseData::_Internal {
- public:
-};
-
-ResponseData::ResponseData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:rat.ResponseData)
-}
-ResponseData::ResponseData(const ResponseData& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ResponseData* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.data_){}
-    , decltype(_impl_.error_message_){}
-    , decltype(_impl_.success_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.data_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.data_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_data().empty()) {
-    _this->_impl_.data_.Set(from._internal_data(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.error_message_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.error_message_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_error_message().empty()) {
-    _this->_impl_.error_message_.Set(from._internal_error_message(), 
-      _this->GetArenaForAllocation());
-  }
-  _this->_impl_.success_ = from._impl_.success_;
-  // @@protoc_insertion_point(copy_constructor:rat.ResponseData)
-}
-
-inline void ResponseData::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.data_){}
-    , decltype(_impl_.error_message_){}
-    , decltype(_impl_.success_){false}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.data_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.data_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.error_message_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.error_message_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-ResponseData::~ResponseData() {
-  // @@protoc_insertion_point(destructor:rat.ResponseData)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void ResponseData::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.data_.Destroy();
-  _impl_.error_message_.Destroy();
-}
-
-void ResponseData::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void ResponseData::Clear() {
-// @@protoc_insertion_point(message_clear_start:rat.ResponseData)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.data_.ClearToEmpty();
-  _impl_.error_message_.ClearToEmpty();
-  _impl_.success_ = false;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* ResponseData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // bool success = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.success_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // bytes data = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_data();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // string error_message = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_error_message();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "rat.ResponseData.error_message"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* ResponseData::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:rat.ResponseData)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // bool success = 1;
-  if (this->_internal_success() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_success(), target);
-  }
-
-  // bytes data = 2;
-  if (!this->_internal_data().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        2, this->_internal_data(), target);
-  }
-
-  // string error_message = 3;
-  if (!this->_internal_error_message().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_error_message().data(), static_cast<int>(this->_internal_error_message().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "rat.ResponseData.error_message");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_error_message(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:rat.ResponseData)
-  return target;
-}
-
-size_t ResponseData::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:rat.ResponseData)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // bytes data = 2;
-  if (!this->_internal_data().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_data());
-  }
-
-  // string error_message = 3;
-  if (!this->_internal_error_message().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_error_message());
-  }
-
-  // bool success = 1;
+  // bool success = 5;
   if (this->_internal_success() != 0) {
     total_size += 1 + 1;
   }
@@ -1573,26 +880,35 @@ size_t ResponseData::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ResponseData::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ChunkedData::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    ResponseData::MergeImpl
+    ChunkedData::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ResponseData::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ChunkedData::GetClassData() const { return &_class_data_; }
 
 
-void ResponseData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<ResponseData*>(&to_msg);
-  auto& from = static_cast<const ResponseData&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:rat.ResponseData)
+void ChunkedData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ChunkedData*>(&to_msg);
+  auto& from = static_cast<const ChunkedData&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:rat.ChunkedData)
   GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_data().empty()) {
-    _this->_internal_set_data(from._internal_data());
+  if (!from._internal_data_id().empty()) {
+    _this->_internal_set_data_id(from._internal_data_id());
+  }
+  if (!from._internal_payload().empty()) {
+    _this->_internal_set_payload(from._internal_payload());
   }
   if (!from._internal_error_message().empty()) {
     _this->_internal_set_error_message(from._internal_error_message());
+  }
+  if (from._internal_sequence_number() != 0) {
+    _this->_internal_set_sequence_number(from._internal_sequence_number());
+  }
+  if (from._internal_total_chunks() != 0) {
+    _this->_internal_set_total_chunks(from._internal_total_chunks());
   }
   if (from._internal_success() != 0) {
     _this->_internal_set_success(from._internal_success());
@@ -1600,37 +916,46 @@ void ResponseData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::P
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void ResponseData::CopyFrom(const ResponseData& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:rat.ResponseData)
+void ChunkedData::CopyFrom(const ChunkedData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:rat.ChunkedData)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool ResponseData::IsInitialized() const {
+bool ChunkedData::IsInitialized() const {
   return true;
 }
 
-void ResponseData::InternalSwap(ResponseData* other) {
+void ChunkedData::InternalSwap(ChunkedData* other) {
   using std::swap;
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.data_, lhs_arena,
-      &other->_impl_.data_, rhs_arena
+      &_impl_.data_id_, lhs_arena,
+      &other->_impl_.data_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.payload_, lhs_arena,
+      &other->_impl_.payload_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.error_message_, lhs_arena,
       &other->_impl_.error_message_, rhs_arena
   );
-  swap(_impl_.success_, other->_impl_.success_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ChunkedData, _impl_.success_)
+      + sizeof(ChunkedData::_impl_.success_)
+      - PROTOBUF_FIELD_OFFSET(ChunkedData, _impl_.sequence_number_)>(
+          reinterpret_cast<char*>(&_impl_.sequence_number_),
+          reinterpret_cast<char*>(&other->_impl_.sequence_number_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata ResponseData::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata ChunkedData::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Packet_2eproto_getter, &descriptor_table_Packet_2eproto_once,
-      file_level_metadata_Packet_2eproto[3]);
+      file_level_metadata_Packet_2eproto[1]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1640,17 +965,9 @@ template<> PROTOBUF_NOINLINE ::rat::Packet*
 Arena::CreateMaybeMessage< ::rat::Packet >(Arena* arena) {
   return Arena::CreateMessageInternal< ::rat::Packet >(arena);
 }
-template<> PROTOBUF_NOINLINE ::rat::FileChunk*
-Arena::CreateMaybeMessage< ::rat::FileChunk >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rat::FileChunk >(arena);
-}
-template<> PROTOBUF_NOINLINE ::rat::CommandData*
-Arena::CreateMaybeMessage< ::rat::CommandData >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rat::CommandData >(arena);
-}
-template<> PROTOBUF_NOINLINE ::rat::ResponseData*
-Arena::CreateMaybeMessage< ::rat::ResponseData >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::rat::ResponseData >(arena);
+template<> PROTOBUF_NOINLINE ::rat::ChunkedData*
+Arena::CreateMaybeMessage< ::rat::ChunkedData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::rat::ChunkedData >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

@@ -45,7 +45,7 @@ namespace Rat
     }
     void Client::initClientID(const std::string &path)
     {
-        std::ifstream file_config(path);
+        std::fstream file_config(path, std::ios::in | std::ios::out | std::ios::app);
         if(!file_config.is_open())
         {
             std::cout << "Open file not success!\n" << std::endl;
@@ -53,13 +53,19 @@ namespace Rat
         }
         std::string client_id;
         std::getline(file_config, client_id);
-        try {
+        try 
+        {
             this_id_  = std::stol(client_id);
             // std::cout <<  "Debug: " << this_id_ << std::endl;
         } 
-        catch (const std::invalid_argument& e) {
-            std::cerr << "ERROR: Invalid number 1!\n";
+        catch (const std::invalid_argument& e) 
+        {
+            std::cout << "ERROR: Invalid number 1!\n";
         } 
+        catch (const std::out_of_range& e) 
+        {
+            std::cout << "ERROR: Out of range number!\n";
+        }   
         file_config.close();
     }
     void Client::tryConnect() 
@@ -79,21 +85,52 @@ namespace Rat
                     if (this_id_ == uint64_t(-1)) // if not have id send request get id 
                     {
                         rat::Packet packet;
-                        packet.set_packet_id("server_" + std::to_string(std::rand()));
-                        packet.set_source_id("-1");
-                        packet.set_destination_id("-1");
-                        packet.set_type(rat::Packet::IDENTIFY);
+                        packet.set_type(rat::Packet::STATIC_ID);
+                        packet.set_packet_id("client_-1_" + std::to_string(std::rand()));
+                        packet.set_source_id("client_-1");
+                        packet.set_destination_id("server_0");
+                        packet.set_encrypted(false);
 
-                        auto* command = packet.mutable_command_data();
-                        std::string random_data = generateRandomData(10);
-                        command->set_command(random_data);
-                        
+                        auto* chunked = packet.mutable_chunked_data();
+                        chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+                        chunked->set_sequence_number(0);
+                        chunked->set_total_chunks(1);
+                        chunked->set_payload("-1");
+                        chunked->set_success(true);
+                        chunked->set_error_message("");
+                        std::cout << "send signal register\n";
                         networkManager_.send(socket_, packet,
                             [](const boost::system::error_code& ec) 
                             {
                                 if (ec) 
                                 {
-                                    std::cerr << "Send error: " << ec.message() << std::endl;
+                                    std::cout << "Send error: " << ec.message() << std::endl;
+                                }
+                            });
+                    }
+                    else // send id for server
+                    {
+                        rat::Packet packet;
+                        packet.set_type(rat::Packet::STATIC_ID);
+                        packet.set_packet_id("client_"+ std::to_string(this_id_) + "_" + std::to_string(std::rand()));
+                        packet.set_source_id("client_" + std::to_string(this_id_));
+                        packet.set_destination_id("server_0");
+                        packet.set_encrypted(false);
+
+                        auto* chunked = packet.mutable_chunked_data();
+                        chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+                        chunked->set_sequence_number(0);
+                        chunked->set_total_chunks(1);
+                        chunked->set_payload(std::to_string(this_id_));
+                        chunked->set_success(true);
+                        chunked->set_error_message("");
+                        std::cout << "send signal id\n";
+                        networkManager_.send(socket_, packet,
+                            [](const boost::system::error_code& ec) 
+                            {
+                                if (ec) 
+                                {
+                                    std::cout << "Send error: " << ec.message() << std::endl;
                                 }
                             });
                     }
@@ -101,7 +138,7 @@ namespace Rat
                 } 
                 else 
                 {
-                    std::cerr << "Connection failed: " << ec.message() << std::endl;
+                    std::cout << "Connection failed: " << ec.message() << std::endl;
                     scheduleReconnect();
                 }
             });
@@ -133,38 +170,38 @@ namespace Rat
                 // std::cout << "Debug data: " << packet.command_data().command() << std::endl;
                 if (ec) 
                 {
-                    std::cerr << "Receive error: " << ec.message() << std::endl;
+                    std::cout << "Receive error: " << ec.message() << std::endl;
                     scheduleReconnect();
                     return;
                 }
-                if (packet.has_command_data() && packet.command_data().command().size()) 
+                if (packet.has_chunked_data() && !packet.chunked_data().payload().empty()) 
                 {
-                    std::cout << "Server: " << packet.command_data().command() << std::endl;
-                    if (packet.type() == rat::Packet::IDENTIFY)
+                    std::cout << "Server: " << packet.chunked_data().payload() << std::endl;
+                    if (packet.type() == rat::Packet::STATIC_ID)
                     {
                         try 
                         {
-                            this_id_ = std::stol(packet.destination_id());
+                            this_id_ = std::stol(packet.chunked_data().payload());
                         }
                         catch (const std::invalid_argument& e)
                         {
-                            std::cerr << "ERROR: Invalid number 2!\n";
+                            std::cout << "ERROR: Invalid number 2!\n";
                         }
                          
                         // insert id in file 
-                        std::ofstream file_config("../config/client_id.txt", std::ios::app);
+                        std::ofstream file_config("./client_id.txt", std::ios::app);
                         if(!file_config.is_open())
                         {
-                            std::cout << "Open file not success!\n" << std::endl;
+                            std::cout << "Open file not success 111!\n" << std::endl;
                             return;
                         }
                         file_config << this_id_ << "\n";
                         file_config.close();
                     }
                 } 
-                else if (packet.has_command_data() && !packet.command_data().command().size()) 
+                else if (packet.has_chunked_data() && !packet.chunked_data().payload().size()) 
                 {
-                    std::cerr << "Error from server: " << std::endl;
+                    std::cout << "Error from server: " << std::endl;
                 }
                 
                 boost::asio::post(io_context_, [this]() { handleCommands(); });
@@ -200,17 +237,17 @@ namespace Rat
             }
 
             // Tạo dữ liệu ngẫu nhiên cho command
-            auto* command = packet.mutable_command_data();
+            auto* command = packet.mutable_chunked_data();
             std::string random_data = generateRandomData(10); // Dữ liệu 10 ký tự ngẫu nhiên
-            random_data = R"(thor\thor64.exe -a filescan --quick --nolog --csvfile "thor\scan_result.csv" --path C:\Users\WIN10\Desktop\New folder)";
-            command->set_command(random_data);
+            // random_data = R"(thor\thor64.exe -a filescan --quick --nolog --csvfile "thor\scan_result.csv" --path C:\Users\WIN10\Desktop\New folder)";
+            command->set_payload(random_data);
 
             networkManager_.send(socket_, packet,
                 [](const boost::system::error_code& ec) 
                 {
                     if (ec) 
                     {
-                        std::cerr << "Send error: " << ec.message() << std::endl;
+                        std::cout << "Send error: " << ec.message() << std::endl;
                     }
                 });
             std::cout << "Client sent: Type=" << input_type << ", Data=" << random_data << std::endl;

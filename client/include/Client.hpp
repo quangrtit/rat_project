@@ -21,7 +21,7 @@ class Client
         ~Client();
         void start();
     private:
-        void initClientID(const std::string &path = "../config/client_id.txt");
+        void initClientID(const std::string &path = "./client_id.txt");
         void tryConnect();
         void scheduleReconnect();
         void handleCommands();

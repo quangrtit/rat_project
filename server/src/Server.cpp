@@ -4,7 +4,7 @@
 #include <openssl/evp.h>
 #include <iomanip>
 #include <sstream>
-#include <random> // Để tạo dữ liệu ngẫu nhiên
+#include <random>
 #include <fstream>
 
 namespace Rat 
@@ -57,7 +57,14 @@ namespace Rat
     void Server::stop() 
     {
         io_context_.stop();
-        clients_.clear();
+        {
+            std::lock_guard<std::mutex> lock(client_mutex_);
+            clients_.clear();
+        }
+        {
+            std::lock_guard<std::mutex> lock(client_id_mutex_);
+            client_id_.clear();
+        }
         if (input_thread_.joinable()) 
         {
             input_thread_.join();
@@ -65,7 +72,7 @@ namespace Rat
     }
     void Server::initListClientID(const std::string &path)
     {
-        std::ifstream file_config(path);
+        std::fstream file_config(path, std::ios::in | std::ios::out | std::ios::app);
         if(!file_config.is_open())
         {
             std::cout << "Open file not success!\n" << std::endl;
@@ -74,14 +81,20 @@ namespace Rat
         std::string client_id;
         while(std::getline(file_config, client_id)) 
         {
-            try {
+            try 
+            {
                 uint64_t number_client_id = std::stol(client_id);
                 // std::cout <<  "Debug: " << number_client_id << std::endl;
                 client_id_.insert(number_client_id);
             } 
-            catch (const std::invalid_argument& e) {
-                std::cerr << "ERROR: Invalid number!\n";
+            catch (const std::invalid_argument& e) 
+            {
+                std::cout << "ERROR: Invalid number!\n";
             } 
+            catch (const std::out_of_range& e) 
+            {
+                std::cout << "ERROR: Out of range number!\n";
+            }   
         }
         file_config.close();
     }
@@ -94,14 +107,14 @@ namespace Rat
             {
                 if (!ec) 
                 {
-                    clients_.insert({socket, -1});
+                    addClient(socket);
                     std::string client_id = std::to_string(socket->native_handle());
                     std::cout << "New client connected: " << socket->remote_endpoint().address().to_string() + "_" + md5HashString(client_id) << std::endl;
                     handleClient(socket);
                 } 
                 else 
                 {
-                    std::cerr << "Accept error: " << ec.message() << std::endl;
+                    std::cout << "Accept error: " << ec.message() << std::endl;
                 }
                 boost::asio::post(io_context_, [this]() { acceptConnections(); });
             });
@@ -114,73 +127,48 @@ namespace Rat
             {
                 if (ec) 
                 {
-                    std::cerr << "Client error: " << ec.message() << std::endl;
-                    clients_.erase(
-                        client);
+                    std::cout << "Client error: " << ec.message() << std::endl;
+                    removeClient(client);
                     return;
                 }
-                if (packet.has_command_data() && packet.command_data().command().size()) 
+                if (packet.has_chunked_data() && !packet.chunked_data().payload().empty()) 
                 {
-                    std::cout << "Debug IDENTIFY: " << packet.destination_id() << " " << packet.source_id() << " " << packet.command_data().command() << std::endl;
+                    // std::cout << "Debug STATIC_ID: " << packet.destination_id() << " " << packet.source_id() << " " << packet.chunked_data().payload() << std::endl;
                     // set id for client 
-                    uint64_t source_id = -1;
-                    if (packet.type() == rat::Packet::IDENTIFY) 
+                    
+                    if (packet.type() == rat::Packet::STATIC_ID) 
                     {
-                        try 
+                        uint64_t source_id = -1;
+                        source_id = parseStaticIdPayload(packet.chunked_data().payload());
+                        
+                        bool client_exists = false;
                         {
-                            source_id = stol(packet.source_id());
+                            std::lock_guard<std::mutex> lock(client_id_mutex_);
+                            auto exist_client = client_id_.find(source_id);
+                            client_exists = (exist_client != client_id_.end());
                         }
-                        catch (const std::invalid_argument& e) 
-                        {
-                            std::cerr << "ERROR: Invalid number!\n";
-                        } 
-                        auto exist_client = client_id_.find(source_id);
-                        if (exist_client != client_id_.end())
-                        {
-                            clients_.insert({client, source_id});
+                        if (client_exists) {
+                            updateClientWithExistingId(client, source_id);
+                        } else {
+                            assignNewClientId(client, source_id);
+                            saveClientIdsToFile(source_id);
                         }
-                        else 
-                        {
-                            if (client_id_.empty())
-                            {
-                                source_id = 0;
-                            }
-                            else
-                            {
-                                source_id = *client_id_.rbegin() + 1;
-                            }
-                            rat::Packet packet;
-                            packet.set_packet_id("server_" + std::to_string(std::rand()));
-                            packet.set_source_id("-1");
-                            packet.set_destination_id(std::to_string(source_id));
-                            packet.set_type(rat::Packet::IDENTIFY);
-
-                            auto* command = packet.mutable_command_data();
-                            std::string random_data = generateRandomData(10);
-                            command->set_command(random_data);
-                            
-                            sendCommandToClient(client, packet); // send id for client 
-                            // insert id 
-                            client_id_.insert(source_id);
-                            clients_.insert({client, source_id});
-                            // insert id in file 
-                            std::ofstream file_config("../config/list_client.txt", std::ios::app);
-                            if(!file_config.is_open())
-                            {
-                                std::cout << "Open file not success!\n" << std::endl;
-                                return;
-                            }
-                            file_config << source_id << "\n";
-                            file_config.close();
-                        }
+                        
+                       
                     }
-                    std::string client_id = std::to_string(client->native_handle());
-                    std::cout << "Client (" << client->remote_endpoint().address().to_string() + "_" + md5HashString(client_id) << "): "
-                            << packet.command_data().command() << std::endl;
+                    std::lock_guard<std::mutex> lock(client_mutex_);
+                    auto it = clients_.find(client);
+                    if (it == clients_.end()) {
+                        std::cout << "Lỗi: Client is not existing\n";
+                        return;
+                    }
+                    std::string client_id = std::to_string(it->second);
+                    std::cout << "Client (" << client->remote_endpoint().address().to_string() + "_" + client_id << "): "
+                            << packet.chunked_data().payload() << std::endl;
                 } 
-                else if (packet.has_command_data() && !packet.command_data().command().size()) 
+                else if (packet.has_chunked_data() && !packet.chunked_data().payload().size()) 
                 {
-                    std::cerr << "Error from client: " << std::endl;
+                    std::cout << "Error from client: " << std::endl;
                 }
                 boost::asio::post(io_context_, [this, client]() { handleClient(client); });
             });
@@ -193,7 +181,7 @@ namespace Rat
             {
                 if (ec) 
                 {
-                    std::cerr << "Send error: " << ec.message() << std::endl;
+                    std::cout << "Send error: " << ec.message() << std::endl;
                 }
             });
     }
@@ -227,9 +215,9 @@ namespace Rat
             }
 
             // Tạo dữ liệu ngẫu nhiên cho command
-            auto* command = packet.mutable_command_data();
+            auto* command = packet.mutable_chunked_data();
             std::string random_data = generateRandomData(10); // Dữ liệu 10 ký tự ngẫu nhiên
-            command->set_command(random_data);
+            command->set_payload(random_data);
 
             for (auto& client : clients_) 
             {
@@ -240,4 +228,99 @@ namespace Rat
         }
     }
 
+    void Server::addClient(std::shared_ptr<boost::asio::ip::tcp::socket> client, uint64_t client_id)
+    {
+        std::lock_guard<std::mutex> lock(client_mutex_);
+        if (clients_.size() >= MAX_CLIENT) {
+            std::cout << "Error: Maximum client limit reached!\n";
+            client->close();
+            return;
+        }
+        clients_.insert({client, client_id});
+    }
+    void Server::removeClient(std::shared_ptr<boost::asio::ip::tcp::socket> client) 
+    {
+        std::lock_guard<std::mutex> lock(client_mutex_);
+        clients_.erase(client);
+    }
+
+    uint64_t Server::parseStaticIdPayload(const std::string& payload) 
+    {
+        try {
+            return std::stol(payload);
+        } 
+        catch (const std::invalid_argument& e) {
+            std::cout << "ERROR: Invalid number!\n";
+            return -1;
+        }
+        catch (const std::out_of_range& e) {
+            std::cout << "ERROR: Out of range number!\n";
+            return -1;
+        }   
+    }
+    void Server::updateClientWithExistingId(std::shared_ptr<boost::asio::ip::tcp::socket> client, uint64_t source_id) 
+    {
+        std::lock_guard<std::mutex> lock(client_mutex_);
+        if (clients_.find(client) != clients_.end()) {
+            std::cout << "Client is existing, update ID: {}" << source_id << std::endl;
+            clients_[client] = source_id; 
+        } else {
+            clients_.insert({client, source_id});
+        }
+    }
+    void Server::assignNewClientId(std::shared_ptr<boost::asio::ip::tcp::socket> client, uint64_t& source_id) 
+    {
+        {
+            std::lock_guard<std::mutex> lock(client_id_mutex_);
+            if (client_id_.empty()) 
+            {
+                source_id = 0;
+            } 
+            else 
+            {
+                source_id = *client_id_.rbegin() + 1;
+            }
+            client_id_.insert(source_id);
+        }
+
+        rat::Packet response;
+        response.set_type(rat::Packet::STATIC_ID);
+        response.set_packet_id("server_0_" + std::to_string(std::rand()));
+        response.set_source_id("server_0");
+        response.set_destination_id("client_" + std::to_string(source_id));
+        response.set_encrypted(false);
+
+        auto* chunked = response.mutable_chunked_data();
+        chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+        chunked->set_sequence_number(0);
+        chunked->set_total_chunks(1);
+        chunked->set_payload(std::to_string(source_id));
+        chunked->set_success(true);
+        chunked->set_error_message("");
+
+        sendCommandToClient(client, response);
+
+        {
+            std::lock_guard<std::mutex> lock(client_mutex_);
+            clients_.insert({client, source_id});
+        }
+    }
+    void Server::saveClientIdsToFile(const uint64_t &source_id, const std::string &file_path)
+    {
+        boost::asio::post(io_context_, [this, source_id, file_path]() {
+            std::lock_guard<std::mutex> lock(file_save_mutex);
+            std::ofstream file_config(file_path, std::ios::app);
+            if (!file_config.is_open()) {
+                std::cout << "ERROR: Not open file success!\n" << file_path << std::endl;
+                return;
+            }
+            file_config << source_id << "\n";
+            if (file_config.fail()) {
+                std::cout << "ERROR: Not write file success!\n" << file_path << std::endl;
+                file_config.close();
+                return;
+            }
+            file_config.close();
+        });
+    }
 } // namespace Rat

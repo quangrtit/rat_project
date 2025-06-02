@@ -3,7 +3,7 @@ project(RATServer LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF) # Đồng bộ với RATCommon
+set(CMAKE_CXX_EXTENSIONS OFF) 
 
 
 find_package(Boost 1.83 REQUIRED COMPONENTS system thread)
@@ -20,12 +20,13 @@ include_directories(${SERVER_INCLUDE_DIR})
 
 
 set(COMMON_DIR ${CMAKE_SOURCE_DIR}/../common)
-include_directories(${COMMON_DIR}/include ${COMMON_DIR}/build/proto) # Include cho Packet.pb.h
+include_directories(${COMMON_DIR}/include ${COMMON_DIR}/build/proto) 
 
 
 set(SERVER_SOURCES
     src/main.cpp
     src/Server.cpp
+    src/ServerSecurity.cpp
 )
 
 
@@ -37,11 +38,12 @@ target_link_libraries(rat_server
     ${COMMON_DIR}/build/proto/libproto.a
     Boost::system
     Boost::thread
+    OpenSSL::SSL
     OpenSSL::Crypto
     ${Protobuf_LIBRARIES}
 )
 
-# Tùy chọn tối ưu hóa (đồng bộ với RATCommon)
+
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     target_compile_options(rat_server PRIVATE -Wall -Wextra)
 else()

@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Boost 1.83 REQUIRED COMPONENTS system thread)
+find_package(OpenSSL REQUIRED)
 
 set(COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${COMMON_INCLUDE_DIR})
@@ -26,6 +27,7 @@ target_link_libraries(rat_common
     PUBLIC
         Boost::system
         Boost::thread
+        OpenSSL::SSL
         proto
 )
 
@@ -44,6 +46,7 @@ if(Catch2_FOUND)
             Catch2::Catch2
             Boost::system
             Boost::thread
+            OpenSSL::SSL    
     )
     add_test(NAME RATTests COMMAND rat_tests)
 else()

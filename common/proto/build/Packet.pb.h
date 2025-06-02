@@ -66,11 +66,12 @@ enum Packet_Type : int {
   Packet_Type_TRANSFER_FILE = 3,
   Packet_Type_LIST_PROCESSES = 4,
   Packet_Type_KILL_PROCESS = 5,
-  Packet_Type_IDENTIFY = 6,
-  Packet_Type_ACK = 7,
-  Packet_Type_ERROR = 8,
-  Packet_Type_COMMAND = 9,
-  Packet_Type_STATIC_ID = 10,
+  Packet_Type_CERT_REQUEST = 6,
+  Packet_Type_CERT_RESPONSE = 7,
+  Packet_Type_AUTH_CONFIRM = 8,
+  Packet_Type_ERROR = 9,
+  Packet_Type_COMMAND = 10,
+  Packet_Type_STATIC_ID = 11,
   Packet_Type_Packet_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   Packet_Type_Packet_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
@@ -226,10 +227,12 @@ class Packet final :
     Packet_Type_LIST_PROCESSES;
   static constexpr Type KILL_PROCESS =
     Packet_Type_KILL_PROCESS;
-  static constexpr Type IDENTIFY =
-    Packet_Type_IDENTIFY;
-  static constexpr Type ACK =
-    Packet_Type_ACK;
+  static constexpr Type CERT_REQUEST =
+    Packet_Type_CERT_REQUEST;
+  static constexpr Type CERT_RESPONSE =
+    Packet_Type_CERT_RESPONSE;
+  static constexpr Type AUTH_CONFIRM =
+    Packet_Type_AUTH_CONFIRM;
   static constexpr Type ERROR =
     Packet_Type_ERROR;
   static constexpr Type COMMAND =

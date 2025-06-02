@@ -99,23 +99,24 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_Packet_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014Packet.proto\022\003rat\"\315\002\n\006Packet\022\036\n\004type\030\001"
+  "\n\014Packet.proto\022\003rat\"\355\002\n\006Packet\022\036\n\004type\030\001"
   " \001(\0162\020.rat.Packet.Type\022\021\n\tpacket_id\030\002 \001("
   "\t\022\021\n\tsource_id\030\003 \001(\t\022\026\n\016destination_id\030\004"
   " \001(\t\022\021\n\tencrypted\030\005 \001(\010\022&\n\014chunked_data\030"
-  "\006 \001(\0132\020.rat.ChunkedData\"\251\001\n\004Type\022\013\n\007UNKN"
+  "\006 \001(\0132\020.rat.ChunkedData\"\311\001\n\004Type\022\013\n\007UNKN"
   "OWN\020\000\022\016\n\nLIST_FILES\020\001\022\r\n\tREAD_FILE\020\002\022\021\n\r"
   "TRANSFER_FILE\020\003\022\022\n\016LIST_PROCESSES\020\004\022\020\n\014K"
-  "ILL_PROCESS\020\005\022\014\n\010IDENTIFY\020\006\022\007\n\003ACK\020\007\022\t\n\005"
-  "ERROR\020\010\022\013\n\007COMMAND\020\t\022\r\n\tSTATIC_ID\020\n\"\206\001\n\013"
-  "ChunkedData\022\017\n\007data_id\030\001 \001(\t\022\027\n\017sequence"
-  "_number\030\002 \001(\004\022\024\n\014total_chunks\030\003 \001(\004\022\017\n\007p"
-  "ayload\030\004 \001(\014\022\017\n\007success\030\005 \001(\010\022\025\n\rerror_m"
-  "essage\030\006 \001(\tb\006proto3"
+  "ILL_PROCESS\020\005\022\020\n\014CERT_REQUEST\020\006\022\021\n\rCERT_"
+  "RESPONSE\020\007\022\020\n\014AUTH_CONFIRM\020\010\022\t\n\005ERROR\020\t\022"
+  "\013\n\007COMMAND\020\n\022\r\n\tSTATIC_ID\020\013\"\206\001\n\013ChunkedD"
+  "ata\022\017\n\007data_id\030\001 \001(\t\022\027\n\017sequence_number\030"
+  "\002 \001(\004\022\024\n\014total_chunks\030\003 \001(\004\022\017\n\007payload\030\004"
+  " \001(\014\022\017\n\007success\030\005 \001(\010\022\025\n\rerror_message\030\006"
+  " \001(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Packet_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Packet_2eproto = {
-    false, false, 500, descriptor_table_protodef_Packet_2eproto,
+    false, false, 532, descriptor_table_protodef_Packet_2eproto,
     "Packet.proto",
     &descriptor_table_Packet_2eproto_once, nullptr, 0, 2,
     schemas, file_default_instances, TableStruct_Packet_2eproto::offsets,
@@ -146,6 +147,7 @@ bool Packet_Type_IsValid(int value) {
     case 8:
     case 9:
     case 10:
+    case 11:
       return true;
     default:
       return false;
@@ -159,8 +161,9 @@ constexpr Packet_Type Packet::READ_FILE;
 constexpr Packet_Type Packet::TRANSFER_FILE;
 constexpr Packet_Type Packet::LIST_PROCESSES;
 constexpr Packet_Type Packet::KILL_PROCESS;
-constexpr Packet_Type Packet::IDENTIFY;
-constexpr Packet_Type Packet::ACK;
+constexpr Packet_Type Packet::CERT_REQUEST;
+constexpr Packet_Type Packet::CERT_RESPONSE;
+constexpr Packet_Type Packet::AUTH_CONFIRM;
 constexpr Packet_Type Packet::ERROR;
 constexpr Packet_Type Packet::COMMAND;
 constexpr Packet_Type Packet::STATIC_ID;

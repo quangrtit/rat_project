@@ -96,8 +96,10 @@ rat_tests: librat_common.a
 rat_tests: proto/libproto.a
 rat_tests: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.83.0
 rat_tests: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.83.0
+rat_tests: /usr/lib/x86_64-linux-gnu/libssl.so
 rat_tests: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 rat_tests: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
+rat_tests: /usr/lib/x86_64-linux-gnu/libcrypto.so
 rat_tests: CMakeFiles/rat_tests.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/common/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable rat_tests"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rat_tests.dir/link.txt --verbose=$(VERBOSE)

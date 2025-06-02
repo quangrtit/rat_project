@@ -153,6 +153,30 @@ src/Client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/Client.cpp.s
 .PHONY : src/Client.cpp.s
 
+src/ClientSecurity.o: src/ClientSecurity.cpp.o
+.PHONY : src/ClientSecurity.o
+
+# target to build an object file
+src/ClientSecurity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o
+.PHONY : src/ClientSecurity.cpp.o
+
+src/ClientSecurity.i: src/ClientSecurity.cpp.i
+.PHONY : src/ClientSecurity.i
+
+# target to preprocess a source file
+src/ClientSecurity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.i
+.PHONY : src/ClientSecurity.cpp.i
+
+src/ClientSecurity.s: src/ClientSecurity.cpp.s
+.PHONY : src/ClientSecurity.s
+
+# target to generate assembly for a file
+src/ClientSecurity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.s
+.PHONY : src/ClientSecurity.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... src/Client.o"
 	@echo "... src/Client.i"
 	@echo "... src/Client.s"
+	@echo "... src/ClientSecurity.o"
+	@echo "... src/ClientSecurity.i"
+	@echo "... src/ClientSecurity.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

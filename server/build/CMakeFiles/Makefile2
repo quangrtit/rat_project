@@ -81,12 +81,12 @@ clean: CMakeFiles/rat_server.dir/clean
 CMakeFiles/rat_server.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=1,2,3 "Built target rat_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=1,2,3,4 "Built target rat_server"
 .PHONY : CMakeFiles/rat_server.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/rat_server.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/server/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/server/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/rat_server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/quang/rat_project/server/build/CMakeFiles 0
 .PHONY : CMakeFiles/rat_server.dir/rule

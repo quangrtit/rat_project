@@ -3,38 +3,40 @@ project(RATClient LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF) # Đồng bộ với RATCommon
+set(CMAKE_CXX_EXTENSIONS OFF) 
 
-# Tìm kiếm Boost
+
 find_package(Boost 1.83 REQUIRED COMPONENTS system thread)
+find_package(OpenSSL REQUIRED)
 
-# Tìm kiếm Protobuf
 find_package(Protobuf REQUIRED)
 
-# Định nghĩa các thư mục include
+
 set(CLIENT_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CLIENT_INCLUDE_DIR})
 
-# Include thư mục từ RATCommon
-set(COMMON_DIR ${CMAKE_SOURCE_DIR}/../common)
-include_directories(${COMMON_DIR}/include ${COMMON_DIR}/build/proto) # Include cho Packet.pb.h
 
-# Danh sách file nguồn
+set(COMMON_DIR ${CMAKE_SOURCE_DIR}/../common)
+include_directories(${COMMON_DIR}/include ${COMMON_DIR}/build/proto)
+
+
 set(CLIENT_SOURCES
     src/main.cpp
     src/Client.cpp
+    src/ClientSecurity.cpp
 )
 
-# Tạo executable
+
 add_executable(rat_client ${CLIENT_SOURCES})
 
-# Link thư viện
+
 target_link_libraries(rat_client
     PRIVATE
-    ${COMMON_DIR}/build/librat_common.a # Link với rat_common
+    ${COMMON_DIR}/build/librat_common.a
     ${COMMON_DIR}/build/proto/libproto.a
     Boost::system
     Boost::thread
+    OpenSSL::SSL
     ${Protobuf_LIBRARIES}
 )
 

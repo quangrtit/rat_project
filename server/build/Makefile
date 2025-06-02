@@ -153,6 +153,30 @@ src/Server.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/Server.cpp.s
 .PHONY : src/Server.cpp.s
 
+src/ServerSecurity.o: src/ServerSecurity.cpp.o
+.PHONY : src/ServerSecurity.o
+
+# target to build an object file
+src/ServerSecurity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerSecurity.cpp.o
+.PHONY : src/ServerSecurity.cpp.o
+
+src/ServerSecurity.i: src/ServerSecurity.cpp.i
+.PHONY : src/ServerSecurity.i
+
+# target to preprocess a source file
+src/ServerSecurity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerSecurity.cpp.i
+.PHONY : src/ServerSecurity.cpp.i
+
+src/ServerSecurity.s: src/ServerSecurity.cpp.s
+.PHONY : src/ServerSecurity.s
+
+# target to generate assembly for a file
+src/ServerSecurity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerSecurity.cpp.s
+.PHONY : src/ServerSecurity.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -189,6 +213,9 @@ help:
 	@echo "... src/Server.o"
 	@echo "... src/Server.i"
 	@echo "... src/Server.s"
+	@echo "... src/ServerSecurity.o"
+	@echo "... src/ServerSecurity.i"
+	@echo "... src/ServerSecurity.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

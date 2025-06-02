@@ -417,6 +417,35 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
   /usr/include/boost/asio/signal_set.hpp \
   /usr/include/boost/asio/signal_set_base.hpp \
   /usr/include/boost/asio/socket_base.hpp \
+  /usr/include/boost/asio/ssl.hpp \
+  /usr/include/boost/asio/ssl/context.hpp \
+  /usr/include/boost/asio/ssl/context_base.hpp \
+  /usr/include/boost/asio/ssl/detail/buffered_handshake_op.hpp \
+  /usr/include/boost/asio/ssl/detail/engine.hpp \
+  /usr/include/boost/asio/ssl/detail/handshake_op.hpp \
+  /usr/include/boost/asio/ssl/detail/impl/engine.ipp \
+  /usr/include/boost/asio/ssl/detail/impl/openssl_init.ipp \
+  /usr/include/boost/asio/ssl/detail/io.hpp \
+  /usr/include/boost/asio/ssl/detail/openssl_init.hpp \
+  /usr/include/boost/asio/ssl/detail/openssl_types.hpp \
+  /usr/include/boost/asio/ssl/detail/password_callback.hpp \
+  /usr/include/boost/asio/ssl/detail/read_op.hpp \
+  /usr/include/boost/asio/ssl/detail/shutdown_op.hpp \
+  /usr/include/boost/asio/ssl/detail/stream_core.hpp \
+  /usr/include/boost/asio/ssl/detail/verify_callback.hpp \
+  /usr/include/boost/asio/ssl/detail/write_op.hpp \
+  /usr/include/boost/asio/ssl/error.hpp \
+  /usr/include/boost/asio/ssl/host_name_verification.hpp \
+  /usr/include/boost/asio/ssl/impl/context.hpp \
+  /usr/include/boost/asio/ssl/impl/context.ipp \
+  /usr/include/boost/asio/ssl/impl/error.ipp \
+  /usr/include/boost/asio/ssl/impl/host_name_verification.ipp \
+  /usr/include/boost/asio/ssl/impl/rfc2818_verification.ipp \
+  /usr/include/boost/asio/ssl/rfc2818_verification.hpp \
+  /usr/include/boost/asio/ssl/stream.hpp \
+  /usr/include/boost/asio/ssl/stream_base.hpp \
+  /usr/include/boost/asio/ssl/verify_context.hpp \
+  /usr/include/boost/asio/ssl/verify_mode.hpp \
   /usr/include/boost/asio/static_thread_pool.hpp \
   /usr/include/boost/asio/steady_timer.hpp \
   /usr/include/boost/asio/strand.hpp \
@@ -1310,6 +1339,78 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
   /usr/include/netdb.h \
   /usr/include/netinet/in.h \
   /usr/include/netinet/tcp.h \
+  /usr/include/openssl/asn1.h \
+  /usr/include/openssl/asn1err.h \
+  /usr/include/openssl/async.h \
+  /usr/include/openssl/asyncerr.h \
+  /usr/include/openssl/bio.h \
+  /usr/include/openssl/bioerr.h \
+  /usr/include/openssl/bn.h \
+  /usr/include/openssl/bnerr.h \
+  /usr/include/openssl/buffer.h \
+  /usr/include/openssl/buffererr.h \
+  /usr/include/openssl/comp.h \
+  /usr/include/openssl/comperr.h \
+  /usr/include/openssl/conf.h \
+  /usr/include/openssl/conferr.h \
+  /usr/include/openssl/conftypes.h \
+  /usr/include/openssl/core.h \
+  /usr/include/openssl/core_dispatch.h \
+  /usr/include/openssl/crypto.h \
+  /usr/include/openssl/cryptoerr.h \
+  /usr/include/openssl/cryptoerr_legacy.h \
+  /usr/include/openssl/ct.h \
+  /usr/include/openssl/cterr.h \
+  /usr/include/openssl/dh.h \
+  /usr/include/openssl/dherr.h \
+  /usr/include/openssl/dsa.h \
+  /usr/include/openssl/dsaerr.h \
+  /usr/include/openssl/dtls1.h \
+  /usr/include/openssl/e_os2.h \
+  /usr/include/openssl/ec.h \
+  /usr/include/openssl/ecerr.h \
+  /usr/include/openssl/engine.h \
+  /usr/include/openssl/engineerr.h \
+  /usr/include/openssl/err.h \
+  /usr/include/openssl/evp.h \
+  /usr/include/openssl/evperr.h \
+  /usr/include/openssl/hmac.h \
+  /usr/include/openssl/http.h \
+  /usr/include/openssl/lhash.h \
+  /usr/include/openssl/macros.h \
+  /usr/include/openssl/obj_mac.h \
+  /usr/include/openssl/objects.h \
+  /usr/include/openssl/objectserr.h \
+  /usr/include/openssl/opensslv.h \
+  /usr/include/openssl/params.h \
+  /usr/include/openssl/pem.h \
+  /usr/include/openssl/pemerr.h \
+  /usr/include/openssl/pkcs7.h \
+  /usr/include/openssl/pkcs7err.h \
+  /usr/include/openssl/prov_ssl.h \
+  /usr/include/openssl/rand.h \
+  /usr/include/openssl/randerr.h \
+  /usr/include/openssl/rsa.h \
+  /usr/include/openssl/rsaerr.h \
+  /usr/include/openssl/safestack.h \
+  /usr/include/openssl/sha.h \
+  /usr/include/openssl/srtp.h \
+  /usr/include/openssl/ssl.h \
+  /usr/include/openssl/ssl2.h \
+  /usr/include/openssl/ssl3.h \
+  /usr/include/openssl/sslerr.h \
+  /usr/include/openssl/sslerr_legacy.h \
+  /usr/include/openssl/stack.h \
+  /usr/include/openssl/symhacks.h \
+  /usr/include/openssl/tls1.h \
+  /usr/include/openssl/types.h \
+  /usr/include/openssl/ui.h \
+  /usr/include/openssl/uierr.h \
+  /usr/include/openssl/x509.h \
+  /usr/include/openssl/x509_vfy.h \
+  /usr/include/openssl/x509err.h \
+  /usr/include/openssl/x509v3.h \
+  /usr/include/openssl/x509v3err.h \
   /usr/include/poll.h \
   /usr/include/pthread.h \
   /usr/include/rpc/netdb.h \
@@ -1482,6 +1583,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/openssl/configuration.h \
+  /usr/include/x86_64-linux-gnu/openssl/opensslconf.h \
   /usr/include/x86_64-linux-gnu/sys/cdefs.h \
   /usr/include/x86_64-linux-gnu/sys/epoll.h \
   /usr/include/x86_64-linux-gnu/sys/eventfd.h \
@@ -1527,6 +1630,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/x86_64-linux-gnu/sys/epoll.h:
 
+/usr/include/x86_64-linux-gnu/openssl/opensslconf.h:
+
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
@@ -1549,15 +1654,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar.h:
-
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
@@ -1655,8 +1756,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/x86_64-linux-gnu/bits/siginfo-consts.h:
 
-/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
-
 /usr/include/x86_64-linux-gnu/bits/sigaction.h:
 
 /usr/include/x86_64-linux-gnu/bits/sched.h:
@@ -1703,8 +1802,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/x86_64-linux-gnu/asm/socket.h:
 
-/usr/include/x86_64-linux-gnu/asm/posix_types.h:
-
 /usr/include/x86_64-linux-gnu/asm/ioctls.h:
 
 /usr/include/x86_64-linux-gnu/asm/ioctl.h:
@@ -1712,8 +1809,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
 
 /usr/include/time.h:
-
-/usr/include/stdlib.h:
 
 /usr/include/stdint.h:
 
@@ -1724,6 +1819,108 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/rpc/netdb.h:
 
 /usr/include/poll.h:
+
+/usr/include/x86_64-linux-gnu/asm/posix_types.h:
+
+/usr/include/openssl/x509err.h:
+
+/usr/include/openssl/x509.h:
+
+/usr/include/openssl/uierr.h:
+
+/usr/include/openssl/ui.h:
+
+/usr/include/openssl/tls1.h:
+
+/usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/openssl/symhacks.h:
+
+/usr/include/openssl/sslerr_legacy.h:
+
+/usr/include/openssl/sslerr.h:
+
+/usr/include/openssl/ssl3.h:
+
+/usr/include/openssl/srtp.h:
+
+/usr/include/openssl/safestack.h:
+
+/usr/include/openssl/rsaerr.h:
+
+/usr/include/openssl/rsa.h:
+
+/usr/include/openssl/rand.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/openssl/pkcs7err.h:
+
+/usr/include/openssl/pemerr.h:
+
+/usr/include/openssl/params.h:
+
+/usr/include/openssl/opensslv.h:
+
+/usr/include/openssl/objectserr.h:
+
+/usr/include/openssl/obj_mac.h:
+
+/usr/include/openssl/macros.h:
+
+/usr/include/openssl/lhash.h:
+
+/usr/include/openssl/http.h:
+
+/usr/include/openssl/evp.h:
+
+/usr/include/openssl/err.h:
+
+/usr/include/openssl/engineerr.h:
+
+/usr/include/openssl/ecerr.h:
+
+/usr/include/openssl/dtls1.h:
+
+/usr/include/openssl/dsa.h:
+
+/usr/include/openssl/dherr.h:
+
+/usr/include/openssl/dh.h:
+
+/usr/include/openssl/cterr.h:
+
+/usr/include/openssl/ct.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigcontext.h:
+
+/usr/include/openssl/cryptoerr_legacy.h:
+
+/usr/include/openssl/cryptoerr.h:
+
+/usr/include/openssl/core_dispatch.h:
+
+/usr/include/openssl/conftypes.h:
+
+/usr/include/openssl/comperr.h:
+
+/usr/include/openssl/comp.h:
+
+/usr/include/openssl/buffer.h:
+
+/usr/include/openssl/bnerr.h:
+
+/usr/include/openssl/bn.h:
+
+/usr/include/openssl/bioerr.h:
+
+/usr/include/openssl/asyncerr.h:
+
+/usr/include/openssl/async.h:
+
+/usr/include/openssl/asn1err.h:
+
+/usr/include/openssl/asn1.h:
 
 /usr/include/netinet/in.h:
 
@@ -1789,6 +1986,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/google/protobuf/parse_context.h:
 
+/usr/include/openssl/e_os2.h:
+
 /usr/include/google/protobuf/metadata_lite.h:
 
 /usr/include/google/protobuf/message_lite.h:
@@ -1798,8 +1997,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/google/protobuf/inlined_string_field.h:
 
 /usr/include/google/protobuf/generated_message_util.h:
-
-/usr/include/google/protobuf/generated_enum_util.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
 
@@ -1854,10 +2051,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/x86_64-linux-gnu/bits/socket_type.h:
 
 /usr/include/c++/13/memory:
-
-/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
-
-/usr/include/c++/13/map:
 
 /usr/include/c++/13/iosfwd:
 
@@ -1951,6 +2144,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/c++/13/bits/stl_construct.h:
 
+/usr/include/openssl/ec.h:
+
 /usr/include/c++/13/bits/stl_algobase.h:
 
 /usr/include/c++/13/bits/stl_algo.h:
@@ -1991,9 +2186,9 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/c++/13/bits/locale_classes.h:
 
-/usr/include/c++/13/bits/ios_base.h:
-
 /usr/include/c++/13/bits/invoke.h:
+
+/usr/include/openssl/pkcs7.h:
 
 /usr/include/c++/13/bits/hashtable_policy.h:
 
@@ -2001,29 +2196,57 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/c++/13/bits/exception_ptr.h:
 
-/usr/include/boost/date_time/date_iterator.hpp:
+/usr/include/c++/13/bits/exception_defines.h:
 
-/usr/include/boost/asio/detail/future.hpp:
+/usr/include/c++/13/bits/enable_special_members.h:
 
-/usr/include/boost/asio/cancellation_state.hpp:
+/usr/include/c++/13/bits/cxxabi_init_exception.h:
 
-/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
+/usr/include/google/protobuf/stubs/logging.h:
 
-/usr/include/boost/date_time/date_duration.hpp:
+/usr/include/c++/13/bits/cxxabi_forced.h:
 
-/usr/include/boost/date_time/date_defs.hpp:
+/usr/include/c++/13/bits/cpp_type_traits.h:
 
-/usr/include/boost/asio/ip/basic_resolver_entry.hpp:
+/usr/include/c++/13/bits/concept_check.h:
 
-/usr/include/boost/type_traits/is_default_constructible.hpp:
+/usr/include/c++/13/bits/charconv.h:
 
-/usr/include/boost/core/ignore_unused.hpp:
+/usr/include/c++/13/bits/char_traits.h:
 
-/usr/include/google/protobuf/map_type_handler.h:
+/usr/include/c++/13/bits/basic_string.tcc:
 
-/usr/include/boost/core/detail/sp_thread_yield.hpp:
+/usr/include/c++/13/bits/basic_ios.tcc:
 
-/usr/include/boost/date_time/gregorian/greg_date.hpp:
+/usr/include/c++/13/bits/basic_ios.h:
+
+/usr/include/c++/13/cstdarg:
+
+/usr/include/c++/13/bits/atomic_lockfree_defines.h:
+
+/usr/include/c++/13/bits/atomic_futex.h:
+
+/usr/include/c++/13/bits/atomic_base.h:
+
+/usr/include/x86_64-linux-gnu/bits/sigstack.h:
+
+/usr/include/c++/13/bits/allocator.h:
+
+/usr/include/c++/13/bits/allocated_ptr.h:
+
+/usr/include/c++/13/bits/alloc_traits.h:
+
+/usr/include/c++/13/bits/align.h:
+
+/usr/include/c++/13/backward/binders.h:
+
+/usr/include/c++/13/backward/auto_ptr.h:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
+/usr/include/c++/13/atomic:
+
+/usr/include/c++/13/array:
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
@@ -2047,8 +2270,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/recycling_allocator.hpp:
 
-/usr/include/boost/config/abi_suffix.hpp:
-
 /usr/include/boost/config.hpp:
 
 /usr/include/c++/13/iterator:
@@ -2065,15 +2286,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/cerrno.hpp:
 
-/usr/include/boost/bind/mem_fn_cc.hpp:
-
-/usr/include/boost/asio/local/detail/impl/endpoint.ipp:
+/usr/include/boost/asio/ssl/detail/buffered_handshake_op.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
 /usr/include/boost/bind/mem_fn.hpp:
-
-/usr/include/c++/13/array:
 
 /usr/include/boost/asio/coroutine.hpp:
 
@@ -2093,9 +2310,7 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/architecture/z.h:
 
-/usr/include/boost/date_time/date.hpp:
-
-/usr/include/boost/asio/use_future.hpp:
+/usr/include/openssl/conf.h:
 
 /home/quang/rat_project/common/src/NetworkManager.cpp:
 
@@ -2103,21 +2318,15 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/mpl/aux_/include_preprocessed.hpp:
 
-/usr/include/boost/asio/traits/submit_free.hpp:
-
 /usr/include/google/protobuf/map.h:
 
 /usr/include/boost/asio/traits/static_require.hpp:
 
 /usr/include/boost/asio/local/connect_pair.hpp:
 
-/usr/include/boost/config/helper_macros.hpp:
-
 /usr/include/boost/preprocessor/arithmetic/detail/is_minimum_number.hpp:
 
 /usr/include/boost/asio/traits/set_value_free.hpp:
-
-/usr/include/boost/asio/execution/impl/receiver_invocation_error.ipp:
 
 /usr/include/boost/asio/traits/query_free.hpp:
 
@@ -2141,10 +2350,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/system_executor.hpp:
 
-/usr/include/boost/date_time/adjust_functors.hpp:
-
-/usr/include/boost/asio/streambuf.hpp:
-
 /usr/include/boost/predef/os/bsd/dragonfly.h:
 
 /usr/include/boost/asio/traits/connect_member.hpp:
@@ -2153,23 +2358,85 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/detail/_cassert.h:
 
-/usr/include/c++/13/bits/allocated_ptr.h:
-
 /usr/include/boost/asio/impl/write.hpp:
 
 /usr/include/boost/preprocessor/list/fold_right.hpp:
 
+/usr/include/boost/config/abi_suffix.hpp:
+
+/usr/include/c++/13/cerrno:
+
+/usr/include/boost/asio/detail/std_fenced_block.hpp:
+
+/usr/include/boost/mpl/aux_/static_cast.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
+
+/usr/include/boost/asio/ssl/stream.hpp:
+
+/usr/include/boost/asio/ssl/rfc2818_verification.hpp:
+
+/usr/include/boost/chrono/clock_string.hpp:
+
+/usr/include/boost/config/helper_macros.hpp:
+
+/usr/include/boost/asio/ssl/impl/error.ipp:
+
+/usr/include/boost/asio/detail/impl/reactive_descriptor_service.ipp:
+
+/usr/include/boost/type_traits/is_base_and_derived.hpp:
+
+/usr/include/boost/asio/ssl/host_name_verification.hpp:
+
+/usr/include/boost/asio/ssl/error.hpp:
+
+/usr/include/boost/predef/architecture/convex.h:
+
+/usr/include/boost/config/detail/select_stdlib_config.hpp:
+
+/usr/include/boost/mpl/equal_to.hpp:
+
+/usr/include/boost/system/detail/errc.hpp:
+
+/usr/include/boost/asio/ssl/impl/context.ipp:
+
+/usr/include/boost/asio/detail/tss_ptr.hpp:
+
+/usr/include/boost/asio/ssl/detail/openssl_types.hpp:
+
+/usr/include/boost/system/detail/throws.hpp:
+
+/usr/include/boost/asio/traits/submit_free.hpp:
+
+/usr/include/boost/asio/ssl/detail/openssl_init.hpp:
+
+/usr/include/boost/preprocessor/debug/error.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigval_t.h:
+
+/usr/include/c++/13/map:
+
+/usr/include/boost/asio/ssl/detail/impl/openssl_init.ipp:
+
+/usr/include/boost/asio/prefer.hpp:
+
+/usr/include/boost/bind/mem_fn_cc.hpp:
+
+/usr/include/boost/asio/local/detail/impl/endpoint.ipp:
+
+/usr/include/openssl/objects.h:
+
+/usr/include/boost/asio/ssl/detail/engine.hpp:
+
+/usr/include/boost/function/detail/epilogue.hpp:
+
+/usr/include/boost/asio/ssl/context_base.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/boost/predef/library/std/vacpp.h:
+
 /usr/include/boost/asio/socket_base.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/uio-ext.h:
-
-/usr/include/boost/date_time/gregorian/greg_calendar.hpp:
-
-/usr/include/boost/asio/execution/invocable_archetype.hpp:
-
-/usr/include/c++/13/new:
-
-/usr/include/boost/asio/execution/any_executor.hpp:
 
 /usr/include/boost/chrono/ceil.hpp:
 
@@ -2194,6 +2461,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/mpl/aux_/yes_no.hpp:
 
 /usr/include/boost/asio/require.hpp:
+
+/usr/include/openssl/prov_ssl.h:
 
 /usr/include/boost/asio/detail/strand_service.hpp:
 
@@ -2223,7 +2492,9 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/random_access_file.hpp:
 
-/usr/include/boost/asio/prefer.hpp:
+/usr/include/x86_64-linux-gnu/asm/types.h:
+
+/usr/include/boost/asio/ip/basic_resolver_iterator.hpp:
 
 /usr/include/boost/asio/post.hpp:
 
@@ -2239,9 +2510,13 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/posix/stream_descriptor.hpp:
 
-/usr/include/c++/13/cstdarg:
+/usr/include/google/protobuf/generated_enum_util.h:
 
-/usr/include/c++/13/bits/atomic_lockfree_defines.h:
+/usr/include/boost/asio/ssl/detail/impl/engine.ipp:
+
+/usr/include/c++/13/utility:
+
+/usr/include/boost/date_time/time_system_split.hpp:
 
 /usr/include/boost/type_traits/intrinsics.hpp:
 
@@ -2259,10 +2534,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/writable_pipe.hpp:
 
-/usr/include/boost/current_function.hpp:
-
-/usr/include/boost/asio/execution/blocking_adaptation.hpp:
-
 /usr/include/boost/move/detail/type_traits.hpp:
 
 /usr/include/boost/asio/posix/basic_descriptor.hpp:
@@ -2272,10 +2543,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/packaged_task.hpp:
 
 /usr/include/boost/mpl/aux_/numeric_cast_utils.hpp:
-
-/usr/include/boost/date_time/c_time.hpp:
-
-/usr/include/boost/predef.h:
 
 /usr/include/boost/asio/multiple_exceptions.hpp:
 
@@ -2299,13 +2566,13 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/bind/mem_fn_template.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
-
-/usr/include/boost/date_time/date_clock_device.hpp:
-
 /usr/include/boost/asio/detail/conditionally_enabled_mutex.hpp:
 
 /usr/include/boost/core/typeinfo.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
+
+/usr/include/boost/date_time/date_clock_device.hpp:
 
 /usr/include/boost/assert.hpp:
 
@@ -2353,9 +2620,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/mpl/times.hpp:
 
-/usr/include/x86_64-linux-gnu/asm/types.h:
+/usr/include/boost/asio/ip/basic_resolver_entry.hpp:
 
-/usr/include/boost/asio/ip/basic_resolver_iterator.hpp:
+/usr/include/boost/predef.h:
+
+/usr/include/boost/date_time/c_time.hpp:
 
 /usr/include/boost/asio/ip/basic_resolver.hpp:
 
@@ -2364,6 +2633,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/associated_executor.hpp:
 
 /usr/include/boost/asio/traits/prefer_member.hpp:
+
+/usr/include/openssl/crypto.h:
 
 /usr/include/boost/predef/language/objc.h:
 
@@ -2407,8 +2678,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/impl/system_executor.hpp:
 
-/usr/include/boost/date_time/constrained_value.hpp:
-
 /usr/include/boost/system/error_code.hpp:
 
 /usr/include/boost/asio/impl/buffered_write_stream.hpp:
@@ -2429,11 +2698,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/impl/prepend.hpp:
 
+/usr/include/boost/numeric/conversion/detail/meta.hpp:
+
 /usr/include/boost/asio/impl/handler_alloc_hook.ipp:
 
 /usr/include/boost/preprocessor/detail/limits/auto_rec_256.hpp:
-
-/usr/include/c++/13/bits/char_traits.h:
 
 /usr/include/boost/asio/ip/impl/address.hpp:
 
@@ -2461,6 +2730,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/impl/append.hpp:
 
+/usr/include/boost/asio/detail/resolver_service_base.hpp:
+
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
 
 /usr/include/boost/asio/handler_continuation_hook.hpp:
@@ -2471,15 +2742,7 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/generic/seq_packet_protocol.hpp:
 
-/usr/include/boost/asio/detail/impl/timer_queue_ptime.ipp:
-
-/usr/include/boost/core/yield_primitives.hpp:
-
-/usr/include/boost/predef/other/wordsize.h:
-
-/usr/include/boost/core/addressof.hpp:
-
-/usr/include/boost/chrono/clock_string.hpp:
+/usr/include/boost/asio/detail/reactive_socket_recv_op.hpp:
 
 /usr/include/boost/asio/generic/raw_protocol.hpp:
 
@@ -2509,17 +2772,23 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/thread/lock_options.hpp:
 
+/usr/include/openssl/buffererr.h:
+
+/usr/include/c++/13/ext/atomicity.h:
+
+/usr/include/c++/13/cstdlib:
+
+/usr/include/c++/13/bit:
+
+/usr/include/boost/asio/execution/set_error.hpp:
+
 /usr/include/stdio.h:
 
 /usr/include/boost/asio/detail/reactive_descriptor_service.hpp:
 
-/usr/include/boost/config/detail/select_stdlib_config.hpp:
-
-/usr/include/boost/mpl/equal_to.hpp:
-
-/usr/include/boost/system/detail/errc.hpp:
-
 /usr/include/boost/asio/execution/scheduler.hpp:
+
+/usr/include/openssl/hmac.h:
 
 /usr/include/boost/thread/detail/platform_time.hpp:
 
@@ -2551,15 +2820,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/execution/prefer_only.hpp:
 
+/usr/include/openssl/ssl2.h:
+
 /usr/include/boost/asio/local/stream_protocol.hpp:
 
 /usr/include/boost/asio/ip/v6_only.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/sigstack.h:
-
-/usr/include/c++/13/bits/allocator.h:
+/usr/include/openssl/bio.h:
 
 /usr/include/boost/asio/execution/schedule.hpp:
+
+/usr/include/boost/asio/execution/impl/receiver_invocation_error.ipp:
 
 /usr/include/boost/asio/io_context.hpp:
 
@@ -2596,6 +2867,10 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/thread/detail/delete.hpp:
 
 /usr/include/boost/asio/detail/descriptor_write_op.hpp:
+
+/usr/include/boost/asio/detail/future.hpp:
+
+/usr/include/boost/asio/cancellation_state.hpp:
 
 /usr/include/boost/asio/impl/read.hpp:
 
@@ -2643,13 +2918,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/detail/buffer_sequence_adapter.hpp:
 
-/usr/include/boost/asio/detail/cstdint.hpp:
+/usr/include/boost/asio/ssl/verify_mode.hpp:
 
 /usr/include/boost/asio/detail/base_from_cancellation_state.hpp:
 
-/usr/include/boost/asio/detail/impl/reactive_descriptor_service.ipp:
-
-/usr/include/boost/type_traits/is_base_and_derived.hpp:
+/usr/include/boost/asio/detail/cstdint.hpp:
 
 /usr/include/boost/asio/detail/keyword_tss_ptr.hpp:
 
@@ -2662,6 +2935,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/predef/library/std/sgi.h:
 
 /usr/include/boost/asio/use_awaitable.hpp:
+
+/usr/include/openssl/types.h:
 
 /usr/include/boost/mpl/aux_/config/compiler.hpp:
 
@@ -2679,11 +2954,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/connect_pipe.hpp:
 
-/usr/include/boost/thread/detail/config.hpp:
-
 /usr/include/boost/asio/windows/random_access_handle.hpp:
 
+/usr/include/boost/thread/detail/config.hpp:
+
 /usr/include/boost/asio/detail/impl/resolver_service_base.ipp:
+
+/usr/include/boost/asio/ssl/impl/host_name_verification.ipp:
+
+/usr/include/boost/asio/generic/datagram_protocol.hpp:
+
+/usr/include/boost/asio/impl/io_context.hpp:
 
 /usr/include/boost/asio/detail/posix_serial_port_service.hpp:
 
@@ -2737,6 +3018,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/config/no_tr1/cmath.hpp:
 
+/usr/include/openssl/core.h:
+
 /usr/include/c++/13/ios:
 
 /usr/include/boost/asio/basic_signal_set.hpp:
@@ -2761,6 +3044,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/append.hpp:
 
+/usr/include/openssl/randerr.h:
+
 /usr/include/boost/asio/detail/impl/timer_queue_set.ipp:
 
 /usr/include/boost/asio/detail/call_stack.hpp:
@@ -2772,12 +3057,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/alloca.h:
 
 /usr/include/boost/asio/ip/tcp.hpp:
-
-/usr/include/c++/13/debug/assertions.h:
-
-/usr/include/boost/asio/traits/prefer_free.hpp:
-
-/usr/include/boost/asio/buffer_registration.hpp:
 
 /usr/include/c++/13/bits/istream.tcc:
 
@@ -2816,12 +3095,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/basic_socket_acceptor.hpp:
 
 /usr/include/boost/asio/bind_allocator.hpp:
-
-/usr/include/boost/core/detail/sp_thread_sleep.hpp:
-
-/usr/include/boost/mpl/aux_/msvc_eti_base.hpp:
-
-/usr/include/boost/preprocessor/variadic/limits/size_64.hpp:
 
 /usr/include/boost/asio/windows/overlapped_ptr.hpp:
 
@@ -2903,8 +3176,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/os/unix.h:
 
-/usr/include/c++/13/bits/basic_ios.tcc:
-
 /usr/include/boost/bind/detail/requires_cxx11.hpp:
 
 /usr/include/boost/asio/wait_traits.hpp:
@@ -2927,13 +3198,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/preprocessor/logical/not.hpp:
 
+/usr/include/c++/13/bits/ios_base.h:
+
+/usr/include/boost/asio/ssl/detail/read_op.hpp:
+
 /usr/include/boost/asio/detail/select_interrupter.hpp:
-
-/usr/include/boost/date_time/filetime_functions.hpp:
-
-/usr/include/boost/asio/detail/socket_ops.hpp:
-
-/usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
 
 /usr/include/c++/13/bits/unordered_set.h:
 
@@ -2950,6 +3219,14 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/predef/compiler/greenhills.h:
 
 /usr/include/boost/predef/compiler/palm.h:
+
+/usr/include/boost/date_time/date_iterator.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/uio-ext.h:
+
+/usr/include/boost/asio/execution/invocable_archetype.hpp:
+
+/usr/include/boost/date_time/gregorian/greg_calendar.hpp:
 
 /usr/include/boost/asio/traits/schedule_member.hpp:
 
@@ -3037,10 +3314,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/library/c/gnu.h:
 
-/usr/include/boost/asio/detail/descriptor_read_op.hpp:
-
-/usr/include/boost/config/user.hpp:
-
 /usr/include/boost/asio/basic_stream_file.hpp:
 
 /usr/include/c++/13/bits/locale_classes.tcc:
@@ -3057,17 +3330,15 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/execution/detail/bulk_sender.hpp:
 
+/usr/include/boost/predef/platform/windows_system.h:
+
+/usr/include/boost/asio/detail/impl/thread_context.ipp:
+
 /home/quang/rat_project/common/include/Constants.hpp:
 
 /usr/include/boost/asio/detail/initiate_dispatch.hpp:
 
 /usr/include/boost/asio/detail/descriptor_ops.hpp:
-
-/usr/include/boost/asio/generic/datagram_protocol.hpp:
-
-/usr/include/boost/asio/impl/io_context.hpp:
-
-/usr/include/c++/13/bits/enable_special_members.h:
 
 /usr/include/boost/asio/detail/reactive_null_buffers_op.hpp:
 
@@ -3107,6 +3378,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/traits/bulk_execute_free.hpp:
 
+/usr/include/boost/asio/ssl/detail/io.hpp:
+
 /usr/include/boost/asio/generic/stream_protocol.hpp:
 
 /usr/include/x86_64-linux-gnu/asm/posix_types_64.h:
@@ -3121,11 +3394,7 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/detached.hpp:
 
-/usr/include/boost/asio/detail/impl/service_registry.ipp:
-
-/usr/include/boost/asio/ip/impl/network_v6.hpp:
-
-/usr/include/boost/mpl/aux_/config/overload_resolution.hpp:
+/usr/include/openssl/dsaerr.h:
 
 /usr/include/boost/asio/detail/date_time_fwd.hpp:
 
@@ -3175,15 +3444,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/detail/pop_options.hpp:
 
-/usr/include/c++/13/cerrno:
+/usr/include/c++/13/bits/exception.h:
 
-/usr/include/boost/asio/detail/std_fenced_block.hpp:
-
-/usr/include/boost/mpl/aux_/static_cast.hpp:
+/usr/include/boost/predef/library/std/modena.h:
 
 /usr/include/boost/asio/basic_random_access_file.hpp:
 
 /usr/include/boost/asio/detail/impl/null_event.ipp:
+
+/usr/include/boost/asio/ssl.hpp:
+
+/usr/include/boost/asio/detail/base_from_completion_cond.hpp:
 
 /usr/include/boost/asio/detail/cstddef.hpp:
 
@@ -3191,7 +3462,13 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/buffers_iterator.hpp:
 
+/usr/include/boost/asio/ssl/detail/handshake_op.hpp:
+
+/usr/include/boost/asio/detail/reactive_socket_service.hpp:
+
 /usr/include/boost/asio/detail/impl/posix_mutex.ipp:
+
+/usr/include/openssl/engine.h:
 
 /usr/include/boost/asio/awaitable.hpp:
 
@@ -3215,8 +3492,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/detail/impl/service_registry.hpp:
 
-/usr/include/boost/asio/detail/base_from_completion_cond.hpp:
-
 /usr/include/boost/asio/execution/outstanding_work.hpp:
 
 /usr/include/boost/asio/detail/impl/strand_executor_service.ipp:
@@ -3227,19 +3502,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/ratio/detail/mpl/lcm.hpp:
 
+/usr/include/boost/asio/ip/impl/network_v6.hpp:
+
+/usr/include/boost/mpl/aux_/config/overload_resolution.hpp:
+
+/usr/include/boost/asio/detail/impl/service_registry.ipp:
+
 /usr/include/boost/asio/traits/set_value_member.hpp:
 
 /usr/include/boost/preprocessor/enum.hpp:
 
 /usr/include/boost/asio/cancellation_type.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/ss_flags.h:
-
-/usr/include/boost/core/ref.hpp:
-
-/usr/include/boost/asio/execution.hpp:
-
-/usr/include/boost/asio/detail/wrapped_handler.hpp:
 
 /usr/include/boost/chrono/detail/system.hpp:
 
@@ -3259,9 +3532,19 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/detail/is_executor.hpp:
 
+/usr/include/c++/13/debug/assertions.h:
+
+/usr/include/boost/asio/traits/prefer_free.hpp:
+
+/usr/include/boost/asio/buffer_registration.hpp:
+
+/usr/include/boost/asio/ssl/detail/write_op.hpp:
+
 /usr/include/boost/date_time/date_generators.hpp:
 
 /usr/include/boost/asio/execution/bad_executor.hpp:
+
+/usr/include/boost/asio/ssl/detail/verify_callback.hpp:
 
 /usr/include/boost/asio/detail/scheduler_task.hpp:
 
@@ -3301,15 +3584,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp:
 
+/usr/include/openssl/ssl.h:
+
 /usr/include/boost/asio/detail/reactive_socket_connect_op.hpp:
 
 /usr/include/boost/asio/is_executor.hpp:
 
 /usr/include/boost/asio/impl/read_until.hpp:
 
-/usr/include/boost/asio/detail/reactive_socket_recv_op.hpp:
-
 /usr/include/boost/align/detail/aligned_alloc_posix.hpp:
+
+/usr/include/boost/asio/ssl/detail/stream_core.hpp:
 
 /usr/include/boost/type_traits/is_rvalue_reference.hpp:
 
@@ -3318,6 +3603,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/basic_serial_port.hpp:
 
 /usr/include/boost/asio/detail/reactive_socket_recvmsg_op.hpp:
+
+/usr/include/boost/asio/ssl/detail/shutdown_op.hpp:
 
 /usr/include/boost/config/no_tr1/functional.hpp:
 
@@ -3335,9 +3622,9 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/compiler/metaware.h:
 
-/usr/include/boost/asio/detail/reactive_socket_service.hpp:
-
 /usr/include/boost/config/platform/linux.hpp:
+
+/usr/include/openssl/sha.h:
 
 /usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
 
@@ -3351,8 +3638,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/system_timer.hpp:
 
-/usr/include/boost/date_time/dst_rules.hpp:
-
 /usr/include/boost/mpl/aux_/numeric_op.hpp:
 
 /usr/include/boost/asio/detail/timer_scheduler_fwd.hpp:
@@ -3360,8 +3645,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/basic_io_object.hpp:
 
 /usr/include/boost/asio/detail/resolve_query_op.hpp:
-
-/usr/include/boost/asio/detail/resolver_service_base.hpp:
 
 /usr/include/boost/asio/detail/scheduler_operation.hpp:
 
@@ -3423,11 +3706,21 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/compiler/intel.h:
 
+/usr/include/boost/asio/ssl/impl/context.hpp:
+
 /usr/include/boost/asio/execution/detail/as_operation.hpp:
 
 /usr/include/boost/asio/detail/thread_info_base.hpp:
 
 /usr/include/boost/asio/detail/scheduler_thread_info.hpp:
+
+/usr/include/boost/asio/execution.hpp:
+
+/usr/include/boost/asio/detail/wrapped_handler.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/ss_flags.h:
+
+/usr/include/boost/core/ref.hpp:
 
 /usr/include/boost/asio/is_contiguous_iterator.hpp:
 
@@ -3444,12 +3737,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/detail/timer_queue_base.hpp:
 
 /usr/include/byteswap.h:
-
-/usr/include/boost/core/enable_if.hpp:
-
-/usr/include/boost/asio/detail/impl/strand_service.ipp:
-
-/usr/include/boost/system/api_config.hpp:
 
 /usr/include/c++/13/bits/ostream_insert.h:
 
@@ -3468,8 +3755,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/detail/timer_scheduler.hpp:
 
 /usr/include/boost/move/utility_core.hpp:
-
-/usr/include/boost/asio/detail/tss_ptr.hpp:
 
 /usr/include/boost/mpl/aux_/lambda_arity_param.hpp:
 
@@ -3495,6 +3780,74 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/asio/dispatch.hpp:
 
+/usr/include/c++/13/new:
+
+/usr/include/boost/asio/execution/any_executor.hpp:
+
+/usr/include/boost/asio/execution/blocking_adaptation.hpp:
+
+/usr/include/boost/current_function.hpp:
+
+/usr/include/boost/asio/detail/descriptor_read_op.hpp:
+
+/usr/include/boost/config/user.hpp:
+
+/usr/include/boost/core/addressof.hpp:
+
+/usr/include/boost/core/detail/sp_thread_sleep.hpp:
+
+/usr/include/boost/asio/ssl/verify_context.hpp:
+
+/usr/include/boost/mpl/aux_/msvc_eti_base.hpp:
+
+/usr/include/boost/preprocessor/variadic/limits/size_64.hpp:
+
+/usr/include/google/protobuf/map_type_handler.h:
+
+/usr/include/boost/core/detail/sp_thread_yield.hpp:
+
+/usr/include/boost/date_time/gregorian/greg_date.hpp:
+
+/usr/include/boost/core/enable_if.hpp:
+
+/usr/include/boost/asio/detail/impl/strand_service.ipp:
+
+/usr/include/boost/system/api_config.hpp:
+
+/usr/include/boost/core/ignore_unused.hpp:
+
+/usr/include/boost/asio/detail/impl/timer_queue_ptime.ipp:
+
+/usr/include/boost/core/yield_primitives.hpp:
+
+/usr/include/boost/predef/other/wordsize.h:
+
+/usr/include/boost/asio/streambuf.hpp:
+
+/usr/include/boost/date_time/adjust_functors.hpp:
+
+/usr/include/boost/type_traits/is_default_constructible.hpp:
+
+/usr/include/boost/date_time/constrained_value.hpp:
+
+/usr/include/boost/asio/use_future.hpp:
+
+/usr/include/boost/date_time/date.hpp:
+
+/usr/include/boost/date_time/date_defs.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
+
+/usr/include/boost/date_time/date_duration.hpp:
+
+/usr/include/boost/date_time/dst_rules.hpp:
+
+/usr/include/boost/date_time/filetime_functions.hpp:
+
+/usr/include/boost/asio/detail/socket_ops.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
 /usr/include/boost/date_time/gregorian/conversion.hpp:
@@ -3510,14 +3863,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/detail/signal_handler.hpp:
 
 /usr/include/boost/date_time/gregorian/greg_duration.hpp:
-
-/usr/include/c++/13/ext/atomicity.h:
-
-/usr/include/c++/13/cstdlib:
-
-/usr/include/boost/asio/execution/set_error.hpp:
-
-/usr/include/c++/13/bit:
 
 /usr/include/boost/date_time/special_defs.hpp:
 
@@ -3538,6 +3883,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/date_time/gregorian_calendar.hpp:
 
 /usr/include/boost/date_time/gregorian_calendar.ipp:
+
+/usr/include/boost/asio/ssl/impl/rfc2818_verification.ipp:
 
 /usr/include/boost/mpl/aux_/config/intel.hpp:
 
@@ -3591,6 +3938,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
+/usr/include/boost/asio/ssl/context.hpp:
+
 /usr/include/boost/asio/impl/io_context.ipp:
 
 /usr/include/boost/date_time/time_clock.hpp:
@@ -3609,25 +3958,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/date_time/time_iterator.hpp:
 
-/usr/include/c++/13/utility:
-
-/usr/include/boost/date_time/time_system_split.hpp:
-
 /usr/include/c++/13/bits/range_access.h:
 
 /usr/include/boost/date_time/wrapping_int.hpp:
+
+/usr/include/openssl/x509_vfy.h:
 
 /usr/include/boost/function.hpp:
 
 /usr/include/boost/asio/detail/op_queue.hpp:
 
 /usr/include/boost/mpl/multiplies.hpp:
-
-/usr/include/boost/function/detail/epilogue.hpp:
-
-/usr/include/boost/asio/detail/impl/thread_context.ipp:
-
-/usr/include/boost/predef/platform/windows_system.h:
 
 /usr/include/boost/function/detail/function_iterate.hpp:
 
@@ -3681,11 +4022,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/move/traits.hpp:
 
+/usr/include/openssl/evperr.h:
+
 /usr/include/boost/preprocessor/array/data.hpp:
 
 /usr/include/boost/type_traits/remove_reference.hpp:
-
-/usr/include/c++/13/backward/auto_ptr.h:
 
 /usr/include/boost/mpl/apply_wrap.hpp:
 
@@ -3694,10 +4035,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/mpl/aux_/arity.hpp:
 
 /usr/include/boost/mpl/aux_/comparison_op.hpp:
-
-/usr/include/google/protobuf/stubs/logging.h:
-
-/usr/include/c++/13/bits/cxxabi_forced.h:
 
 /usr/include/boost/asio/detail/array.hpp:
 
@@ -3787,15 +4124,17 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/mpl/aux_/preprocessor/default_params.hpp:
 
-/usr/include/boost/mpl/aux_/arithmetic_op.hpp:
-
 /usr/include/c++/13/bits/deque.tcc:
+
+/usr/include/boost/mpl/aux_/arithmetic_op.hpp:
 
 /usr/include/boost/mpl/aux_/preprocessor/params.hpp:
 
 /usr/include/boost/mpl/aux_/template_arity_fwd.hpp:
 
 /usr/include/boost/mpl/bool.hpp:
+
+/usr/include/boost/asio/ssl/detail/password_callback.hpp:
 
 /usr/include/boost/mpl/bool_fwd.hpp:
 
@@ -3863,13 +4202,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/numeric/conversion/detail/int_float_mixture.hpp:
 
-/usr/include/boost/preprocessor/config/config.hpp:
-
 /usr/include/boost/asio/detail/executor_function.hpp:
 
-/usr/include/boost/system/error_condition.hpp:
+/usr/include/boost/preprocessor/config/config.hpp:
 
-/usr/include/boost/numeric/conversion/detail/meta.hpp:
+/usr/include/boost/system/error_condition.hpp:
 
 /usr/include/c++/13/chrono:
 
@@ -3921,8 +4258,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/preprocessor/control/while.hpp:
 
-/usr/include/boost/predef/architecture/convex.h:
-
 /usr/include/boost/predef/architecture/ia64.h:
 
 /usr/include/boost/predef/architecture/m68k.h:
@@ -3946,6 +4281,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/x86_64-linux-gnu/bits/sigevent-consts.h:
 
 /usr/include/boost/predef/architecture/pyramid.h:
+
+/usr/include/openssl/stack.h:
 
 /usr/include/boost/predef/architecture/riscv.h:
 
@@ -3974,6 +4311,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/predef/architecture/x86.h:
 
 /usr/include/boost/predef/architecture/x86/32.h:
+
+/usr/include/boost/asio/ssl/stream_base.hpp:
 
 /usr/include/boost/predef/architecture/x86/64.h:
 
@@ -4012,6 +4351,8 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/mpl/aux_/msvc_never_true.hpp:
 
 /usr/include/boost/predef/library/c.h:
+
+/usr/include/openssl/x509v3.h:
 
 /usr/include/boost/predef/compiler/kai.h:
 
@@ -4054,8 +4395,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/predef/detail/_exception.h:
 
 /usr/include/boost/predef/hardware.h:
-
-/usr/include/c++/13/bits/cpp_type_traits.h:
 
 /usr/include/boost/numeric/conversion/numeric_cast_traits.hpp:
 
@@ -4100,10 +4439,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/asio/associated_cancellation_slot.hpp:
 
 /usr/include/boost/predef/library/std/stlport.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
-/usr/include/boost/predef/library/std/vacpp.h:
 
 /usr/include/boost/predef/make.h:
 
@@ -4159,8 +4494,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/predef/other.h:
 
-/usr/include/c++/13/backward/binders.h:
-
 /usr/include/boost/predef/platform/mingw.h:
 
 /usr/include/x86_64-linux-gnu/bits/ioctl-types.h:
@@ -4179,11 +4512,15 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/preprocessor/arithmetic/detail/maximum_number.hpp:
 
+/usr/include/x86_64-linux-gnu/openssl/configuration.h:
+
 /usr/include/boost/preprocessor/arithmetic/inc.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/eventfd.h:
 
 /usr/include/boost/preprocessor/arithmetic/limits/dec_256.hpp:
+
+/usr/include/openssl/pem.h:
 
 /usr/include/boost/preprocessor/array/elem.hpp:
 
@@ -4204,8 +4541,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/preprocessor/comparison/not_equal.hpp:
 
 /usr/include/boost/preprocessor/control/expr_iif.hpp:
-
-/usr/include/boost/preprocessor/debug/error.hpp:
 
 /usr/include/boost/preprocessor/detail/auto_rec.hpp:
 
@@ -4268,8 +4603,6 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 /usr/include/boost/cstdint.hpp:
 
 /usr/include/boost/preprocessor/stringize.hpp:
-
-/usr/include/c++/13/bits/exception_defines.h:
 
 /usr/include/boost/asio/ip/address.hpp:
 
@@ -4371,11 +4704,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/system/detail/system_category.hpp:
 
+/usr/include/openssl/conferr.h:
+
 /usr/include/boost/preprocessor/punctuation/comma_if.hpp:
 
 /usr/include/boost/system/detail/system_category_impl.hpp:
-
-/usr/include/boost/system/detail/throws.hpp:
 
 /usr/include/boost/type_traits/is_destructible.hpp:
 
@@ -4421,11 +4754,11 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/type_traits/add_reference.hpp:
 
+/usr/include/openssl/x509v3err.h:
+
 /usr/include/boost/predef/library/std/stdcpp3.h:
 
 /usr/include/boost/type_traits/integral_constant.hpp:
-
-/usr/include/c++/13/bits/charconv.h:
 
 /usr/include/boost/type_traits/alignment_of.hpp:
 
@@ -4477,34 +4810,10 @@ CMakeFiles/rat_common.dir/src/NetworkManager.cpp.o: /home/quang/rat_project/comm
 
 /usr/include/boost/type_traits/is_void.hpp:
 
-/usr/include/c++/13/bits/align.h:
-
 /usr/include/boost/type_traits/is_volatile.hpp:
-
-/usr/include/c++/13/bits/concept_check.h:
 
 /usr/include/boost/mpl/aux_/config/has_apply.hpp:
 
 /usr/include/boost/type_traits/remove_cv.hpp:
 
 /usr/include/boost/version.hpp:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/usr/include/c++/13/atomic:
-
-/usr/include/c++/13/bits/alloc_traits.h:
-
-/usr/include/c++/13/bits/atomic_base.h:
-
-/usr/include/c++/13/bits/atomic_futex.h:
-
-/usr/include/c++/13/bits/basic_ios.h:
-
-/usr/include/c++/13/bits/basic_string.tcc:
-
-/usr/include/c++/13/bits/cxxabi_init_exception.h:
-
-/usr/include/boost/predef/library/std/modena.h:
-
-/usr/include/c++/13/bits/exception.h:

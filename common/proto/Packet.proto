@@ -10,11 +10,12 @@ message Packet {
     TRANSFER_FILE = 3;
     LIST_PROCESSES = 4;
     KILL_PROCESS = 5;
-    IDENTIFY = 6;
-    ACK = 7;
-    ERROR = 8;
-    COMMAND = 9;
-    STATIC_ID = 10;
+    CERT_REQUEST = 6;
+    CERT_RESPONSE = 7;
+    AUTH_CONFIRM = 8;
+    ERROR = 9;
+    COMMAND = 10;
+    STATIC_ID = 11;
   }
 
   Type type = 1;

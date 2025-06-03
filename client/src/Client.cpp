@@ -21,16 +21,14 @@ namespace Rat
     }
 
     Client::Client(const std::string& host, uint16_t port)
-        : io_context_(),
-        timer_(io_context_),
-        host_(host),
+        : host_(host),
         port_(port),
         stopping_(false),
         networkManager_(),
-        security_(networkManager_) 
-        {
-            mkdir("certs", 0755);
-        }
+        timer_(networkManager_.get_io_context())
+    {
+        networkManager_.setup_ssl_context(false, "client.crt", "client.key", "ca.crt");
+    }
 
     Client::~Client() 
     {
@@ -42,13 +40,13 @@ namespace Rat
         initClientID();
         tryConnect();
         input_thread_ = std::thread(&Client::handleUserInput, this);
-        io_context_.run();
+        networkManager_.get_io_context().run();
     }
 
     void Client::stop() 
     {
         stopping_ = true;
-        io_context_.stop();
+        networkManager_.get_io_context().stop();
         if (socket_) socket_->lowest_layer().close();
         if (input_thread_.joinable()) input_thread_.join();
     }
@@ -83,94 +81,74 @@ namespace Rat
             socket_.reset();
             std::cout << "Debug: Closed previous socket\n";
         }
-        auto tcp_socket = std::make_shared<boost::asio::ip::tcp::socket>(io_context_);
-        boost::asio::ip::tcp::resolver resolver(io_context_);
+        socket_ = std::make_shared<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>(
+            networkManager_.get_io_context(), networkManager_.get_ssl_context());
+        boost::asio::ip::tcp::resolver resolver(networkManager_.get_io_context());
         auto endpoints = resolver.resolve(host_, std::to_string(port_));
 
-        boost::asio::async_connect(*tcp_socket, endpoints,
-            [this, tcp_socket](const boost::system::error_code& ec, boost::asio::ip::tcp::endpoint) 
-            {
-                if (ec) 
-                {
-                    std::cout << "Connection failed: " << ec.message() << "\n";
-                    tcp_socket->close();
+        boost::asio::async_connect(socket_->lowest_layer(), endpoints,
+            [this](const boost::system::error_code& ec, boost::asio::ip::tcp::endpoint) {
+                if (!ec) {
+                    socket_->set_verify_mode(boost::asio::ssl::verify_peer);
+                    socket_->async_handshake(boost::asio::ssl::stream_base::client,
+                        [this](const boost::system::error_code& ec) {
+                            if (!ec) {
+                                std::cout << "Connected to server: " << host_ << ":" << port_ << "\n";
+                                sendClientId();
+                                handleCommands();
+                            } else {
+                                std::cout << "Handshake error: " << ec.message() << "\n";
+                                scheduleReconnect();
+                            }
+                        });
+                } else {
+                    std::cout << "Connection error: " << ec.message() << "\n";
                     scheduleReconnect();
-                    return;
                 }
-
-                security_.authenticate(tcp_socket, "./ca.crt",
-                    [this, tcp_socket](bool success, const boost::system::error_code& ec) 
-                    {
-                        if (!success) 
-                        {
-                            std::cout << "Client authentication failed: " << ec.message() << "\n";
-                            tcp_socket->close();
-                            scheduleReconnect();
-                            return;
-                        }
-                        std::cout << "Debug authenticate: " << bool(success) << std::endl;
-                        proceedWithTls(tcp_socket);
-                    });
             });
     }
 
-    void Client::proceedWithTls(std::shared_ptr<boost::asio::ip::tcp::socket> tcp_socket) 
+    void Client::sendClientId() 
     {
-        networkManager_.setup_ssl_context(false, "./client.crt", "./client.key", "./ca.crt");
-        socket_ = security_.createSslSocket(tcp_socket, networkManager_.get_ssl_context());
-        // std::cout << "Debug TLS 1: " << std::endl;
-        socket_->async_handshake(boost::asio::ssl::stream_base::client,
-            [this](const boost::system::error_code& ec) 
+        
+        if (this_id_ == uint64_t(-1)) 
+        {
+            rat::Packet packet;
+            packet.set_type(rat::Packet::STATIC_ID);
+            packet.set_packet_id("client_-1_" + std::to_string(std::rand()));
+            packet.set_source_id("client_-1");
+            packet.set_destination_id("server_0");
+            packet.set_encrypted(false);
+            auto* chunked = packet.mutable_chunked_data();
+            chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+            chunked->set_sequence_number(0);
+            chunked->set_total_chunks(1);
+            chunked->set_payload("-1");
+            chunked->set_success(true);
+            networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
             {
-                if (ec) 
-                {
-                    std::cout << "Handshake error: " << ec.message() << "\n";
-                    socket_->lowest_layer().close();
-                    scheduleReconnect();
-                    return;
-                }
-                // std::cout << "Debug TLS: " << std::endl;
-                std::cout << "Connected to server: " << host_ << ":" << port_ << "\n";
-                if (this_id_ == uint64_t(-1)) 
-                {
-                    rat::Packet packet;
-                    packet.set_type(rat::Packet::STATIC_ID);
-                    packet.set_packet_id("client_-1_" + std::to_string(std::rand()));
-                    packet.set_source_id("client_-1");
-                    packet.set_destination_id("server_0");
-                    packet.set_encrypted(false);
-                    auto* chunked = packet.mutable_chunked_data();
-                    chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
-                    chunked->set_sequence_number(0);
-                    chunked->set_total_chunks(1);
-                    chunked->set_payload("-1");
-                    chunked->set_success(true);
-                    networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
-                    {
-                        if (ec) std::cout << "Send error: " << ec.message() << "\n";
-                    });
-                } 
-                else 
-                {
-                    rat::Packet packet;
-                    packet.set_type(rat::Packet::STATIC_ID);
-                    packet.set_packet_id("client_" + std::to_string(this_id_) + "_" + std::to_string(std::rand()));
-                    packet.set_source_id("client_" + std::to_string(this_id_));
-                    packet.set_destination_id("server_0");
-                    packet.set_encrypted(false);
-                    auto* chunked = packet.mutable_chunked_data();
-                    chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
-                    chunked->set_sequence_number(0);
-                    chunked->set_total_chunks(1);
-                    chunked->set_payload(std::to_string(this_id_));
-                    chunked->set_success(true);
-                    networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
-                    {
-                        if (ec) std::cout << "Send error: " << ec.message() << "\n";
-                    });
-                }
-                handleCommands();
+                if (ec) std::cout << "Send error: " << ec.message() << "\n";
             });
+        } 
+        else 
+        {
+            rat::Packet packet;
+            packet.set_type(rat::Packet::STATIC_ID);
+            packet.set_packet_id("client_" + std::to_string(this_id_) + "_" + std::to_string(std::rand()));
+            packet.set_source_id("client_" + std::to_string(this_id_));
+            packet.set_destination_id("server_0");
+            packet.set_encrypted(false);
+            auto* chunked = packet.mutable_chunked_data();
+            chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+            chunked->set_sequence_number(0);
+            chunked->set_total_chunks(1);
+            chunked->set_payload(std::to_string(this_id_));
+            chunked->set_success(true);
+            networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
+            {
+                if (ec) std::cout << "Send error: " << ec.message() << "\n";
+            });
+        }
     }
 
     void Client::scheduleReconnect() 
@@ -224,7 +202,7 @@ namespace Rat
                     }
                 }
                 std::cout << "Server: " << packet.chunked_data().payload() << "\n";
-                boost::asio::post(io_context_, [this]() { handleCommands(); });
+                boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
             });
     }
 

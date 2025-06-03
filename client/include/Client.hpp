@@ -24,21 +24,22 @@ namespace Rat
     private:
         void initClientID(const std::string& path = "./client_id.txt");
         void tryConnect();
-        void proceedWithTls(std::shared_ptr<boost::asio::ip::tcp::socket> tcp_socket);
+        void sendClientId();
         
         void scheduleReconnect();
         void handleCommands();
         void handleUserInput();
 
         uint64_t this_id_ = -1;
-        boost::asio::io_context io_context_;
+        // boost::asio::io_context io_context_;
         std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_;
-        boost::asio::deadline_timer timer_;
+        
         std::string host_;
         uint16_t port_;
         bool stopping_;
         NetworkManager networkManager_;
-        ClientSecurity security_;
+        boost::asio::deadline_timer timer_;
+        // ClientSecurity security_;
         std::thread input_thread_;
     };
 

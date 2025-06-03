@@ -41,10 +41,11 @@ namespace Rat
 
         std::set<uint64_t> client_id_;
         std::unordered_map<std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>, uint64_t> clients_;
-        boost::asio::io_context io_context_;
-        boost::asio::ip::tcp::acceptor acceptor_;
+        // boost::asio::io_context io_context_;
+        
         NetworkManager networkManager_;
-        ServerSecurity security_;
+        boost::asio::ip::tcp::acceptor acceptor_;
+        // ServerSecurity security_;
         std::thread input_thread_;
         std::mutex file_save_mutex_;
         std::mutex client_mutex_;

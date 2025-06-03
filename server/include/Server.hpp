@@ -23,7 +23,7 @@ namespace Rat
         ~Server();
         void start();
         void stop();
-
+        ////
     private:
         void initListClientID(const std::string& path = "./list_client.txt");
         void acceptConnections();

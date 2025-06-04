@@ -26,7 +26,8 @@ include_directories(${COMMON_DIR}/include ${COMMON_DIR}/build/proto)
 set(SERVER_SOURCES
     src/main.cpp
     src/Server.cpp
-    src/ServerSecurity.cpp
+    src/ServerGUI.cpp
+    src/Utils.cpp
 )
 
 

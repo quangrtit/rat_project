@@ -1474,5 +1474,12 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: \
  /usr/include/google/protobuf/map.h \
  /usr/include/google/protobuf/map_type_handler.h \
  /usr/include/google/protobuf/extension_set.h \
- /home/quang/rat_project/server/include/ServerSecurity.hpp \
+ /home/quang/rat_project/server/include/ServerGUI.hpp \
+ /usr/include/c++/13/iomanip /usr/include/c++/13/locale \
+ /usr/include/c++/13/bits/locale_facets_nonio.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/13/bits/codecvt.h \
+ /usr/include/c++/13/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/13/bits/locale_conv.h \
  /home/quang/rat_project/server/../common/include/Constants.hpp

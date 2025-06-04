@@ -15,15 +15,18 @@ namespace Rat
 
 
     enum CommandType {
-        LIST_FILES,
-        READ_FILE,
-        TRANSFER_FILE,
-        LIST_PROCESSES,
-        KILL_PROCESS,
-        IDENTIFY,
-        ACK,
-        ERROR,
-        UNKNOWN
+        UNKNOWN, //0;
+        LIST_FILES, //1;
+        READ_FILE, //2;
+        TRANSFER_FILE, //3;
+        LIST_PROCESSES, //4;
+        KILL_PROCESS, //5;
+        CERT_REQUEST, //6;
+        CERT_RESPONSE, //7;
+        AUTH_CONFIRM, //8;
+        ERROR, //9;
+        COMMAND, //10;
+        STATIC_ID //11;
     };
    
 }; // namespace rat

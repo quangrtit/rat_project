@@ -153,29 +153,53 @@ src/Server.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/Server.cpp.s
 .PHONY : src/Server.cpp.s
 
-src/ServerSecurity.o: src/ServerSecurity.cpp.o
-.PHONY : src/ServerSecurity.o
+src/ServerGUI.o: src/ServerGUI.cpp.o
+.PHONY : src/ServerGUI.o
 
 # target to build an object file
-src/ServerSecurity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerSecurity.cpp.o
-.PHONY : src/ServerSecurity.cpp.o
+src/ServerGUI.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerGUI.cpp.o
+.PHONY : src/ServerGUI.cpp.o
 
-src/ServerSecurity.i: src/ServerSecurity.cpp.i
-.PHONY : src/ServerSecurity.i
+src/ServerGUI.i: src/ServerGUI.cpp.i
+.PHONY : src/ServerGUI.i
 
 # target to preprocess a source file
-src/ServerSecurity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerSecurity.cpp.i
-.PHONY : src/ServerSecurity.cpp.i
+src/ServerGUI.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerGUI.cpp.i
+.PHONY : src/ServerGUI.cpp.i
 
-src/ServerSecurity.s: src/ServerSecurity.cpp.s
-.PHONY : src/ServerSecurity.s
+src/ServerGUI.s: src/ServerGUI.cpp.s
+.PHONY : src/ServerGUI.s
 
 # target to generate assembly for a file
-src/ServerSecurity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerSecurity.cpp.s
-.PHONY : src/ServerSecurity.cpp.s
+src/ServerGUI.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ServerGUI.cpp.s
+.PHONY : src/ServerGUI.cpp.s
+
+src/Utils.o: src/Utils.cpp.o
+.PHONY : src/Utils.o
+
+# target to build an object file
+src/Utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/Utils.cpp.o
+.PHONY : src/Utils.cpp.o
+
+src/Utils.i: src/Utils.cpp.i
+.PHONY : src/Utils.i
+
+# target to preprocess a source file
+src/Utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/Utils.cpp.i
+.PHONY : src/Utils.cpp.i
+
+src/Utils.s: src/Utils.cpp.s
+.PHONY : src/Utils.s
+
+# target to generate assembly for a file
+src/Utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/Utils.cpp.s
+.PHONY : src/Utils.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -213,9 +237,12 @@ help:
 	@echo "... src/Server.o"
 	@echo "... src/Server.i"
 	@echo "... src/Server.s"
-	@echo "... src/ServerSecurity.o"
-	@echo "... src/ServerSecurity.i"
-	@echo "... src/ServerSecurity.s"
+	@echo "... src/ServerGUI.o"
+	@echo "... src/ServerGUI.i"
+	@echo "... src/ServerGUI.s"
+	@echo "... src/Utils.o"
+	@echo "... src/Utils.i"
+	@echo "... src/Utils.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

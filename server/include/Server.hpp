@@ -10,7 +10,7 @@
 #include <thread>
 #include <mutex>
 #include "NetworkManager.hpp"
-#include "ServerSecurity.hpp"
+#include "ServerGUI.hpp"
 #include "Packet.pb.h"
 
 namespace Rat 

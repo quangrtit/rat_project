@@ -168,6 +168,7 @@ namespace Rat
                             //         << packet.chunked_data().total_chunks() << " = "
                             //         << (packet.chunked_data().sequence_number() + 1) / float(packet.chunked_data().total_chunks()) * 100 << "%" << std::endl;
                             uint64_t client_id;
+                            std::string ip_id;
                             {
                                 std::lock_guard<std::mutex> lock(file_receivers_mutex_);
                                 auto client_it = clients_.find(client);
@@ -176,12 +177,13 @@ namespace Rat
                                     break;
                                 }
                                 client_id = client_it->second;
+                                ip_id = client->lowest_layer().remote_endpoint().address().to_string();
                             }
                             auto receiver_it = file_receivers_.find(client_id);
                             if (receiver_it == file_receivers_.end()) {
                                 // std::string file_path = "received_" + Utils::sanitizeFileName(packet.chunked_data().data_id()) + "_" + std::to_string(client_id) + ".txt";
                                 std::string file_path = Utils::sanitizeFileName(packet.chunked_data().data_id()) + "_" + std::to_string(client_id) + Utils::getFileName(packet.file_path());
-                                // std::cout << "Debug file name: " << Utils::getFileName(packet.file_path()) << " " << packet.file_path() << std::endl;
+                                std::string filename = Utils::getFileName(packet.file_path());
                                 auto receiver = std::make_shared<FileReceiver>(
                                     client, networkManager_, file_path, packet.chunked_data().data_id(), client_id,
                                     [this, client_id, client]() {
@@ -202,6 +204,9 @@ namespace Rat
                                         }
                                 
                                         handleClient(client);
+                                    }, 
+                                    [this, client_id, ip_id, filename](uint64_t sequence_number, uint64_t total_chunks) {
+                                        ServerGUI::displayProgress(client_id, ip_id, filename, sequence_number, total_chunks);
                                     });
 
                                 

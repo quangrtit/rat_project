@@ -6,10 +6,11 @@
 #include <vector>
 #include <iomanip>
 #include <unordered_map>
+#include <map>
 #include <memory>
+#include <mutex>
 #include <boost/asio/ssl.hpp>
 #include <boost/asio.hpp>
-
 
 // ANSI escape codes for colors
 #define RESET   "\033[0m"
@@ -19,14 +20,11 @@
 #define BLUE    "\033[34m"
 #define BOLD    "\033[1m"
 
-
-
 namespace Rat 
 {
     class ServerGUI 
     {
     public:
-
         using SslSocket = boost::asio::ssl::stream<boost::asio::ip::tcp::socket>;
 
         ServerGUI();
@@ -45,8 +43,24 @@ namespace Rat
         // Show error
         static void displayError(const std::string& error);
 
+        // Display file transfer progress
+        static void displayProgress(uint64_t client_id, const std::string& ip, const std::string& filename, 
+                                   uint64_t sequence_number, uint64_t total_chunks);
+
+    private:
+        // Structure to store progress information for each client
+        struct ProgressInfo {
+            std::string ip;
+            std::string filename;
+            uint64_t sequence_number;
+            uint64_t total_chunks;
+        };
+
+        // Map to store progress for each client
+        static std::map<uint64_t, ProgressInfo> progress_map_;
+        // Mutex to protect console output and progress_map
+        static std::mutex console_mutex_;
     };
 }
-
 
 #endif // SERVER_GUI_HPP

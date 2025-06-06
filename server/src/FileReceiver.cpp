@@ -8,7 +8,8 @@ FileReceiver::FileReceiver(std::shared_ptr<boost::asio::ssl::stream<boost::asio:
                            const std::string& save_path,
                            const std::string& data_id,
                            uint64_t client_id,
-                           std::function<void()> on_complete)
+                           std::function<void()> on_complete,
+                           std::function<void(uint64_t, uint64_t)> on_progress)
     : socket_(socket),
       networkManager_(networkManager),
       save_path_(save_path),
@@ -16,7 +17,8 @@ FileReceiver::FileReceiver(std::shared_ptr<boost::asio::ssl::stream<boost::asio:
       client_id_(client_id),
       expected_sequence_(0),
       stopped_(false),
-      on_complete_(on_complete) {
+      on_complete_(on_complete),
+      on_progress_(on_progress) {
     file_.open(save_path, std::ios::binary | std::ios::app);
     if (!file_.is_open()) {
         std::cerr << "[" << std::time(nullptr) << "] Cannot open file: " << save_path << "\n";
@@ -24,6 +26,11 @@ FileReceiver::FileReceiver(std::shared_ptr<boost::asio::ssl::stream<boost::asio:
     }
 }
 
+void FileReceiver::receiveProgress(uint64_t seq, uint64_t total_chunks) {
+    if (on_progress_ && !stopped_) {
+        on_progress_(seq, total_chunks);
+    }
+}
 void FileReceiver::startReceiving(const rat::Packet& initial_packet) {
     if (stopped_) return;
     if (initial_packet.has_chunked_data() && initial_packet.type() == rat::Packet::TRANSFER_FILE) {
@@ -107,6 +114,9 @@ void FileReceiver::processPacket(const rat::Packet& packet) {
             // std::cout << "file good" << std::endl;
             success = true;
             expected_sequence_++;
+            if (on_progress_) {
+                on_progress_(chunk.sequence_number(), chunk.total_chunks());
+            }
         } else {
             error_message = "Failed to write chunk";
         }
@@ -116,6 +126,10 @@ void FileReceiver::processPacket(const rat::Packet& packet) {
     sendAck(packet, success, error_message);
     if (success && chunk.sequence_number() + 1 == chunk.total_chunks()) {
         std::cout << "[" << std::time(nullptr) << "] File transfer completed: " << save_path_ << "\n";
+
+        if (on_progress_) {
+            on_progress_(chunk.total_chunks(), chunk.total_chunks()); // Cập nhật cuối
+        }
         stop();
         return;
     }

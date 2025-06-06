@@ -12,6 +12,7 @@
 #include "NetworkManager.hpp"
 #include "ServerGUI.hpp"
 #include "Packet.pb.h"
+#include "FileReceiver.hpp"
 
 namespace Rat 
 {
@@ -50,6 +51,10 @@ namespace Rat
         std::mutex file_save_mutex_;
         std::mutex client_mutex_;
         std::mutex client_id_mutex_;
+
+        // File receiver 
+        std::unordered_map<uint64_t, std::shared_ptr<FileReceiver>> file_receivers_;
+        std::mutex file_receivers_mutex_;
     };
 
 } // namespace Rat

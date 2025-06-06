@@ -60,7 +60,7 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
 
     SECTION("Send valid packet") {
         rat::Packet packet;
-        packet.set_type(rat::Packet::LIST_FILES);
+        packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
         packet.set_packet_id("test_packet");
         packet.set_source_id("server_0");
         packet.set_destination_id("client_1");
@@ -82,7 +82,7 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
 
         rat::Packet parsed_packet;
         REQUIRE(parsed_packet.ParseFromArray(buffer.data() + sizeof(uint32_t), packet_size));
-        REQUIRE(parsed_packet.type() == rat::Packet::LIST_FILES);
+        REQUIRE(parsed_packet.type() == rat::Packet::LIST_FILES_FOLDERS);
         REQUIRE(parsed_packet.packet_id() == "test_packet");
         REQUIRE(parsed_packet.source_id() == "server_0");
         REQUIRE(parsed_packet.destination_id() == "client_1");
@@ -97,7 +97,7 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
 
     SECTION("Receive valid packet") {
         rat::Packet packet;
-        packet.set_type(rat::Packet::LIST_FILES);
+        packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
         packet.set_packet_id("test_packet");
         packet.set_source_id("server_0");
         packet.set_destination_id("client_1");
@@ -115,7 +115,7 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
 
         simulate_receive(buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) {
             REQUIRE(!ec); // Không có lỗi
-            REQUIRE(response.type() == rat::Packet::LIST_FILES);
+            REQUIRE(response.type() == rat::Packet::LIST_FILES_FOLDERS);
             REQUIRE(response.packet_id() == "test_packet");
             REQUIRE(response.source_id() == "server_0");
             REQUIRE(response.destination_id() == "client_1");
@@ -129,7 +129,7 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
 
     SECTION("Send packet with oversized payload") {
         rat::Packet packet;
-        packet.set_type(rat::Packet::LIST_FILES);
+        packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
         packet.set_packet_id("test_packet");
         packet.set_source_id("server_0");
         packet.set_destination_id("client_1");

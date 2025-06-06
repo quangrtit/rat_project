@@ -29,6 +29,10 @@ namespace Rat
         static std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> getSocketFromId(
             const std::unordered_map<std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>, uint64_t> &clients, 
             uint64_t& object_id);
+
+        static std::string sanitizeFileName(const std::string& name);
+        
+        static std::string getFileName(const std::string& path);
     };
 }
 

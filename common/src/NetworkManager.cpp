@@ -6,7 +6,8 @@
 #include <openssl/x509.h>
 #include <openssl/ssl.h>
 
-namespace Rat {
+namespace Rat 
+{
     NetworkManager::NetworkManager() : io_context_(), ssl_context_(boost::asio::ssl::context::tls)
     {
         ssl_context_.set_options(
@@ -18,11 +19,13 @@ namespace Rat {
 
     NetworkManager::~NetworkManager() {}
 
-    NetworkManager::IoContext& NetworkManager::get_io_context() {
+    NetworkManager::IoContext& NetworkManager::get_io_context() 
+    {
         return io_context_;
     }
 
-    boost::asio::ssl::context& NetworkManager::get_ssl_context() {
+    boost::asio::ssl::context& NetworkManager::get_ssl_context() 
+    {
        return ssl_context_;
     }
     
@@ -99,7 +102,6 @@ namespace Rat {
             const char* str = SSL_state_string_long(ssl);
             std::cout << "[" << std::time(nullptr) << "] SSL Server: " << str << " (where: " << where << ", ret: " << ret << ")\n";
         });
-
         ssl_context_.set_verify_mode(boost::asio::ssl::verify_none);
     }
 
@@ -107,6 +109,7 @@ namespace Rat {
     void NetworkManager::send(std::shared_ptr<SocketType> socket, const rat::Packet& packet,
                              boost::function<void(const ErrorCode&)> callback)  
     {
+        // std::cout << "data send 0: " << std::endl;
         if (!socket || !socket->lowest_layer().is_open()) {
             std::cout << "[" << std::time(nullptr) << "] Socket not open for send\n";
             callback({boost::asio::error::not_connected, boost::system::system_category()});
@@ -114,28 +117,38 @@ namespace Rat {
         }
 
         std::string serialized;
+        // std::cout << "data send 1: " << std::endl; 
         if (!packet.SerializeToString(&serialized)) {
             std::cout << "[" << std::time(nullptr) << "] Failed to serialize packet\n";
             callback({boost::asio::error::invalid_argument, boost::system::system_category()});
             return;
         }
-
+        // std::cout << "data send 2: " << serialized << std::endl;
         if (serialized.size() > MAX_BUFFER_SIZE) {
             std::cout << "[" << std::time(nullptr) << "] Packet size exceeds maximum: " << serialized.size() << "\n";
             callback({boost::asio::error::message_size, boost::system::system_category()});
             return;
         }
 
-        uint32_t packet_size = static_cast<uint32_t>(serialized.size());
-        auto full_buffer = std::make_shared<std::vector<char>>(sizeof(uint32_t) + packet_size);
-        std::memcpy(full_buffer->data(), &packet_size, sizeof(uint32_t));
-        std::memcpy(full_buffer->data() + sizeof(uint32_t), serialized.data(), packet_size);
+        // uint32_t packet_size = static_cast<uint32_t>(serialized.size());
+        // uint32_t packet_size = htonl(packet_size);
+        // auto full_buffer = std::make_shared<std::vector<char>>(sizeof(uint32_t) + packet_size);
+        // std::memcpy(full_buffer->data(), &packet_size, sizeof(uint32_t));
+        // std::memcpy(full_buffer->data() + sizeof(uint32_t), serialized.data(), packet_size);
 
+        uint32_t packet_size = static_cast<uint32_t>(serialized.size());
+        uint32_t net_packet_size = htonl(packet_size);  // CHUYỂN endian
+
+        auto full_buffer = std::make_shared<std::vector<char>>(sizeof(uint32_t) + packet_size);
+        std::memcpy(full_buffer->data(), &net_packet_size, sizeof(uint32_t));  // Gửi bản đã chuyển endian
+        std::memcpy(full_buffer->data() + sizeof(uint32_t), serialized.data(), packet_size);
+        // std::cout << "data send 3: " << std::endl;
         boost::asio::async_write(*socket, boost::asio::buffer(*full_buffer),
             [callback](const ErrorCode& ec, std::size_t) {
                 if (ec) {
                     std::cout << "[" << std::time(nullptr) << "] Send error: " << ec.message() << " (code: " << ec.value() << ")\n";
                 }
+                // else {std::cout << "send send " << std::endl;}
                 callback(ec);
             });
     }
@@ -149,10 +162,11 @@ namespace Rat {
             callback(rat::Packet(), {boost::asio::error::not_connected, boost::system::system_category()});
             return;
         }
-
+        // std::cout << "Debug byte transfer size" << "gogogogogoggogogo" << std::endl;
         auto size_buffer = std::make_shared<std::vector<char>>(sizeof(uint32_t));
         boost::asio::async_read(*socket, boost::asio::buffer(*size_buffer),
             [this, socket, size_buffer, callback](const ErrorCode& ec, std::size_t /*bytes_transferred*/) {
+                // std::cout << "Debug byte transfer size" << size_buffer->data() << std::endl;
                 if (ec) {
                     std::cout << "[" << std::time(nullptr) << "] Receive size error: " << ec.message() << " (code: " << ec.value() << ")\n";
                     callback(rat::Packet(), ec);
@@ -161,6 +175,7 @@ namespace Rat {
 
                 uint32_t packet_size;
                 std::memcpy(&packet_size, size_buffer->data(), sizeof(uint32_t));
+                packet_size = ntohl(packet_size);
                 if (packet_size == 0 || packet_size > MAX_BUFFER_SIZE) {
                     std::cout << "[" << std::time(nullptr) << "] Invalid packet size: " << packet_size << "\n";
                     callback(rat::Packet(), {boost::asio::error::message_size, boost::system::system_category()});

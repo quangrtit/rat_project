@@ -61,7 +61,7 @@ namespace rat {
 
 enum Packet_Type : int {
   Packet_Type_UNKNOWN = 0,
-  Packet_Type_LIST_FILES = 1,
+  Packet_Type_LIST_FILES_FOLDERS = 1,
   Packet_Type_READ_FILE = 2,
   Packet_Type_TRANSFER_FILE = 3,
   Packet_Type_LIST_PROCESSES = 4,
@@ -72,12 +72,13 @@ enum Packet_Type : int {
   Packet_Type_ERROR = 9,
   Packet_Type_COMMAND = 10,
   Packet_Type_STATIC_ID = 11,
+  Packet_Type_TRANSFER_FILE_ACK = 12,
   Packet_Type_Packet_Type_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   Packet_Type_Packet_Type_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool Packet_Type_IsValid(int value);
 constexpr Packet_Type Packet_Type_Type_MIN = Packet_Type_UNKNOWN;
-constexpr Packet_Type Packet_Type_Type_MAX = Packet_Type_STATIC_ID;
+constexpr Packet_Type Packet_Type_Type_MAX = Packet_Type_TRANSFER_FILE_ACK;
 constexpr int Packet_Type_Type_ARRAYSIZE = Packet_Type_Type_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Packet_Type_descriptor();
@@ -217,8 +218,8 @@ class Packet final :
   typedef Packet_Type Type;
   static constexpr Type UNKNOWN =
     Packet_Type_UNKNOWN;
-  static constexpr Type LIST_FILES =
-    Packet_Type_LIST_FILES;
+  static constexpr Type LIST_FILES_FOLDERS =
+    Packet_Type_LIST_FILES_FOLDERS;
   static constexpr Type READ_FILE =
     Packet_Type_READ_FILE;
   static constexpr Type TRANSFER_FILE =
@@ -239,6 +240,8 @@ class Packet final :
     Packet_Type_COMMAND;
   static constexpr Type STATIC_ID =
     Packet_Type_STATIC_ID;
+  static constexpr Type TRANSFER_FILE_ACK =
+    Packet_Type_TRANSFER_FILE_ACK;
   static inline bool Type_IsValid(int value) {
     return Packet_Type_IsValid(value);
   }
@@ -270,7 +273,8 @@ class Packet final :
     kPacketIdFieldNumber = 2,
     kSourceIdFieldNumber = 3,
     kDestinationIdFieldNumber = 4,
-    kChunkedDataFieldNumber = 6,
+    kFilePathFieldNumber = 6,
+    kChunkedDataFieldNumber = 7,
     kTypeFieldNumber = 1,
     kEncryptedFieldNumber = 5,
   };
@@ -316,7 +320,21 @@ class Packet final :
   std::string* _internal_mutable_destination_id();
   public:
 
-  // .rat.ChunkedData chunked_data = 6;
+  // bytes file_path = 6;
+  void clear_file_path();
+  const std::string& file_path() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_file_path(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_file_path();
+  PROTOBUF_NODISCARD std::string* release_file_path();
+  void set_allocated_file_path(std::string* file_path);
+  private:
+  const std::string& _internal_file_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_file_path(const std::string& value);
+  std::string* _internal_mutable_file_path();
+  public:
+
+  // .rat.ChunkedData chunked_data = 7;
   bool has_chunked_data() const;
   private:
   bool _internal_has_chunked_data() const;
@@ -363,6 +381,7 @@ class Packet final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr packet_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr source_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr destination_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr file_path_;
     ::rat::ChunkedData* chunked_data_;
     int type_;
     bool encrypted_;
@@ -790,7 +809,57 @@ inline void Packet::set_encrypted(bool value) {
   // @@protoc_insertion_point(field_set:rat.Packet.encrypted)
 }
 
-// .rat.ChunkedData chunked_data = 6;
+// bytes file_path = 6;
+inline void Packet::clear_file_path() {
+  _impl_.file_path_.ClearToEmpty();
+}
+inline const std::string& Packet::file_path() const {
+  // @@protoc_insertion_point(field_get:rat.Packet.file_path)
+  return _internal_file_path();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Packet::set_file_path(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.file_path_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:rat.Packet.file_path)
+}
+inline std::string* Packet::mutable_file_path() {
+  std::string* _s = _internal_mutable_file_path();
+  // @@protoc_insertion_point(field_mutable:rat.Packet.file_path)
+  return _s;
+}
+inline const std::string& Packet::_internal_file_path() const {
+  return _impl_.file_path_.Get();
+}
+inline void Packet::_internal_set_file_path(const std::string& value) {
+  
+  _impl_.file_path_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Packet::_internal_mutable_file_path() {
+  
+  return _impl_.file_path_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Packet::release_file_path() {
+  // @@protoc_insertion_point(field_release:rat.Packet.file_path)
+  return _impl_.file_path_.Release();
+}
+inline void Packet::set_allocated_file_path(std::string* file_path) {
+  if (file_path != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.file_path_.SetAllocated(file_path, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.file_path_.IsDefault()) {
+    _impl_.file_path_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:rat.Packet.file_path)
+}
+
+// .rat.ChunkedData chunked_data = 7;
 inline bool Packet::_internal_has_chunked_data() const {
   return this != internal_default_instance() && _impl_.chunked_data_ != nullptr;
 }

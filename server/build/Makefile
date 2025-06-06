@@ -129,6 +129,30 @@ rat_server/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/build
 .PHONY : rat_server/fast
 
+src/FileReceiver.o: src/FileReceiver.cpp.o
+.PHONY : src/FileReceiver.o
+
+# target to build an object file
+src/FileReceiver.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o
+.PHONY : src/FileReceiver.cpp.o
+
+src/FileReceiver.i: src/FileReceiver.cpp.i
+.PHONY : src/FileReceiver.i
+
+# target to preprocess a source file
+src/FileReceiver.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FileReceiver.cpp.i
+.PHONY : src/FileReceiver.cpp.i
+
+src/FileReceiver.s: src/FileReceiver.cpp.s
+.PHONY : src/FileReceiver.s
+
+# target to generate assembly for a file
+src/FileReceiver.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FileReceiver.cpp.s
+.PHONY : src/FileReceiver.cpp.s
+
 src/Server.o: src/Server.cpp.o
 .PHONY : src/Server.o
 
@@ -234,6 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... rat_server"
+	@echo "... src/FileReceiver.o"
+	@echo "... src/FileReceiver.i"
+	@echo "... src/FileReceiver.s"
 	@echo "... src/Server.o"
 	@echo "... src/Server.i"
 	@echo "... src/Server.s"

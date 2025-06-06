@@ -7,7 +7,7 @@
 #include <string>
 #include <thread>
 #include "NetworkManager.hpp"
-#include "ClientSecurity.hpp"
+#include "FileSender.hpp"
 #include "Packet.pb.h"
 
 namespace Rat 
@@ -41,6 +41,7 @@ namespace Rat
         boost::asio::deadline_timer timer_;
         // ClientSecurity security_;
         std::thread input_thread_;
+        std::shared_ptr<FileSender> current_file_sender_;
     };
 
 } // namespace Rat

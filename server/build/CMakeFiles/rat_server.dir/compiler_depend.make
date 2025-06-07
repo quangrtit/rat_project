@@ -6,6 +6,7 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o: /home/quang/rat_project/server
   /home/quang/rat_project/common/include/Constants.hpp \
   /home/quang/rat_project/common/include/NetworkManager.hpp \
   /home/quang/rat_project/server/include/FileReceiver.hpp \
+  /home/quang/rat_project/server/include/ServerGUI.hpp \
   /usr/include/alloca.h \
   /usr/include/arpa/inet.h \
   /usr/include/asm-generic/bitsperlong.h \
@@ -1153,8 +1154,11 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o: /home/quang/rat_project/server
   /usr/include/c++/13/bits/istream.tcc \
   /usr/include/c++/13/bits/locale_classes.h \
   /usr/include/c++/13/bits/locale_classes.tcc \
+  /usr/include/c++/13/bits/locale_conv.h \
   /usr/include/c++/13/bits/locale_facets.h \
   /usr/include/c++/13/bits/locale_facets.tcc \
+  /usr/include/c++/13/bits/locale_facets_nonio.h \
+  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
   /usr/include/c++/13/bits/localefwd.h \
   /usr/include/c++/13/bits/memoryfwd.h \
   /usr/include/c++/13/bits/move.h \
@@ -1246,12 +1250,14 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o: /home/quang/rat_project/server
   /usr/include/c++/13/functional \
   /usr/include/c++/13/future \
   /usr/include/c++/13/initializer_list \
+  /usr/include/c++/13/iomanip \
   /usr/include/c++/13/ios \
   /usr/include/c++/13/iosfwd \
   /usr/include/c++/13/iostream \
   /usr/include/c++/13/istream \
   /usr/include/c++/13/iterator \
   /usr/include/c++/13/limits \
+  /usr/include/c++/13/locale \
   /usr/include/c++/13/map \
   /usr/include/c++/13/memory \
   /usr/include/c++/13/mutex \
@@ -1326,6 +1332,7 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o: /home/quang/rat_project/server
   /usr/include/google/protobuf/stubs/strutil.h \
   /usr/include/google/protobuf/unknown_field_set.h \
   /usr/include/google/protobuf/wire_format_lite.h \
+  /usr/include/libintl.h \
   /usr/include/limits.h \
   /usr/include/linux/close_range.h \
   /usr/include/linux/errno.h \
@@ -1602,7 +1609,9 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o: /home/quang/rat_project/server
   /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/openssl/configuration.h \
@@ -5739,6 +5748,8 @@ CMakeFiles/rat_server.dir/src/Utils.cpp.o: /home/quang/rat_project/server/src/Ut
   /usr/include/c++/13/bits/postypes.h \
   /usr/include/c++/13/bits/predefined_ops.h \
   /usr/include/c++/13/bits/ptr_traits.h \
+  /usr/include/c++/13/bits/random.h \
+  /usr/include/c++/13/bits/random.tcc \
   /usr/include/c++/13/bits/range_access.h \
   /usr/include/c++/13/bits/refwrap.h \
   /usr/include/c++/13/bits/requires_hosted.h \
@@ -5761,6 +5772,7 @@ CMakeFiles/rat_server.dir/src/Utils.cpp.o: /home/quang/rat_project/server/src/Ut
   /usr/include/c++/13/bits/stl_iterator_base_types.h \
   /usr/include/c++/13/bits/stl_map.h \
   /usr/include/c++/13/bits/stl_multimap.h \
+  /usr/include/c++/13/bits/stl_numeric.h \
   /usr/include/c++/13/bits/stl_pair.h \
   /usr/include/c++/13/bits/stl_raw_storage_iter.h \
   /usr/include/c++/13/bits/stl_relops.h \
@@ -5823,7 +5835,9 @@ CMakeFiles/rat_server.dir/src/Utils.cpp.o: /home/quang/rat_project/server/src/Ut
   /usr/include/c++/13/memory \
   /usr/include/c++/13/mutex \
   /usr/include/c++/13/new \
+  /usr/include/c++/13/numeric \
   /usr/include/c++/13/ostream \
+  /usr/include/c++/13/random \
   /usr/include/c++/13/ratio \
   /usr/include/c++/13/sstream \
   /usr/include/c++/13/stdexcept \
@@ -6119,6 +6133,7 @@ CMakeFiles/rat_server.dir/src/Utils.cpp.o: /home/quang/rat_project/server/src/Ut
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/gthr.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
+  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
@@ -7794,17 +7809,9 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h:
-
-/usr/include/c++/13/iomanip:
-
 /usr/include/c++/13/bits/stl_numeric.h:
 
 /usr/include/c++/13/bits/random.tcc:
-
-/usr/include/c++/13/bits/locale_facets_nonio.tcc:
-
-/usr/include/c++/13/bits/locale_facets_nonio.h:
 
 /home/quang/rat_project/server/include/Utils.hpp:
 
@@ -7835,6 +7842,8 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
 
@@ -7993,10 +8002,6 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
-
-/usr/include/libintl.h:
-
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
@@ -8178,6 +8183,10 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/limits.h:
 
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/libintl.h:
+
 /usr/include/x86_64-linux-gnu/bits/fcntl.h:
 
 /usr/include/google/protobuf/wire_format_lite.h:
@@ -8277,6 +8286,8 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/c++/13/memory:
 
 /usr/include/c++/13/iosfwd:
+
+/usr/include/c++/13/iomanip:
 
 /usr/include/c++/13/initializer_list:
 
@@ -8408,6 +8419,10 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/c++/13/bits/localefwd.h:
 
+/usr/include/c++/13/bits/locale_facets_nonio.tcc:
+
+/usr/include/c++/13/bits/locale_facets_nonio.h:
+
 /usr/include/c++/13/bits/locale_facets.tcc:
 
 /usr/include/c++/13/bits/locale_facets.h:
@@ -8479,6 +8494,8 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/c++/13/array:
 
 /usr/include/c++/13/algorithm:
+
+/usr/include/byteswap.h:
 
 /usr/include/x86_64-linux-gnu/sys/stat.h:
 
@@ -8972,10 +8989,6 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/asio/execution/connect.hpp:
 
-/home/quang/rat_project/server/include/ServerGUI.hpp:
-
-/usr/include/boost/config/requires_threads.hpp:
-
 /usr/include/boost/asio/generic/seq_packet_protocol.hpp:
 
 /usr/include/boost/asio/detail/reactive_socket_recv_op.hpp:
@@ -9073,6 +9086,12 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/boost/predef/architecture/sys370.h:
 
 /usr/include/boost/shared_ptr.hpp:
+
+/usr/include/boost/asio/traits/query_member.hpp:
+
+/usr/include/boost/asio/windows/stream_handle.hpp:
+
+/usr/include/boost/system/detail/is_same.hpp:
 
 /usr/include/boost/asio/detail/throw_error.hpp:
 
@@ -9374,11 +9393,11 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/asio/detail/posix_global.hpp:
 
+/usr/include/boost/asio/detail/impl/posix_event.ipp:
+
 /usr/include/c++/13/cstdio:
 
 /usr/include/boost/asio/basic_stream_socket.hpp:
-
-/usr/include/boost/asio/detail/impl/posix_event.ipp:
 
 /usr/include/boost/mpl/aux_/largest_int.hpp:
 
@@ -9416,6 +9435,94 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/function_equal.hpp:
 
+/usr/include/boost/asio/execution/context.hpp:
+
+/usr/include/boost/asio/detail/dependent_type.hpp:
+
+/usr/include/boost/asio/detail/impl/epoll_reactor.hpp:
+
+/usr/include/boost/mpl/identity.hpp:
+
+/usr/include/boost/asio/detail/reactive_wait_op.hpp:
+
+/usr/include/boost/asio/ip/impl/host_name.ipp:
+
+/usr/include/boost/asio/detail/functional.hpp:
+
+/usr/include/asm-generic/types.h:
+
+/home/quang/rat_project/server/include/Server.hpp:
+
+/usr/include/boost/regex_fwd.hpp:
+
+/usr/include/boost/asio/detail/scheduler.hpp:
+
+/usr/include/boost/mpl/aux_/lambda_support.hpp:
+
+/usr/include/boost/asio/traits/schedule_member.hpp:
+
+/usr/include/asm-generic/socket.h:
+
+/usr/include/boost/asio/detail/recycling_allocator.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/typesizes.h:
+
+/usr/include/boost/asio/co_spawn.hpp:
+
+/usr/include/boost/move/detail/config_begin.hpp:
+
+/usr/include/boost/asio/generic/detail/endpoint.hpp:
+
+/usr/include/boost/core/demangle.hpp:
+
+/usr/include/boost/asio/buffered_write_stream.hpp:
+
+/usr/include/boost/asio/detail/config.hpp:
+
+/usr/include/boost/predef/platform/android.h:
+
+/usr/include/boost/asio/execution/submit.hpp:
+
+/usr/include/boost/asio/io_context_strand.hpp:
+
+/home/quang/rat_project/common/build/proto/Packet.pb.h:
+
+/usr/include/boost/asio/detail/array_fwd.hpp:
+
+/usr/include/boost/predef/compiler/greenhills.h:
+
+/usr/include/boost/predef/compiler/palm.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
+
+/usr/include/boost/asio/detail/impl/strand_executor_service.hpp:
+
+/usr/include/c++/13/bits/random.h:
+
+/usr/include/boost/preprocessor/logical/bool.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
+
+/usr/include/boost/asio/local/basic_endpoint.hpp:
+
+/usr/include/boost/asio/execution/executor.hpp:
+
+/usr/include/boost/asio/execution/bulk_guarantee.hpp:
+
+/usr/include/boost/numeric/conversion/detail/is_subranged.hpp:
+
+/usr/include/boost/asio/detail/impl/handler_tracking.ipp:
+
+/usr/include/boost/predef/detail/comp_detected.h:
+
+/usr/include/boost/asio/detail/regex_fwd.hpp:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/boost/preprocessor/repetition/limits/repeat_256.hpp:
+
+/usr/include/boost/asio/detached.hpp:
+
 /usr/include/boost/bind/detail/requires_cxx11.hpp:
 
 /usr/include/boost/asio/wait_traits.hpp:
@@ -9444,23 +9551,15 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/asio/detail/select_interrupter.hpp:
 
+/usr/include/boost/asio/execution/allocator.hpp:
+
+/usr/include/boost/asio/deferred.hpp:
+
 /usr/include/c++/13/bits/unordered_set.h:
 
 /usr/include/boost/asio/detail/non_const_lvalue.hpp:
 
 /usr/include/arpa/inet.h:
-
-/usr/include/boost/asio/execution/submit.hpp:
-
-/usr/include/boost/asio/io_context_strand.hpp:
-
-/home/quang/rat_project/common/build/proto/Packet.pb.h:
-
-/usr/include/boost/asio/detail/array_fwd.hpp:
-
-/usr/include/boost/predef/compiler/greenhills.h:
-
-/usr/include/boost/predef/compiler/palm.h:
 
 /usr/include/boost/date_time/date_iterator.hpp:
 
@@ -9469,86 +9568,6 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/boost/asio/execution/invocable_archetype.hpp:
 
 /usr/include/boost/date_time/gregorian/greg_calendar.hpp:
-
-/usr/include/boost/asio/traits/schedule_member.hpp:
-
-/usr/include/asm-generic/socket.h:
-
-/usr/include/boost/asio/detail/recycling_allocator.hpp:
-
-/usr/include/boost/asio/execution/context.hpp:
-
-/usr/include/boost/asio/detail/dependent_type.hpp:
-
-/usr/include/boost/asio/detail/impl/epoll_reactor.hpp:
-
-/usr/include/boost/mpl/identity.hpp:
-
-/usr/include/boost/asio/detail/reactive_wait_op.hpp:
-
-/usr/include/boost/asio/ip/impl/host_name.ipp:
-
-/usr/include/boost/asio/detail/functional.hpp:
-
-/usr/include/asm-generic/types.h:
-
-/home/quang/rat_project/server/include/Server.hpp:
-
-/usr/include/boost/regex_fwd.hpp:
-
-/usr/include/boost/asio/detail/scheduler.hpp:
-
-/usr/include/boost/mpl/aux_/lambda_support.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/typesizes.h:
-
-/usr/include/boost/asio/co_spawn.hpp:
-
-/usr/include/boost/move/detail/config_begin.hpp:
-
-/usr/include/boost/asio/generic/detail/endpoint.hpp:
-
-/usr/include/boost/core/demangle.hpp:
-
-/usr/include/boost/asio/buffered_write_stream.hpp:
-
-/usr/include/boost/asio/detail/config.hpp:
-
-/usr/include/boost/predef/platform/android.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
-/usr/include/boost/asio/detail/impl/strand_executor_service.hpp:
-
-/usr/include/c++/13/bits/random.h:
-
-/usr/include/boost/preprocessor/logical/bool.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
-
-/usr/include/boost/asio/local/basic_endpoint.hpp:
-
-/usr/include/boost/asio/execution/executor.hpp:
-
-/usr/include/boost/asio/deferred.hpp:
-
-/usr/include/boost/asio/execution/allocator.hpp:
-
-/usr/include/boost/asio/execution/bulk_guarantee.hpp:
-
-/usr/include/boost/numeric/conversion/detail/is_subranged.hpp:
-
-/usr/include/boost/asio/detail/impl/handler_tracking.ipp:
-
-/usr/include/boost/predef/detail/comp_detected.h:
-
-/usr/include/boost/asio/detail/regex_fwd.hpp:
-
-/usr/include/asm-generic/errno.h:
-
-/usr/include/boost/preprocessor/repetition/limits/repeat_256.hpp:
-
-/usr/include/boost/asio/detached.hpp:
 
 /usr/include/boost/asio/executor_work_guard.hpp:
 
@@ -9642,13 +9661,13 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/preprocessor/detail/is_binary.hpp:
 
+/usr/include/boost/asio/buffer.hpp:
+
 /usr/include/boost/asio/detail/initiate_post.hpp:
 
 /usr/include/boost/predef/other/endian.h:
 
 /usr/include/boost/preprocessor/iteration/detail/bounds/upper1.hpp:
-
-/usr/include/boost/asio/buffer.hpp:
 
 /usr/include/boost/asio/detail/work_dispatcher.hpp:
 
@@ -9926,12 +9945,6 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/asio/impl/execution_context.hpp:
 
-/usr/include/boost/asio/traits/query_member.hpp:
-
-/usr/include/boost/asio/windows/stream_handle.hpp:
-
-/usr/include/boost/system/detail/is_same.hpp:
-
 /usr/include/boost/asio/detail/strand_executor_service.hpp:
 
 /usr/include/boost/predef/os/bsd/bsdi.h:
@@ -9986,8 +9999,6 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/asio/detail/timer_queue_base.hpp:
 
-/usr/include/byteswap.h:
-
 /usr/include/c++/13/bits/ostream_insert.h:
 
 /usr/include/boost/preprocessor/config/limits.hpp:
@@ -10037,6 +10048,10 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 /usr/include/boost/asio/execution/blocking_adaptation.hpp:
 
 /usr/include/boost/current_function.hpp:
+
+/home/quang/rat_project/server/include/ServerGUI.hpp:
+
+/usr/include/boost/config/requires_threads.hpp:
 
 /usr/include/boost/asio/detail/descriptor_read_op.hpp:
 
@@ -11044,9 +11059,9 @@ CMakeFiles/rat_server.dir/src/main.cpp.o: /home/quang/rat_project/server/src/mai
 
 /usr/include/boost/type_traits/has_trivial_destructor.hpp:
 
-/usr/include/boost/asio/buffered_read_stream_fwd.hpp:
-
 /usr/include/boost/asio/detail/resolve_endpoint_op.hpp:
+
+/usr/include/boost/asio/buffered_read_stream_fwd.hpp:
 
 /usr/include/boost/type_traits/is_abstract.hpp:
 

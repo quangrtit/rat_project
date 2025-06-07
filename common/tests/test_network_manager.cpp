@@ -5,15 +5,18 @@
 
 using namespace Rat;
 
-std::vector<char> simulate_send(const rat::Packet& packet) {
+std::vector<char> simulate_send(const rat::Packet& packet) 
+{
     std::vector<char> buffer;
     std::string serialized;
 
-    if (!packet.SerializeToString(&serialized)) {
+    if (!packet.SerializeToString(&serialized)) 
+    {
         return buffer; 
     }
 
-    if (serialized.size() > MAX_BUFFER_SIZE) {
+    if (serialized.size() > MAX_BUFFER_SIZE) 
+    {
         return buffer; 
     }
 
@@ -26,9 +29,11 @@ std::vector<char> simulate_send(const rat::Packet& packet) {
 }
 
 void simulate_receive(const std::vector<char>& input_data, 
-                      std::function<void(const rat::Packet&, const NetworkManager::ErrorCode&)> callback) {
+                      std::function<void(const rat::Packet&, const NetworkManager::ErrorCode&)> callback) 
+                      {
 
-    if (input_data.size() < sizeof(uint32_t)) {
+    if (input_data.size() < sizeof(uint32_t)) 
+    {
         callback(rat::Packet(), boost::asio::error::eof);
         return;
     }
@@ -36,18 +41,21 @@ void simulate_receive(const std::vector<char>& input_data,
     uint32_t packet_size;
     std::memcpy(&packet_size, input_data.data(), sizeof(uint32_t));
 
-    if (packet_size > MAX_BUFFER_SIZE) {
+    if (packet_size > MAX_BUFFER_SIZE) 
+    {
         callback(rat::Packet(), boost::asio::error::message_size);
         return;
     }
 
-    if (input_data.size() - sizeof(uint32_t) < packet_size) {
+    if (input_data.size() - sizeof(uint32_t) < packet_size) 
+    {
         callback(rat::Packet(), boost::asio::error::eof);
         return;
     }
 
     rat::Packet packet;
-    if (!packet.ParseFromArray(input_data.data() + sizeof(uint32_t), packet_size)) {
+    if (!packet.ParseFromArray(input_data.data() + sizeof(uint32_t), packet_size)) 
+    {
         callback(rat::Packet(), boost::asio::error::invalid_argument);
         return;
     }
@@ -55,10 +63,12 @@ void simulate_receive(const std::vector<char>& input_data,
     callback(packet, boost::system::error_code());
 }
 
-TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
+TEST_CASE("NetworkManager send and receive", "[NetworkManager]") 
+{
     NetworkManager nm;
 
-    SECTION("Send valid packet") {
+    SECTION("Send valid packet") 
+    {
         rat::Packet packet;
         packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
         packet.set_packet_id("test_packet");
@@ -95,7 +105,8 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
         REQUIRE(parsed_chunk.success() == true);
     }
 
-    SECTION("Receive valid packet") {
+    SECTION("Receive valid packet") 
+    {
         rat::Packet packet;
         packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
         packet.set_packet_id("test_packet");
@@ -113,7 +124,8 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
 
         auto buffer = simulate_send(packet);
 
-        simulate_receive(buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) {
+        simulate_receive(buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) 
+        {
             REQUIRE(!ec); // Không có lỗi
             REQUIRE(response.type() == rat::Packet::LIST_FILES_FOLDERS);
             REQUIRE(response.packet_id() == "test_packet");
@@ -127,7 +139,8 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
         });
     }
 
-    SECTION("Send packet with oversized payload") {
+    SECTION("Send packet with oversized payload") 
+    {
         rat::Packet packet;
         packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
         packet.set_packet_id("test_packet");
@@ -152,31 +165,37 @@ TEST_CASE("NetworkManager send and receive", "[NetworkManager]") {
     }
 
 
-    SECTION("Receive response with invalid payload size") {
+    SECTION("Receive response with invalid payload size") 
+    {
      
         std::vector<char> invalid_data(sizeof(uint32_t) - 1, 'x'); 
-        simulate_receive(invalid_data, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) {
+        simulate_receive(invalid_data, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) 
+        {
             REQUIRE(ec == boost::asio::error::eof); 
             REQUIRE(response.type() == rat::Packet::UNKNOWN);
         });
     }
 
-    SECTION("Receive packet with invalid size") {
+    SECTION("Receive packet with invalid size") 
+    {
         uint32_t oversized_packet_size = MAX_BUFFER_SIZE + 1;
         std::vector<char> size_buffer(sizeof(uint32_t));
         std::memcpy(size_buffer.data(), &oversized_packet_size, sizeof(uint32_t));
 
-        simulate_receive(size_buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) {
+        simulate_receive(size_buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) 
+        {
             REQUIRE(ec == boost::asio::error::message_size); 
             REQUIRE(response.type() == rat::Packet::UNKNOWN); 
         });
     }
 }
 
-TEST_CASE("NetworkManager error handling", "[NetworkManager]") {
+TEST_CASE("NetworkManager error handling", "[NetworkManager]") 
+{
     NetworkManager nm;
 
-    SECTION("Receive response with invalid command type") {
+    SECTION("Receive response with invalid command type") 
+    {
         rat::Packet packet;
         packet.set_type(rat::Packet::UNKNOWN);
         packet.set_packet_id("test_packet");
@@ -186,7 +205,8 @@ TEST_CASE("NetworkManager error handling", "[NetworkManager]") {
 
         auto buffer = simulate_send(packet);
 
-        simulate_receive(buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) {
+        simulate_receive(buffer, [](const rat::Packet& response, const NetworkManager::ErrorCode& ec) 
+        {
             // REQUIRE(!ec); 
             REQUIRE(response.type() == rat::Packet::UNKNOWN);
         });

@@ -41,8 +41,6 @@ namespace Rat
     private:
         IoContext io_context_;
         boost::asio::ssl::context ssl_context_;
-        // std::queue<Command> command_queue_;
-        // boost::mutex queue_mutex_;
     };
 };
 

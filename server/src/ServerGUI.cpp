@@ -19,7 +19,8 @@ namespace Rat
         std::cout << BOLD << "| IP Address       | Client ID             |" << RESET << "\n";
         std::cout << BOLD << BLUE << "+------------------+-----------------------+" << RESET << "\n";
 
-        for (const auto& client : clients) {
+        for (const auto& client : clients) 
+        {
             std::string ip = client.first->lowest_layer().remote_endpoint().address().to_string();
             std::cout << "| " << std::left << std::setw(16) << ip
                       << "| " << std::setw(21) << client.second << "|\n";
@@ -28,7 +29,8 @@ namespace Rat
         std::cout << BOLD << BLUE << "+------------------+-----------------------+" << RESET << "\n\n";
     }
     
-    void ServerGUI::displayMenu() {
+    void ServerGUI::displayMenu() 
+    {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << YELLOW << "Available Commands:" << RESET << "\n";
         std::cout << GREEN << "  LIST_FILES <path>        : List files/folders in <path>" << RESET << "\n";
@@ -51,67 +53,83 @@ namespace Rat
         std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n\n";
     }
 
-    void ServerGUI::displayError(const std::string& error) {
+    void ServerGUI::displayError(const std::string& error) 
+    {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << RED << "Error: " << error << RESET << "\n\n";
     }
 
     void ServerGUI::displayProgress(uint64_t client_id, const std::string& ip, const std::string& filename,
-                                   uint64_t sequence_number, uint64_t total_chunks) {
+                               uint64_t sequence_number, uint64_t total_chunks) 
+                               {
         std::lock_guard<std::mutex> lock(console_mutex_);
 
-        // Update progress map
-        progress_map_[client_id] = ProgressInfo{ip, filename, sequence_number, total_chunks};
-
-        // In tiêu đề chỉ một lần khi progress_map_ bắt đầu có dữ liệu
-        if (!header_displayed_ && !progress_map_.empty()) {
+        if (sequence_number == total_chunks) 
+        {
+            if (header_displayed_) 
+            {
+                
+                header_displayed_ = false;
+            }
+            std::cout.flush();
+            return;
+        }
+        // if(!header_displayed_) 
+        // {
+        //     std::cout << "yes header dispayed\n" << std::endl;
+        // }
+        if (!header_displayed_) 
+        {
+           
+            std::cout << "\033[0J";
             std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
             std::cout << BOLD << BLUE << "| File Transfer Progress                                      |" << RESET << "\n";
             std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
-            header_displayed_ = true;
-        }
-
-        // Xóa các dòng tiến trình cũ (không xóa tiêu đề)
-        size_t lines_to_clear = progress_map_.size() * 2; // Mỗi client chiếm 2 dòng
-        for (size_t i = 0; i < lines_to_clear; ++i) {
-            std::cout << "\033[1A\033[K"; // Di chuyển lên và xóa dòng
-        }
-
-        // In tiến trình cho từng client
-        for (std::map<uint64_t, ProgressInfo>::const_iterator it = progress_map_.begin(); it != progress_map_.end(); ++it) {
-            uint64_t id = it->first;
-            const ProgressInfo& info = it->second;
-            float percentage = (info.sequence_number + 1) / (float)info.total_chunks * 100;
-            int bar_width = 20;
-            int filled = static_cast<int>(percentage / 100 * bar_width);
-            std::string bar(filled, '=');
+            
+            std::cout << "| Client ID: " << std::setw(4) << client_id
+                    << " | IP: " << std::setw(15) << ip
+                    << " | File: " << std::setw(15) << filename << " |\n";
+   
+            float percentage = (sequence_number + 1) / (float)total_chunks * 100.0f;
+            int bar_width = 30;
+            int filled = static_cast<int>(percentage / 100.0f * bar_width);
+            std::string bar(filled, '#');
             bar.append(bar_width - filled, '-');
+            std::cout << "| [" << bar << "] " 
+                    << std::fixed << std::setprecision(1) << std::setw(5) << percentage << "%"
+                    << " (" << sequence_number + 1 << "/" << total_chunks << " chunks)" << " |\n";
+            std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
+            header_displayed_ = true;
+        } else {
+            // if(sequence_number == total_chunks) 
+            // {
+            //     std::cout << "\033[1B";
+            //     return;
+            // }
+            // Move the cursor up to the progress bar line (2 lines up from the footer)
+            std::cout << "\033[2A"; // Move up 2 lines (from footer to progress line)
 
-            std::cout << "| Client ID: " << std::setw(4) << id 
-                      << " | IP: " << std::setw(20) << info.ip 
-                      << " | File: " << std::setw(15) << info.filename << " |\n";
-            std::cout << "| [" << bar << " " << std::fixed << std::setprecision(1) << percentage 
-                      << "%] " << info.sequence_number + 1 << "/" << info.total_chunks 
-                      << " chunks received |\n";
-        }
+            // Clear current line to reprint progress bar
+            std::cout << "\033[K";
 
-        // Xóa mục đã hoàn tất
-        std::vector<uint64_t> completed_clients;
-        for (std::map<uint64_t, ProgressInfo>::const_iterator it = progress_map_.begin(); it != progress_map_.end(); ++it) {
-            if (it->second.sequence_number + 1 >= it->second.total_chunks) {
-                completed_clients.push_back(it->first);
-            }
-        }
-        for (std::vector<uint64_t>::const_iterator it = completed_clients.begin(); it != completed_clients.end(); ++it) {
-            progress_map_.erase(*it);
-        }
+            // Reprint progress bar
+            float percentage = (sequence_number + 1) / (float)total_chunks * 100.0f;
+            int bar_width = 30;
+            int filled = static_cast<int>(percentage / 100.0f * bar_width);
+            std::string bar(filled, '#');
+            bar.append(bar_width - filled, '-');
+            std::cout << "| [" << bar << "] " 
+                    << std::fixed << std::setprecision(1) << std::setw(5) << percentage << "%"
+                    << " (" << sequence_number + 1 << "/" << total_chunks << " chunks)" << " |\n";
 
-        // Nếu progress_map_ rỗng, xóa tiêu đề
-        if (progress_map_.empty() && header_displayed_) {
-            std::cout << "\033[3A\033[K"; // Xóa tiêu đề (3 dòng)
-            header_displayed_ = false;
+            // Move cursor down footer (1 line down)
+            std::cout << "\033[1B";
         }
 
         std::cout.flush();
+    }
+    void ServerGUI::resetHeaderDisplayed()
+    {
+        header_displayed_ = false;
     }
 }

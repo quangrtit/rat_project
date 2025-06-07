@@ -23,7 +23,10 @@ namespace Rat
 
         ~FileSender();
 
-        void sendFile(const std::string& file_path, const std::string& file_id, std::function<void()> on_finish);
+        void sendFile(const std::string& file_path, 
+            const std::string& file_id, 
+            std::function<void()> on_finish,
+            std::function<void()> on_disconnect);
 
     private: 
         void processNextChunk();
@@ -38,6 +41,7 @@ namespace Rat
         std::vector<char> buffer_;
         uint64_t client_id_;
         std::function<void()> on_finish_;
+        std::function<void()> on_disconnect_;
         std::string file_path_;
     };
 }

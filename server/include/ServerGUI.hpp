@@ -46,10 +46,11 @@ namespace Rat
         // Display file transfer progress
         static void displayProgress(uint64_t client_id, const std::string& ip, const std::string& filename, 
                                    uint64_t sequence_number, uint64_t total_chunks);
-
+        static void resetHeaderDisplayed();
     private:
         // Structure to store progress information for each client
-        struct ProgressInfo {
+        struct ProgressInfo 
+        {
             std::string ip;
             std::string filename;
             uint64_t sequence_number;

@@ -20,6 +20,10 @@ namespace Rat
 
         ~Utils();
 
+        static std::string md5HashString(const std::string& input);
+
+        static std::string generateRandomData(size_t length);
+
         static std::vector<std::string> handleCommand(const std::string& cmd);
 
         static bool checkObjectAndGetId(const std::string& object, std::string& object_id);

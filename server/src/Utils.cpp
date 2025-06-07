@@ -1,7 +1,8 @@
 #include "Utils.hpp"
 #include "ServerGUI.hpp"
 #include <sstream>
-
+#include <iomanip>
+#include <random>
 
 
 namespace Rat 
@@ -10,6 +11,33 @@ namespace Rat
 
     Utils::~Utils(){}
 
+    std::string Utils::md5HashString(const std::string& input) 
+    {
+        unsigned char md_value[EVP_MAX_MD_SIZE];
+        unsigned int md_len = 0;
+        EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
+        EVP_DigestInit_ex(mdctx, EVP_md5(), nullptr);
+        EVP_DigestUpdate(mdctx, input.data(), input.size());
+        EVP_DigestFinal_ex(mdctx, md_value, &md_len);
+        EVP_MD_CTX_free(mdctx);
+        std::stringstream ss;
+        for (unsigned int i = 0; i < md_len; ++i)
+            ss << std::hex << std::setw(2) << std::setfill('0') << (int)md_value[i];
+        return ss.str();
+    }
+
+    std::string Utils::generateRandomData(size_t length) 
+    {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(33, 126);
+        std::string data;
+        for (size_t i = 0; i < length; ++i) 
+        {
+            data += static_cast<char>(dis(gen));
+        }
+        return data;
+    }
     std::vector<std::string> Utils::handleCommand(const std::string &cmd)
     {
         std::stringstream ss(cmd);

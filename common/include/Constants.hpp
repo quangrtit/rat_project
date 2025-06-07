@@ -11,11 +11,12 @@ namespace Rat
     const size_t MAX_BUFFER_SIZE = 64 * 1024;
     const size_t CHUNK_SIZE = 8 * 1024;
     const size_t MAX_CLIENT = 1000;
-    const std::string KEY_AES = "";
+    // const std::string KEY_AES = "";
     const std::string LOG_DIR = "var/log/rat";
 
 
-    enum CommandType {
+    enum CommandType 
+    {
         UNKNOWN, //0;
         LIST_FILES_FOLDERS, //1;
         READ_FILE, //2;
@@ -27,7 +28,8 @@ namespace Rat
         AUTH_CONFIRM, //8;
         ERROR, //9;
         COMMAND, //10;
-        STATIC_ID //11;
+        STATIC_ID, //11;
+        TRANSFER_FILE_ACK //12
     };
    
 }; // namespace rat

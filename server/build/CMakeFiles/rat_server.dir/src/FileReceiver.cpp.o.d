@@ -1479,4 +1479,11 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o: \
  /usr/include/boost/chrono/ceil.hpp \
  /usr/include/boost/thread/pthread/pthread_mutex_scoped_lock.hpp \
  /usr/include/boost/thread/pthread/pthread_helpers.hpp \
- /home/quang/rat_project/server/../common/include/Constants.hpp
+ /home/quang/rat_project/server/../common/include/Constants.hpp \
+ /home/quang/rat_project/server/include/ServerGUI.hpp \
+ /usr/include/c++/13/iomanip /usr/include/c++/13/locale \
+ /usr/include/c++/13/bits/locale_facets_nonio.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
+ /usr/include/libintl.h /usr/include/c++/13/bits/locale_facets_nonio.tcc \
+ /usr/include/c++/13/bits/locale_conv.h

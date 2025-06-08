@@ -9,7 +9,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/quang/rat_project/client/src/Client.cpp" "CMakeFiles/rat_client.dir/src/Client.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/Client.cpp.o.d"
+  "/home/quang/rat_project/client/src/FileFolderSender.cpp" "CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o.d"
+  "/home/quang/rat_project/client/src/FileFolderUtils.cpp" "CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o.d"
   "/home/quang/rat_project/client/src/FileSender.cpp" "CMakeFiles/rat_client.dir/src/FileSender.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/FileSender.cpp.o.d"
+  "/home/quang/rat_project/client/src/ProcessSender.cpp" "CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o.d"
+  "/home/quang/rat_project/client/src/ProcessUtils.cpp" "CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o.d"
   "/home/quang/rat_project/client/src/Utils.cpp" "CMakeFiles/rat_client.dir/src/Utils.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/Utils.cpp.o.d"
   "/home/quang/rat_project/client/src/main.cpp" "CMakeFiles/rat_client.dir/src/main.cpp.o" "gcc" "CMakeFiles/rat_client.dir/src/main.cpp.o.d"
   )

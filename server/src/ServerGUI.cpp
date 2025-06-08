@@ -132,4 +132,85 @@ namespace Rat
     {
         header_displayed_ = false;
     }
+
+    void ServerGUI::displayProcessList(uint64_t client_id, const std::string& ip, const std::string& process_data)
+    {
+        std::lock_guard<std::mutex> lock(console_mutex_);
+        std::cout << BOLD << GREEN << "=== Process List from Client " << client_id << " (" << ip << ") ===\n" << RESET;
+
+        // Parse process data into lines
+        std::vector<std::string> lines;
+        std::stringstream ss(process_data);
+        std::string line;
+        while (std::getline(ss, line))
+        {
+            if (!line.empty())
+            {
+                lines.push_back(line);
+            }
+        }
+
+        // Determine column widths
+        size_t pidWidth = 5;  // Minimum width for PID
+        size_t userWidth = 8; // Minimum width for User
+        size_t memWidth = 8;  // Minimum width for Memory
+        size_t cmdWidth = 15; // Minimum width for Command
+
+        for (const auto& l : lines)
+        {
+            std::stringstream ls(l);
+            std::string pid, user, mem, cmd;
+            ls >> pid >> user >> mem >> cmd;
+            pidWidth = std::max(pidWidth, pid.length());
+            userWidth = std::max(userWidth, user.length());
+            memWidth = std::max(memWidth, mem.length());
+            cmdWidth = std::max(cmdWidth, cmd.length() + (cmd.find("...") != std::string::npos ? 0 : 10)); // Adjust for truncated commands
+        }
+
+        // Print header
+        std::cout << BLUE << std::left << std::setw(pidWidth) << "PID" 
+                  << std::setw(userWidth) << "User" 
+                  << std::setw(memWidth) << "Memory%" 
+                  << "Command" << RESET << "\n";
+        std::cout << std::string(pidWidth + userWidth + memWidth + cmdWidth, '-') << "\n";
+
+        // Print data with color
+        for (const auto& l : lines)
+        {
+            std::stringstream ls(l);
+            std::string pid, user, mem, cmd;
+            ls >> pid >> user >> mem >> cmd;
+
+            // Highlight high memory usage (> 5%) in yellow
+            std::string memColor = (std::stod(mem) > 5.0) ? YELLOW : RESET;
+            std::cout << BLUE << std::left << std::setw(pidWidth) << pid
+                      << std::setw(userWidth) << user
+                      << memColor << std::setw(memWidth) << mem
+                      << RESET << cmd << "\n";
+        }
+
+        std::cout << std::endl;
+    }
+    void ServerGUI::displayFileFolderList(uint64_t client_id, const std::string& ip_id, const std::string& file_folder_list)
+    {
+        std::cout << "File/Folder list for Client " << client_id << " (" << ip_id << "):\n";
+
+        std::istringstream iss(file_folder_list);
+        std::string line;
+
+        while (std::getline(iss, line))
+        {
+            size_t colonPos = line.find(':');
+            if (colonPos != std::string::npos)
+            {
+                std::string levelStr = line.substr(0, colonPos);
+                std::string name = line.substr(colonPos + 1);
+                int level = std::stoi(levelStr);
+
+                std::string indent(level * 2, ' ');
+                std::cout << indent << "├── " << name << "\n";
+            }
+        }
+        std::cout << std::endl;
+    }
 }

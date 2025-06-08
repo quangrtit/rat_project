@@ -1481,4 +1481,6 @@ CMakeFiles/rat_client.dir/src/main.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
  /usr/include/c++/13/bits/fstream.tcc \
- /home/quang/rat_project/client/../common/include/Constants.hpp
+ /home/quang/rat_project/client/../common/include/Constants.hpp \
+ /home/quang/rat_project/client/include/ProcessSender.hpp \
+ /home/quang/rat_project/client/include/FileFolderSender.hpp

@@ -125,12 +125,72 @@ CMakeFiles/rat_client.dir/src/Utils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/Utils.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/Utils.cpp -o CMakeFiles/rat_client.dir/src/Utils.cpp.s
 
+CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o: CMakeFiles/rat_client.dir/flags.make
+CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o: /home/quang/rat_project/client/src/ProcessSender.cpp
+CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o -MF CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o.d -o CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o -c /home/quang/rat_project/client/src/ProcessSender.cpp
+
+CMakeFiles/rat_client.dir/src/ProcessSender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/ProcessSender.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/ProcessSender.cpp > CMakeFiles/rat_client.dir/src/ProcessSender.cpp.i
+
+CMakeFiles/rat_client.dir/src/ProcessSender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/ProcessSender.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/ProcessSender.cpp -o CMakeFiles/rat_client.dir/src/ProcessSender.cpp.s
+
+CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o: CMakeFiles/rat_client.dir/flags.make
+CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o: /home/quang/rat_project/client/src/ProcessUtils.cpp
+CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o -MF CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o.d -o CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o -c /home/quang/rat_project/client/src/ProcessUtils.cpp
+
+CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/ProcessUtils.cpp > CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.i
+
+CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/ProcessUtils.cpp -o CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.s
+
+CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o: CMakeFiles/rat_client.dir/flags.make
+CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o: /home/quang/rat_project/client/src/FileFolderSender.cpp
+CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o -MF CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o.d -o CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o -c /home/quang/rat_project/client/src/FileFolderSender.cpp
+
+CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/FileFolderSender.cpp > CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.i
+
+CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/FileFolderSender.cpp -o CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.s
+
+CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o: CMakeFiles/rat_client.dir/flags.make
+CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o: /home/quang/rat_project/client/src/FileFolderUtils.cpp
+CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o: CMakeFiles/rat_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o -MF CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o.d -o CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o -c /home/quang/rat_project/client/src/FileFolderUtils.cpp
+
+CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/client/src/FileFolderUtils.cpp > CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.i
+
+CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/client/src/FileFolderUtils.cpp -o CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.s
+
 # Object files for target rat_client
 rat_client_OBJECTS = \
 "CMakeFiles/rat_client.dir/src/main.cpp.o" \
 "CMakeFiles/rat_client.dir/src/Client.cpp.o" \
 "CMakeFiles/rat_client.dir/src/FileSender.cpp.o" \
-"CMakeFiles/rat_client.dir/src/Utils.cpp.o"
+"CMakeFiles/rat_client.dir/src/Utils.cpp.o" \
+"CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o" \
+"CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o" \
+"CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o" \
+"CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o"
 
 # External object files for target rat_client
 rat_client_EXTERNAL_OBJECTS =
@@ -139,6 +199,10 @@ rat_client: CMakeFiles/rat_client.dir/src/main.cpp.o
 rat_client: CMakeFiles/rat_client.dir/src/Client.cpp.o
 rat_client: CMakeFiles/rat_client.dir/src/FileSender.cpp.o
 rat_client: CMakeFiles/rat_client.dir/src/Utils.cpp.o
+rat_client: CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o
+rat_client: CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o
+rat_client: CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o
+rat_client: CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o
 rat_client: CMakeFiles/rat_client.dir/build.make
 rat_client: /home/quang/rat_project/client/../common/build/librat_common.a
 rat_client: /home/quang/rat_project/client/../common/build/proto/libproto.a
@@ -149,7 +213,7 @@ rat_client: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 rat_client: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
 rat_client: /usr/lib/x86_64-linux-gnu/libcrypto.so
 rat_client: CMakeFiles/rat_client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable rat_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable rat_client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rat_client.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

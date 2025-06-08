@@ -1482,11 +1482,15 @@ CMakeFiles/rat_client.dir/src/Client.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
  /usr/include/c++/13/bits/fstream.tcc \
  /home/quang/rat_project/client/../common/include/Constants.hpp \
+ /home/quang/rat_project/client/include/ProcessSender.hpp \
+ /home/quang/rat_project/client/include/FileFolderSender.hpp \
  /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
  /usr/include/c++/13/bits/random.tcc /usr/include/c++/13/numeric \
  /usr/include/c++/13/bits/stl_numeric.h \
  /home/quang/rat_project/client/include/FileSender.hpp \
+ /home/quang/rat_project/client/include/ProcessUtils.hpp \
+ /home/quang/rat_project/client/include/FileFolderUtils.hpp \
  /home/quang/rat_project/client/include/Utils.hpp \
  /usr/include/c++/13/iomanip /usr/include/c++/13/locale \
  /usr/include/c++/13/bits/locale_facets_nonio.h \

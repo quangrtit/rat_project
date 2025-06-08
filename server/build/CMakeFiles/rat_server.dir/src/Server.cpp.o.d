@@ -1487,6 +1487,9 @@ CMakeFiles/rat_server.dir/src/Server.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
  /usr/include/c++/13/bits/fstream.tcc \
+ /home/quang/rat_project/server/include/ProcessHandler.hpp \
+ /home/quang/rat_project/server/include/DataHandler.hpp \
+ /home/quang/rat_project/server/include/FilesFoldersHandler.hpp \
  /home/quang/rat_project/server/include/Utils.hpp \
  /usr/include/c++/13/random /usr/include/c++/13/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \

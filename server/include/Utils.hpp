@@ -8,6 +8,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
 #include <unordered_map>
+#include <chrono>
 // #include "Packet.pb.h"
 
 namespace Rat 
@@ -23,6 +24,8 @@ namespace Rat
         static std::string md5HashString(const std::string& input);
 
         static std::string generateRandomData(size_t length);
+
+        static std::string getCurrentTimeString();
 
         static std::vector<std::string> handleCommand(const std::string& cmd);
 

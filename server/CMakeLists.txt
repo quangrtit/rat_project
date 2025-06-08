@@ -29,6 +29,8 @@ set(SERVER_SOURCES
     src/ServerGUI.cpp
     src/Utils.cpp
     src/FileReceiver.cpp
+    src/ProcessHandler.cpp
+    src/FilesFoldersHandler.cpp
 )
 
 

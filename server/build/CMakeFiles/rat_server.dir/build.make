@@ -139,13 +139,43 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_server.dir/src/FileReceiver.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/server/src/FileReceiver.cpp -o CMakeFiles/rat_server.dir/src/FileReceiver.cpp.s
 
+CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o: CMakeFiles/rat_server.dir/flags.make
+CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o: /home/quang/rat_project/server/src/ProcessHandler.cpp
+CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o: CMakeFiles/rat_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o -MF CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o.d -o CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o -c /home/quang/rat_project/server/src/ProcessHandler.cpp
+
+CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/server/src/ProcessHandler.cpp > CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.i
+
+CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/server/src/ProcessHandler.cpp -o CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.s
+
+CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o: CMakeFiles/rat_server.dir/flags.make
+CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o: /home/quang/rat_project/server/src/FilesFoldersHandler.cpp
+CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o: CMakeFiles/rat_server.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o -MF CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o.d -o CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o -c /home/quang/rat_project/server/src/FilesFoldersHandler.cpp
+
+CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/quang/rat_project/server/src/FilesFoldersHandler.cpp > CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.i
+
+CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/quang/rat_project/server/src/FilesFoldersHandler.cpp -o CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.s
+
 # Object files for target rat_server
 rat_server_OBJECTS = \
 "CMakeFiles/rat_server.dir/src/main.cpp.o" \
 "CMakeFiles/rat_server.dir/src/Server.cpp.o" \
 "CMakeFiles/rat_server.dir/src/ServerGUI.cpp.o" \
 "CMakeFiles/rat_server.dir/src/Utils.cpp.o" \
-"CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o"
+"CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o" \
+"CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o" \
+"CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o"
 
 # External object files for target rat_server
 rat_server_EXTERNAL_OBJECTS =
@@ -155,6 +185,8 @@ rat_server: CMakeFiles/rat_server.dir/src/Server.cpp.o
 rat_server: CMakeFiles/rat_server.dir/src/ServerGUI.cpp.o
 rat_server: CMakeFiles/rat_server.dir/src/Utils.cpp.o
 rat_server: CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o
+rat_server: CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o
+rat_server: CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o
 rat_server: CMakeFiles/rat_server.dir/build.make
 rat_server: /home/quang/rat_project/server/../common/build/librat_common.a
 rat_server: /home/quang/rat_project/server/../common/build/proto/libproto.a
@@ -165,7 +197,7 @@ rat_server: /usr/lib/x86_64-linux-gnu/libcrypto.so
 rat_server: /usr/lib/x86_64-linux-gnu/libprotobuf.so
 rat_server: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
 rat_server: CMakeFiles/rat_server.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable rat_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/server/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable rat_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/rat_server.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -153,6 +153,54 @@ src/FileReceiver.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FileReceiver.cpp.s
 .PHONY : src/FileReceiver.cpp.s
 
+src/FilesFoldersHandler.o: src/FilesFoldersHandler.cpp.o
+.PHONY : src/FilesFoldersHandler.o
+
+# target to build an object file
+src/FilesFoldersHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o
+.PHONY : src/FilesFoldersHandler.cpp.o
+
+src/FilesFoldersHandler.i: src/FilesFoldersHandler.cpp.i
+.PHONY : src/FilesFoldersHandler.i
+
+# target to preprocess a source file
+src/FilesFoldersHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.i
+.PHONY : src/FilesFoldersHandler.cpp.i
+
+src/FilesFoldersHandler.s: src/FilesFoldersHandler.cpp.s
+.PHONY : src/FilesFoldersHandler.s
+
+# target to generate assembly for a file
+src/FilesFoldersHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.s
+.PHONY : src/FilesFoldersHandler.cpp.s
+
+src/ProcessHandler.o: src/ProcessHandler.cpp.o
+.PHONY : src/ProcessHandler.o
+
+# target to build an object file
+src/ProcessHandler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o
+.PHONY : src/ProcessHandler.cpp.o
+
+src/ProcessHandler.i: src/ProcessHandler.cpp.i
+.PHONY : src/ProcessHandler.i
+
+# target to preprocess a source file
+src/ProcessHandler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.i
+.PHONY : src/ProcessHandler.cpp.i
+
+src/ProcessHandler.s: src/ProcessHandler.cpp.s
+.PHONY : src/ProcessHandler.s
+
+# target to generate assembly for a file
+src/ProcessHandler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_server.dir/build.make CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.s
+.PHONY : src/ProcessHandler.cpp.s
+
 src/Server.o: src/Server.cpp.o
 .PHONY : src/Server.o
 
@@ -261,6 +309,12 @@ help:
 	@echo "... src/FileReceiver.o"
 	@echo "... src/FileReceiver.i"
 	@echo "... src/FileReceiver.s"
+	@echo "... src/FilesFoldersHandler.o"
+	@echo "... src/FilesFoldersHandler.i"
+	@echo "... src/FilesFoldersHandler.s"
+	@echo "... src/ProcessHandler.o"
+	@echo "... src/ProcessHandler.i"
+	@echo "... src/ProcessHandler.s"
 	@echo "... src/Server.o"
 	@echo "... src/Server.i"
 	@echo "... src/Server.s"

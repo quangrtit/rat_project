@@ -153,6 +153,54 @@ src/Client.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/Client.cpp.s
 .PHONY : src/Client.cpp.s
 
+src/FileFolderSender.o: src/FileFolderSender.cpp.o
+.PHONY : src/FileFolderSender.o
+
+# target to build an object file
+src/FileFolderSender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.o
+.PHONY : src/FileFolderSender.cpp.o
+
+src/FileFolderSender.i: src/FileFolderSender.cpp.i
+.PHONY : src/FileFolderSender.i
+
+# target to preprocess a source file
+src/FileFolderSender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.i
+.PHONY : src/FileFolderSender.cpp.i
+
+src/FileFolderSender.s: src/FileFolderSender.cpp.s
+.PHONY : src/FileFolderSender.s
+
+# target to generate assembly for a file
+src/FileFolderSender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileFolderSender.cpp.s
+.PHONY : src/FileFolderSender.cpp.s
+
+src/FileFolderUtils.o: src/FileFolderUtils.cpp.o
+.PHONY : src/FileFolderUtils.o
+
+# target to build an object file
+src/FileFolderUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o
+.PHONY : src/FileFolderUtils.cpp.o
+
+src/FileFolderUtils.i: src/FileFolderUtils.cpp.i
+.PHONY : src/FileFolderUtils.i
+
+# target to preprocess a source file
+src/FileFolderUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.i
+.PHONY : src/FileFolderUtils.cpp.i
+
+src/FileFolderUtils.s: src/FileFolderUtils.cpp.s
+.PHONY : src/FileFolderUtils.s
+
+# target to generate assembly for a file
+src/FileFolderUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.s
+.PHONY : src/FileFolderUtils.cpp.s
+
 src/FileSender.o: src/FileSender.cpp.o
 .PHONY : src/FileSender.o
 
@@ -176,6 +224,54 @@ src/FileSender.s: src/FileSender.cpp.s
 src/FileSender.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/FileSender.cpp.s
 .PHONY : src/FileSender.cpp.s
+
+src/ProcessSender.o: src/ProcessSender.cpp.o
+.PHONY : src/ProcessSender.o
+
+# target to build an object file
+src/ProcessSender.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ProcessSender.cpp.o
+.PHONY : src/ProcessSender.cpp.o
+
+src/ProcessSender.i: src/ProcessSender.cpp.i
+.PHONY : src/ProcessSender.i
+
+# target to preprocess a source file
+src/ProcessSender.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ProcessSender.cpp.i
+.PHONY : src/ProcessSender.cpp.i
+
+src/ProcessSender.s: src/ProcessSender.cpp.s
+.PHONY : src/ProcessSender.s
+
+# target to generate assembly for a file
+src/ProcessSender.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ProcessSender.cpp.s
+.PHONY : src/ProcessSender.cpp.s
+
+src/ProcessUtils.o: src/ProcessUtils.cpp.o
+.PHONY : src/ProcessUtils.o
+
+# target to build an object file
+src/ProcessUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.o
+.PHONY : src/ProcessUtils.cpp.o
+
+src/ProcessUtils.i: src/ProcessUtils.cpp.i
+.PHONY : src/ProcessUtils.i
+
+# target to preprocess a source file
+src/ProcessUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.i
+.PHONY : src/ProcessUtils.cpp.i
+
+src/ProcessUtils.s: src/ProcessUtils.cpp.s
+.PHONY : src/ProcessUtils.s
+
+# target to generate assembly for a file
+src/ProcessUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rat_client.dir/build.make CMakeFiles/rat_client.dir/src/ProcessUtils.cpp.s
+.PHONY : src/ProcessUtils.cpp.s
 
 src/Utils.o: src/Utils.cpp.o
 .PHONY : src/Utils.o
@@ -237,9 +333,21 @@ help:
 	@echo "... src/Client.o"
 	@echo "... src/Client.i"
 	@echo "... src/Client.s"
+	@echo "... src/FileFolderSender.o"
+	@echo "... src/FileFolderSender.i"
+	@echo "... src/FileFolderSender.s"
+	@echo "... src/FileFolderUtils.o"
+	@echo "... src/FileFolderUtils.i"
+	@echo "... src/FileFolderUtils.s"
 	@echo "... src/FileSender.o"
 	@echo "... src/FileSender.i"
 	@echo "... src/FileSender.s"
+	@echo "... src/ProcessSender.o"
+	@echo "... src/ProcessSender.i"
+	@echo "... src/ProcessSender.s"
+	@echo "... src/ProcessUtils.o"
+	@echo "... src/ProcessUtils.i"
+	@echo "... src/ProcessUtils.s"
 	@echo "... src/Utils.o"
 	@echo "... src/Utils.i"
 	@echo "... src/Utils.s"

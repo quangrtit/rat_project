@@ -25,6 +25,10 @@ set(CLIENT_SOURCES
     src/Client.cpp
     src/FileSender.cpp
     src/Utils.cpp
+    src/ProcessSender.cpp
+    src/ProcessUtils.cpp
+    src/FileFolderSender.cpp
+    src/FileFolderUtils.cpp
 )
 
 

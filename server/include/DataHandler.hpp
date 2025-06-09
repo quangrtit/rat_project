@@ -135,7 +135,7 @@ namespace Rat
 
             if (expected_sequence_ == chunk.total_chunks())
             {
-                std::cout << "[" << std::time(nullptr) << "] Data transfer completed for client " << client_id_ << "\n";
+                // std::cout << "[" << std::time(nullptr) << "] Data transfer completed for client " << client_id_ << "\n";
                 stop();
             }
             else

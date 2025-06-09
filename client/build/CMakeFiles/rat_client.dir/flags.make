@@ -6,5 +6,5 @@ CXX_DEFINES = -DBOOST_ATOMIC_DYN_LINK -DBOOST_ATOMIC_NO_LIB -DBOOST_SYSTEM_DYN_L
 
 CXX_INCLUDES = -I/home/quang/rat_project/client/include -I/home/quang/rat_project/client/../common/include -I/home/quang/rat_project/client/../common/build/proto
 
-CXX_FLAGS = -std=c++11 -O2 -Wall -Wextra
+CXX_FLAGS = -std=c++17 -O2 -Wall -Wextra
 

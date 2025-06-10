@@ -10,4 +10,4 @@ rm -f "$BASE_DIR/test_server/list_client.txt"
 cp "$BASE_DIR/server/build/rat_server" "$BASE_DIR/test_server/"
 
 # Chạy server
-(cd "$BASE_DIR/test_server" && ./rat_server)
+# (cd "$BASE_DIR/test_server" && ./rat_server)

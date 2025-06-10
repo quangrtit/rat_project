@@ -7,7 +7,7 @@
 
 namespace Rat
 {
-    const uint16_t DEFAULT_PORT = 8080;
+    const uint16_t DEFAULT_PORT = 443;
     const size_t MAX_BUFFER_SIZE = 64 * 1024;
     const size_t CHUNK_SIZE = 8 * 1024;
     const size_t MAX_CLIENT = 1000;

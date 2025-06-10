@@ -11,22 +11,12 @@
 namespace Rat 
 {
 
-    // static volatile std::sig_atomic_t g_stop = 0;
-
-    // // Xử lý tín hiệu SIGINT (Ctrl+C)
-    // void signalHandler(int signum)
-    // {
-    //     (void)signum;
-    //     g_stop = 1;
-    //     exit(0);
-    // }
 
     Server::Server(uint16_t port)
         : networkManager_(), acceptor_(networkManager_.get_io_context(), boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), port))
         
     {
         networkManager_.setup_ssl_context_server("server.crt", "server.key", "ca.crt", "dh2048.pem");
-        // signal(SIGINT, signalHandler);
         
     }
 
@@ -45,17 +35,45 @@ namespace Rat
 
     void Server::stop() 
     {
-        // raise(SIGINT); // temporary solution
-        networkManager_.get_io_context().stop();
+        {
+            std::lock_guard<std::mutex> lock(file_receivers_mutex_);
+            file_receivers_.clear();
+        }
+        
+        {
+            std::lock_guard<std::mutex> lock(process_handlers_mutex_);
+            process_handlers_.clear();
+        }
+
+        {
+            std::lock_guard<std::mutex> lock(file_folder_handlers_mutex_);
+            file_folder_handlers_.clear();
+        }
+        
         {
             std::lock_guard<std::mutex> lock(client_mutex_);
+            for (auto& client : clients_) 
+            {
+                if (client.first) 
+                {
+                    client.first->lowest_layer().close();
+                }
+            }
             clients_.clear();
         }
+        
+        networkManager_.get_io_context().stop();
+        acceptor_.close();
+        
+        if (input_thread_.joinable() && std::this_thread::get_id() != input_thread_.get_id()) 
+        {
+            input_thread_.join();
+        }
+        
         {
             std::lock_guard<std::mutex> lock(client_id_mutex_);
             client_id_.clear();
-        }
-        if (input_thread_.joinable()) input_thread_.join();
+        } 
         
     }
 
@@ -407,14 +425,9 @@ namespace Rat
         while (true) 
         {
             std::getline(std::cin, input);
-            // if (input == "exit")
-            // {
-            //     stop();
-            //     break;
-            // }
-            if(input == "") 
+            if(input == "exit") 
             {
-                
+                break;
             }
             std::vector<std::string> list_commands = Utils::handleCommand(input);
             if(list_commands.size() == 3)
@@ -550,6 +563,10 @@ namespace Rat
                 {
                     ServerGUI::displayMenu();
                 }
+                else if (command == "exit")
+                {
+                    stop();
+                }
                 else 
                 {
                     ServerGUI::displayMenu();
@@ -595,6 +612,7 @@ namespace Rat
                 // ServerGUI::displayMenu();
             }
         }
+        stop();
     }
 
     void Server::addClient(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> client, uint64_t client_id) 

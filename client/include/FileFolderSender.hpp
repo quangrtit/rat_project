@@ -13,7 +13,7 @@
 
 namespace Rat
 {
-    class FileFolderSender
+    class FileFolderSender: public std::enable_shared_from_this<FileFolderSender>
     {
     public:
         FileFolderSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket,

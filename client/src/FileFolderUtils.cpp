@@ -23,7 +23,7 @@ namespace Rat {
         bool include_hidden;
         std::tie(path, level, include_hidden) = parsed.value();
 
-        if (level > 20) 
+        if (level > 5) 
         {
             response = "LIST FILES AND FOLDER | ARGUMENT ERROR | LEVEL TOO DEEP";
             return "";

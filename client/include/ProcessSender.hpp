@@ -12,7 +12,7 @@
 
 namespace Rat
 {
-    class ProcessSender
+    class ProcessSender : public std::enable_shared_from_this<ProcessSender>
     {
     public:
         ProcessSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket,

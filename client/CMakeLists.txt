@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF) 
 
+set(Boost_USE_STATIC_LIBS ON)
+set(OPENSSL_USE_STATIC_LIBS TRUE)
 
 find_package(Boost 1.83 REQUIRED COMPONENTS system thread)
 find_package(OpenSSL REQUIRED)
@@ -51,3 +53,24 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
 else()
     target_compile_options(rat_client PRIVATE -O2 -Wall -Wextra)
 endif()
+
+install(TARGETS rat_client DESTINATION bin)
+install(FILES ${CMAKE_BINARY_DIR}/ca.crt DESTINATION etc/rat-client)
+set(CPACK_SET_DESTDIR ON)
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_NAME "rat-client")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_CONTACT "quang@example.com")
+set(CPACK_PACKAGE_VENDOR "quang")
+set(CPACK_PACKAGE_DESCRIPTION "RAT Client đóng gói bằng CPack")
+set(CPACK_PACKAGE_HOMEPAGE_URL "https://quang.com")
+
+set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
+set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+set(CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+set(CPACK_DEBIAN_COMPRESSION_TYPE "xz")
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+
+include(CPack)

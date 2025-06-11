@@ -37,7 +37,6 @@ namespace Rat
             boost::asio::ssl::context::no_sslv2 |
             boost::asio::ssl::context::no_sslv3
         );
-
         boost::system::error_code ec;
         ssl_context_.load_verify_file(verify_file, ec);
         if (ec) 
@@ -45,13 +44,11 @@ namespace Rat
             // std::cout << "[" << std::time(nullptr) << "] Failed to load CA certificate: " << ec.message() << std::endl;
             throw std::runtime_error("CA certificate loading failed");
         }
-
         SSL_CTX_set_info_callback(ssl_context_.native_handle(), [](const SSL* ssl, int where, int ret) 
         {
             const char* str = SSL_state_string_long(ssl);
             // std::cout << "[" << std::time(nullptr) << "] SSL Client: " << str << " (where: " << where << ", ret: " << ret << ")\n";
         });
-
         ssl_context_.set_verify_mode(boost::asio::ssl::verify_peer);
         ssl_context_.set_verify_callback(
             [host](bool preverified, boost::asio::ssl::verify_context& ctx) 
@@ -68,7 +65,6 @@ namespace Rat
                 return verified;
             });
     }
-
     void NetworkManager::setup_ssl_context_server(const std::string& cert_file, const std::string& key_file,
                                                 const std::string& verify_file, const std::string& dh_file) 
                                                 {
@@ -79,7 +75,6 @@ namespace Rat
             boost::asio::ssl::context::no_sslv3 |
             boost::asio::ssl::context::single_dh_use
         );
-
         boost::system::error_code ec;
         ssl_context_.use_certificate_chain_file(cert_file, ec);
         if (ec) 

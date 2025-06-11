@@ -13,10 +13,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/lib/x86_64-linux-gnu/cmake/Boost-1.83.0/BoostConfig.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/Boost-1.83.0/BoostConfigVersion.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/BoostDetectToolset-1.83.0.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_atomic-1.83.0/boost_atomic-config-version.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_atomic-1.83.0/boost_atomic-config.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_atomic-1.83.0/libboost_atomic-variant-shared.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/boost_atomic-1.83.0/libboost_atomic-variant-static.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.83.0/boost_headers-config-version.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/boost_headers-1.83.0/boost_headers-config.cmake"
   "/usr/lib/x86_64-linux-gnu/cmake/boost_system-1.83.0/boost_system-config-version.cmake"
@@ -35,6 +31,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake"
   "/usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake"
   "/usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake"
+  "/usr/share/cmake-3.28/Modules/CPack.cmake"
+  "/usr/share/cmake-3.28/Modules/CPackComponent.cmake"
   "/usr/share/cmake-3.28/Modules/CheckCXXSourceCompiles.cmake"
   "/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake"
   "/usr/share/cmake-3.28/Modules/CheckLibraryExists.cmake"
@@ -48,6 +46,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/FindPkgConfig.cmake"
   "/usr/share/cmake-3.28/Modules/FindProtobuf.cmake"
   "/usr/share/cmake-3.28/Modules/FindThreads.cmake"
+  "/usr/share/cmake-3.28/Modules/InstallRequiredSystemLibraries.cmake"
   "/usr/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake"
@@ -55,6 +54,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/Platform/Linux.cmake"
   "/usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake"
   "/usr/share/cmake-3.28/Modules/SelectLibraryConfigurations.cmake"
+  "/usr/share/cmake-3.28/Templates/CPackConfig.cmake.in"
   )
 
 # The corresponding makefile is:
@@ -65,6 +65,8 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "CPackConfig.cmake"
+  "CPackSourceConfig.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

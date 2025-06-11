@@ -1,0 +1,10 @@
+Architecture: amd64
+Description: RAT Client đóng gói bằng CPack
+Homepage: https://quang.com
+Maintainer: quang@example.com
+Package: rat-client
+Priority: optional
+Section: utils
+Version: 1.0.0
+Installed-Size: 1323
+

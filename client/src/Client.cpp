@@ -32,8 +32,8 @@ namespace Rat
         networkManager_(),
         timer_(networkManager_.get_io_context())
     {
-        networkManager_.setup_ssl_context_client("ca.crt", host_);
-        // networkManager_.setup_ssl_context(false, "client.crt", "client.key", "ca.crt");
+        networkManager_.setup_ssl_context_client("/usr/local/etc/rat-client/ca.crt", host_);
+        // networkManager_.setup_ssl_context_client("ca.crt", host_);
     }
 
     Client::~Client() 

@@ -17,7 +17,6 @@
 #include "FilesFoldersHandler.hpp"
 namespace Rat 
 {
-
     class Server 
     {
     public:
@@ -44,7 +43,6 @@ namespace Rat
         std::set<uint64_t> client_id_;
         std::unordered_map<std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>, uint64_t> clients_;
         // boost::asio::io_context io_context_;
-        
         NetworkManager networkManager_;
         boost::asio::ip::tcp::acceptor acceptor_;
         // ServerSecurity security_;
@@ -52,16 +50,12 @@ namespace Rat
         std::mutex file_save_mutex_;
         std::mutex client_mutex_;
         std::mutex client_id_mutex_;
-
-        // bool stopping_;
         // File receiver 
         std::unordered_map<uint64_t, std::shared_ptr<FileReceiver>> file_receivers_;
         std::mutex file_receivers_mutex_;
-
         // process handler
         std::unordered_map<uint64_t, std::shared_ptr<ProcessHandler>> process_handlers_;
         std::mutex process_handlers_mutex_;
-
         // file folder handler 
         std::unordered_map<uint64_t, std::shared_ptr<FilesFoldersHandler>> file_folder_handlers_; // Thay ProcessHandler nếu cần FileFolderHandler
         std::mutex file_folder_handlers_mutex_;

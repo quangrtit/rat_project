@@ -206,11 +206,10 @@ rat_client: CMakeFiles/rat_client.dir/src/FileFolderUtils.cpp.o
 rat_client: CMakeFiles/rat_client.dir/build.make
 rat_client: /home/quang/rat_project/client/../common/build/librat_common.a
 rat_client: /home/quang/rat_project/client/../common/build/proto/libproto.a
-rat_client: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.83.0
-rat_client: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.83.0
+rat_client: /usr/lib/x86_64-linux-gnu/libboost_system.a
+rat_client: /usr/lib/x86_64-linux-gnu/libboost_thread.a
 rat_client: /usr/lib/x86_64-linux-gnu/libssl.so
 rat_client: /usr/lib/x86_64-linux-gnu/libprotobuf.so
-rat_client: /usr/lib/x86_64-linux-gnu/libboost_atomic.so.1.83.0
 rat_client: /usr/lib/x86_64-linux-gnu/libcrypto.so
 rat_client: CMakeFiles/rat_client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/quang/rat_project/client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable rat_client"

@@ -4,11 +4,28 @@ project(RATCommon LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
+
+set(BOOST_ROOT /usr/local)
+set(OPENSSL_ROOT_DIR /usr/local/openssl-3.0.14)
+set(Protobuf_ROOT /usr/local/protobuf-static)
+
+
 find_package(Boost 1.83 REQUIRED COMPONENTS system thread)
 find_package(OpenSSL REQUIRED)
+find_package(Protobuf REQUIRED)
 
-set(COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories(${COMMON_INCLUDE_DIR})
+add_compile_options(-fvisibility=hidden)
+
+include_directories(
+    ${Boost_INCLUDE_DIRS}
+    ${OPENSSL_INCLUDE_DIR}
+    ${Protobuf_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/proto/build
+)
+
+add_subdirectory(proto) 
 
 set(COMMON_SOURCES
     src/NetworkManager.cpp
@@ -16,41 +33,47 @@ set(COMMON_SOURCES
 
 add_library(rat_common STATIC ${COMMON_SOURCES})
 
-add_subdirectory(proto)
-
-target_include_directories(rat_common PUBLIC
-    ${COMMON_INCLUDE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/proto/build
+target_link_libraries(rat_common PUBLIC
+    proto
+    Boost::system
+    Boost::thread
+    OpenSSL::SSL
+    OpenSSL::Crypto
+    ${Protobuf_LIBRARIES}
+    -pthread
+    -ldl
 )
 
-target_link_libraries(rat_common
-    PUBLIC
-        Boost::system
-        Boost::thread
-        OpenSSL::SSL
-        proto
-)
-
-find_package(Catch2 2.13.0 REQUIRED) 
+find_package(Catch2 2.13.0 REQUIRED)
 if(Catch2_FOUND)
+    message(STATUS "Catch2 found")
     enable_testing()
+
     set(TEST_SOURCES
         tests/test_network_manager.cpp
     )
+
     add_executable(rat_tests ${TEST_SOURCES})
-    target_include_directories(rat_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/proto/build)
-    target_link_libraries(rat_tests
-        PRIVATE
-            rat_common
-            proto
-            Catch2::Catch2
-            Boost::system
-            Boost::thread
-            OpenSSL::SSL    
+    target_include_directories(rat_tests PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/proto/build
+        ${Protobuf_INCLUDE_DIRS}
     )
+    target_link_libraries(rat_tests PRIVATE
+        rat_common
+        Catch2::Catch2
+        Boost::system
+        Boost::thread
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ${Protobuf_LIBRARIES}
+        -pthread
+        -ldl
+    )
+    target_compile_options(rat_tests PRIVATE -fno-common)
     add_test(NAME RATTests COMMAND rat_tests)
 else()
     message(FATAL_ERROR "Catch2 not found. Please install Catch2.")
 endif()
 
-set(RAT_COMMON_INCLUDE_DIR ${COMMON_INCLUDE_DIR})
+set(RAT_COMMON_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Include directory for RATCommon")

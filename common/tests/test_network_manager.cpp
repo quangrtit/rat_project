@@ -1,8 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 #include "NetworkManager.hpp"
-#include "Packet.pb.h"
-
+// #include "Packet.pb.h"
 using namespace Rat;
 
 std::vector<char> simulate_send(const rat::Packet& packet) 

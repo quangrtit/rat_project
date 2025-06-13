@@ -8,6 +8,7 @@
 #include <boost/thread/mutex.hpp>
 #include <memory>
 #include <boost/asio/ssl.hpp>
+#include <google/protobuf/arena.h>
 #include "Constants.hpp"
 #include "Packet.pb.h"
 

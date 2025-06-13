@@ -1,0 +1,26 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                
+                // BOOST
+                "/usr/local/include",
+
+                // OPENSSL
+                "/usr/local/openssl-3.0.14/include",
+
+                // PROTOBUF
+                "/usr/local/protobuf-static/include",
+                "/usr/local/protobuf-static/include/google"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}

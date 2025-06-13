@@ -117,10 +117,11 @@ CMakeFiles/proto.dir/Packet.pb.cc.o: \
  /usr/include/c++/13/bits/memory_resource.h /usr/include/c++/13/cstddef \
  /usr/include/c++/13/bits/uses_allocator.h \
  /usr/include/c++/13/bits/uses_allocator_args.h /usr/include/c++/13/tuple \
- /usr/include/google/protobuf/port_def.inc \
- /usr/include/google/protobuf/port_undef.inc \
- /usr/include/google/protobuf/io/coded_stream.h /usr/include/assert.h \
- /usr/include/c++/13/atomic /usr/include/c++/13/bits/atomic_base.h \
+ /usr/local/protobuf-static/include/google/protobuf/port_def.inc \
+ /usr/local/protobuf-static/include/google/protobuf/port_undef.inc \
+ /usr/local/protobuf-static/include/google/protobuf/io/coded_stream.h \
+ /usr/include/assert.h /usr/include/c++/13/atomic \
+ /usr/include/c++/13/bits/atomic_base.h \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
@@ -137,7 +138,7 @@ CMakeFiles/proto.dir/Packet.pb.cc.o: \
  /usr/include/x86_64-linux-gnu/bits/uio_lim.h /usr/include/c++/13/cstring \
  /usr/include/string.h /usr/include/strings.h /usr/include/c++/13/utility \
  /usr/include/c++/13/bits/stl_relops.h \
- /usr/include/google/protobuf/stubs/common.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/common.h \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
  /usr/include/c++/13/bits/stl_heap.h \
@@ -201,12 +202,13 @@ CMakeFiles/proto.dir/Packet.pb.cc.o: \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc \
- /usr/include/google/protobuf/stubs/macros.h \
- /usr/include/google/protobuf/stubs/platform_macros.h \
- /usr/include/google/protobuf/stubs/port.h /usr/include/c++/13/cstdint \
- /usr/include/c++/13/stdlib.h /usr/include/byteswap.h \
- /usr/include/google/protobuf/stubs/stringpiece.h \
- /usr/include/google/protobuf/stubs/hash.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/macros.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/platform_macros.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/port.h \
+ /usr/include/c++/13/cstdint /usr/include/c++/13/stdlib.h \
+ /usr/include/byteswap.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/stringpiece.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/hash.h \
  /usr/include/c++/13/unordered_map \
  /usr/include/c++/13/bits/unordered_map.h \
  /usr/include/c++/13/bits/hashtable.h \
@@ -214,48 +216,51 @@ CMakeFiles/proto.dir/Packet.pb.cc.o: \
  /usr/include/c++/13/bits/enable_special_members.h \
  /usr/include/c++/13/unordered_set \
  /usr/include/c++/13/bits/unordered_set.h \
- /usr/include/google/protobuf/stubs/logging.h \
- /usr/include/google/protobuf/stubs/status.h \
- /usr/include/google/protobuf/stubs/strutil.h \
- /usr/include/google/protobuf/port.h /usr/include/google/protobuf/arena.h \
- /usr/include/google/protobuf/arena_impl.h \
- /usr/include/google/protobuf/arenaz_sampler.h \
- /usr/include/google/protobuf/arenastring.h \
- /usr/include/google/protobuf/explicitly_constructed.h \
- /usr/include/google/protobuf/generated_message_util.h \
- /usr/include/google/protobuf/stubs/once.h /usr/include/c++/13/mutex \
- /usr/include/c++/13/bits/chrono.h /usr/include/c++/13/ratio \
- /usr/include/c++/13/ctime /usr/include/c++/13/bits/parse_numbers.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/logging.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/status.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/strutil.h \
+ /usr/local/protobuf-static/include/google/protobuf/port.h \
+ /usr/local/protobuf-static/include/google/protobuf/arena.h \
+ /usr/local/protobuf-static/include/google/protobuf/arena_impl.h \
+ /usr/local/protobuf-static/include/google/protobuf/arenaz_sampler.h \
+ /usr/local/protobuf-static/include/google/protobuf/arenastring.h \
+ /usr/local/protobuf-static/include/google/protobuf/explicitly_constructed.h \
+ /usr/local/protobuf-static/include/google/protobuf/generated_message_util.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/once.h \
+ /usr/include/c++/13/mutex /usr/include/c++/13/bits/chrono.h \
+ /usr/include/c++/13/ratio /usr/include/c++/13/ctime \
+ /usr/include/c++/13/bits/parse_numbers.h \
  /usr/include/c++/13/bits/std_mutex.h \
  /usr/include/c++/13/bits/unique_lock.h \
- /usr/include/google/protobuf/any.h \
- /usr/include/google/protobuf/message_lite.h \
- /usr/include/google/protobuf/metadata_lite.h \
- /usr/include/google/protobuf/has_bits.h \
- /usr/include/google/protobuf/implicit_weak_message.h \
- /usr/include/google/protobuf/repeated_field.h \
+ /usr/local/protobuf-static/include/google/protobuf/any.h \
+ /usr/local/protobuf-static/include/google/protobuf/message_lite.h \
+ /usr/local/protobuf-static/include/google/protobuf/metadata_lite.h \
+ /usr/local/protobuf-static/include/google/protobuf/has_bits.h \
+ /usr/local/protobuf-static/include/google/protobuf/implicit_weak_message.h \
+ /usr/local/protobuf-static/include/google/protobuf/repeated_field.h \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /usr/include/google/protobuf/repeated_ptr_field.h \
- /usr/include/google/protobuf/wire_format_lite.h \
- /usr/include/google/protobuf/stubs/casts.h \
- /usr/include/google/protobuf/generated_message_reflection.h \
- /usr/include/google/protobuf/descriptor.h \
- /usr/include/google/protobuf/stubs/mutex.h \
- /usr/include/google/protobuf/generated_enum_reflection.h \
- /usr/include/google/protobuf/generated_enum_util.h \
- /usr/include/google/protobuf/unknown_field_set.h \
- /usr/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
- /usr/include/google/protobuf/stubs/callback.h \
- /usr/include/google/protobuf/io/zero_copy_stream.h \
- /usr/include/google/protobuf/stubs/stl_util.h \
- /usr/include/google/protobuf/parse_context.h \
- /usr/include/google/protobuf/endian.h \
- /usr/include/google/protobuf/inlined_string_field.h \
- /usr/include/google/protobuf/message.h \
- /usr/include/google/protobuf/map.h /usr/include/c++/13/functional \
- /usr/include/c++/13/bits/std_function.h /usr/include/c++/13/array \
- /usr/include/c++/13/compare \
- /usr/include/google/protobuf/map_type_handler.h \
- /usr/include/google/protobuf/extension_set.h /usr/include/c++/13/cassert \
- /usr/include/google/protobuf/reflection_ops.h \
- /usr/include/google/protobuf/wire_format.h
+ /usr/local/protobuf-static/include/google/protobuf/repeated_ptr_field.h \
+ /usr/local/protobuf-static/include/google/protobuf/wire_format_lite.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/casts.h \
+ /usr/local/protobuf-static/include/google/protobuf/generated_message_reflection.h \
+ /usr/local/protobuf-static/include/google/protobuf/descriptor.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/mutex.h \
+ /usr/local/protobuf-static/include/google/protobuf/generated_enum_reflection.h \
+ /usr/local/protobuf-static/include/google/protobuf/generated_enum_util.h \
+ /usr/local/protobuf-static/include/google/protobuf/unknown_field_set.h \
+ /usr/local/protobuf-static/include/google/protobuf/io/zero_copy_stream_impl_lite.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/callback.h \
+ /usr/local/protobuf-static/include/google/protobuf/io/zero_copy_stream.h \
+ /usr/local/protobuf-static/include/google/protobuf/stubs/stl_util.h \
+ /usr/local/protobuf-static/include/google/protobuf/parse_context.h \
+ /usr/local/protobuf-static/include/google/protobuf/endian.h \
+ /usr/local/protobuf-static/include/google/protobuf/inlined_string_field.h \
+ /usr/local/protobuf-static/include/google/protobuf/message.h \
+ /usr/local/protobuf-static/include/google/protobuf/map.h \
+ /usr/include/c++/13/functional /usr/include/c++/13/bits/std_function.h \
+ /usr/include/c++/13/array /usr/include/c++/13/compare \
+ /usr/local/protobuf-static/include/google/protobuf/map_type_handler.h \
+ /usr/local/protobuf-static/include/google/protobuf/extension_set.h \
+ /usr/include/c++/13/cassert \
+ /usr/local/protobuf-static/include/google/protobuf/reflection_ops.h \
+ /usr/local/protobuf-static/include/google/protobuf/wire_format.h

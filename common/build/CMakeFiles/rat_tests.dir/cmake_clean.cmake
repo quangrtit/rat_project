@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/rat_tests.dir/link.d"
   "CMakeFiles/rat_tests.dir/tests/test_network_manager.cpp.o"
   "CMakeFiles/rat_tests.dir/tests/test_network_manager.cpp.o.d"
   "rat_tests"

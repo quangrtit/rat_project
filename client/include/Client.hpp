@@ -24,6 +24,7 @@ namespace Rat
         void stop();
 
     private:
+        // void initClientID(const std::string& path = "/usr/local/etc/rat-client/client_id.txt");
         void initClientID(const std::string& path = "./client_id.txt");
         void tryConnect();
         void sendClientId();

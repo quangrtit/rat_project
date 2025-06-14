@@ -1,0 +1,2 @@
+/usr/local/bin/rat_client
+/usr/local/etc/rat-client/ca.crt

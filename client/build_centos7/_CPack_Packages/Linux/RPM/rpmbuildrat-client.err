@@ -1,0 +1,25 @@
++ umask 022
++ cd /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/BUILD
++ mv /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/tmpBBroot
++ exit 0
++ umask 022
++ cd /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/BUILD
++ '[' /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux '!=' / ']'
++ rm -rf /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux
+++ dirname /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux
++ mkdir -p /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM
++ mkdir /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux
++ '[' -e /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux ']'
++ rm -rf /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux
++ mv /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/tmpBBroot /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/rat-client-1.0.0-Linux
++ /usr/lib/rpm/check-buildroot
++ /usr/lib/rpm/redhat/brp-compress
++ /usr/lib/rpm/redhat/brp-strip /usr/bin/strip
++ /usr/lib/rpm/redhat/brp-strip-comment-note /usr/bin/strip /usr/bin/objdump
++ /usr/lib/rpm/redhat/brp-strip-static-archive /usr/bin/strip
++ /usr/lib/rpm/brp-python-bytecompile /usr/bin/python 1
++ /usr/lib/rpm/redhat/brp-python-hardlink
++ /usr/lib/rpm/redhat/brp-java-repack-jars
++ umask 022
++ cd /rat_project/client/build_centos7/_CPack_Packages/Linux/RPM/BUILD
++ exit 0

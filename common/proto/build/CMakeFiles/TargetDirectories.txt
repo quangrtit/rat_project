@@ -1,7 +1,0 @@
-/home/quang/rat_project/common/proto/build/CMakeFiles/proto.dir
-/home/quang/rat_project/common/proto/build/CMakeFiles/edit_cache.dir
-/home/quang/rat_project/common/proto/build/CMakeFiles/rebuild_cache.dir
-/home/quang/rat_project/common/proto/build/CMakeFiles/list_install_components.dir
-/home/quang/rat_project/common/proto/build/CMakeFiles/install.dir
-/home/quang/rat_project/common/proto/build/CMakeFiles/install/local.dir
-/home/quang/rat_project/common/proto/build/CMakeFiles/install/strip.dir

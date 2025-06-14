@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/quang/rat_project/common/build/cmake_install.cmake",
-		"/home/quang/rat_project/common/build/proto/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

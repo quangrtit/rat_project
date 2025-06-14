@@ -192,8 +192,8 @@ rat_server: CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o
 rat_server: CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o
 rat_server: CMakeFiles/rat_server.dir/build.make
 rat_server: CMakeFiles/rat_server.dir/compiler_depend.ts
-rat_server: /home/quang/rat_project/server/../common/build/librat_common.a
-rat_server: /home/quang/rat_project/server/../common/build/proto/libproto.a
+rat_server: /home/quang/rat_project/server/../common/build_ubuntu/librat_common.a
+rat_server: /home/quang/rat_project/server/../common/proto/build_ubuntu/libproto.a
 rat_server: /usr/local/lib/libboost_system.a
 rat_server: /usr/local/lib/libboost_thread.a
 rat_server: /usr/local/openssl-3.0.14/lib64/libssl.a

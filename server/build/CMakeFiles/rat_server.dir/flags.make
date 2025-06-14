@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DBOOST_SYSTEM_NO_LIB -DBOOST_THREAD_NO_LIB
 
-CXX_INCLUDES = -I/home/quang/rat_project/server/include -I/home/quang/rat_project/server/../common/include -I/home/quang/rat_project/server/../common/build/proto -I/usr/local/openssl-3.0.14/include -I/usr/local/protobuf-static/include
+CXX_INCLUDES = -I/home/quang/rat_project/server/include -I/home/quang/rat_project/server/../common/include -I/home/quang/rat_project/server/../common/proto/build_ubuntu -I/usr/local/openssl-3.0.14/include -I/usr/local/protobuf-static/include
 
 CXX_FLAGS = -std=c++17 -fPIE -O2 -Wall -Wextra
 

@@ -1534,7 +1534,7 @@ CMakeFiles/rat_server.dir/src/Server.cpp.o: \
  /usr/local/protobuf-static/include/google/protobuf/arenaz_sampler.h \
  /usr/local/protobuf-static/include/google/protobuf/port.h \
  /home/quang/rat_project/server/../common/include/Constants.hpp \
- /home/quang/rat_project/server/../common/build/proto/Packet.pb.h \
+ /home/quang/rat_project/server/../common/proto/build_ubuntu/Packet.pb.h \
  /usr/local/protobuf-static/include/google/protobuf/io/coded_stream.h \
  /usr/local/protobuf-static/include/google/protobuf/stubs/strutil.h \
  /usr/local/protobuf-static/include/google/protobuf/arenastring.h \

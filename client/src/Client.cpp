@@ -263,7 +263,8 @@ namespace Rat
                                     if (this_id_ > std::numeric_limits<uint64_t>::max()) {
                                         this_id_ = -1;
                                     }
-                                    std::ofstream file("client_id.txt");
+                                    // std::ofstream file("/usr/local/etc/rat-client/client_id.txt");
+                                    std::ofstream file("./client_id.txt");
                                     if (file.is_open()) 
                                     {
                                         file << this_id_ << "\n";

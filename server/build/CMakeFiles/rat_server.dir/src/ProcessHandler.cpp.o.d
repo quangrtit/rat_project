@@ -1264,7 +1264,7 @@ CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o: \
  /usr/local/include/boost/asio/writable_pipe.hpp \
  /usr/local/include/boost/asio/write_at.hpp \
  /usr/local/include/boost/asio/impl/write_at.hpp \
- /home/quang/rat_project/server/../common/build/proto/Packet.pb.h \
+ /home/quang/rat_project/server/../common/proto/build_ubuntu/Packet.pb.h \
  /usr/local/protobuf-static/include/google/protobuf/port_def.inc \
  /usr/local/protobuf-static/include/google/protobuf/port_undef.inc \
  /usr/local/protobuf-static/include/google/protobuf/io/coded_stream.h \

@@ -49,7 +49,7 @@ add_executable(rat_server
 target_include_directories(rat_server PRIVATE
     ${SERVER_INCLUDE_DIR}
     ${COMMON_DIR}/include
-    ${COMMON_DIR}/build/proto
+    ${COMMON_DIR}/proto/build_ubuntu
     ${OPENSSL_INCLUDE_DIR}
     ${Boost_INCLUDE_DIRS}
     ${Protobuf_INCLUDE_DIRS}
@@ -57,8 +57,8 @@ target_include_directories(rat_server PRIVATE
 
 target_link_libraries(rat_server
     PRIVATE
-    ${COMMON_DIR}/build/librat_common.a
-    ${COMMON_DIR}/build/proto/libproto.a
+    ${COMMON_DIR}/build_ubuntu/librat_common.a
+    ${COMMON_DIR}/proto/build_ubuntu/libproto.a
     ${Boost_LIBRARIES}
     ${OPENSSL_SSL_LIBRARY} 
     ${OPENSSL_CRYPTO_LIBRARY}  

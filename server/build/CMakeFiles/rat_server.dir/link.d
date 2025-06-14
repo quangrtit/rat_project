@@ -9,8 +9,8 @@ rat_server: \
   CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o \
   CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o \
   CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o \
-  /home/quang/rat_project/server/../common/build/librat_common.a \
-  /home/quang/rat_project/server/../common/build/proto/libproto.a \
+  /home/quang/rat_project/server/../common/build_ubuntu/librat_common.a \
+  /home/quang/rat_project/server/../common/proto/build_ubuntu/libproto.a \
   /usr/local/lib/libboost_system.a \
   /usr/local/lib/libboost_thread.a \
   /usr/local/openssl-3.0.14/lib64/libssl.a \
@@ -64,9 +64,9 @@ CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o:
 
 CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o:
 
-/home/quang/rat_project/server/../common/build/librat_common.a:
+/home/quang/rat_project/server/../common/build_ubuntu/librat_common.a:
 
-/home/quang/rat_project/server/../common/build/proto/libproto.a:
+/home/quang/rat_project/server/../common/proto/build_ubuntu/libproto.a:
 
 /usr/local/lib/libboost_system.a:
 

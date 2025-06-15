@@ -1,11 +1,11 @@
 #include "FileSender.hpp"
 #include <iostream>
 
-namespace Rat 
+namespace Rat
 {
     FileSender::FileSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket,
-                           NetworkManager& networkManager,
-                           const uint64_t& client_id, const std::string& file_path)
+                           NetworkManager &networkManager,
+                           const uint64_t &client_id, const std::string &file_path)
         : socket_(socket),
           networkManager_(networkManager),
           client_id_(client_id),
@@ -16,26 +16,26 @@ namespace Rat
 
     FileSender::~FileSender() {}
 
-    void FileSender::sendFile(const std::string& file_path, 
-        const std::string& file_id, 
-        std::function<void()> on_finish,
-        std::function<void()> on_disconnect)
+    void FileSender::sendFile(const std::string &file_path,
+                              const std::string &file_id,
+                              std::function<void()> on_finish,
+                              std::function<void()> on_disconnect)
     {
         file_id_ = file_id;
         on_finish_ = std::move(on_finish);
         on_disconnect_ = std::move(on_disconnect);
 
         file_.open(file_path, std::ios::binary);
-        if (!file_.is_open()) 
+        if (!file_.is_open())
         {
             std::cerr << "[" << std::time(nullptr) << "] Cannot open file: " << file_path << "\n";
             return;
         }
 
-        if (!socket_ || !socket_->lowest_layer().is_open() || !socket_->next_layer().is_open()) 
+        if (!socket_ || !socket_->lowest_layer().is_open() || !socket_->next_layer().is_open())
         {
             std::cerr << "[" << std::time(nullptr) << "] Socket not ready, need to reconnect\n";
-            if (on_disconnect_) 
+            if (on_disconnect_)
             {
                 on_disconnect_();
             }
@@ -50,20 +50,18 @@ namespace Rat
 
         std::cout << "[" << std::time(nullptr) << "] Debug all chunk: " << total_chunks_ << "\n";
 
-        boost::asio::post(networkManager_.get_io_context(), [this]() 
-        {
-            this->processNextChunk();
-        });
+        boost::asio::post(networkManager_.get_io_context(), [this]()
+                          { this->processNextChunk(); });
     }
 
     void FileSender::processNextChunk()
     {
         // Check if enough chunks have been sent
-        if (sequence_ >= total_chunks_) 
+        if (sequence_ >= total_chunks_)
         {
             std::cout << "[" << std::time(nullptr) << "] Finished sending file: " << file_id_ << "\n";
             file_.close();
-            if (on_finish_) 
+            if (on_finish_)
             {
                 on_finish_();
             }
@@ -74,7 +72,7 @@ namespace Rat
         file_.read(buffer_.data(), CHUNK_SIZE);
         std::streamsize bytes_read = file_.gcount();
 
-        if (file_.fail() && !file_.eof()) 
+        if (file_.fail() && !file_.eof())
         {
             std::cerr << "[" << std::time(nullptr) << "] File read error for file: " << file_id_ << "\n";
             file_.close();
@@ -86,7 +84,7 @@ namespace Rat
         {
             std::cout << "[" << std::time(nullptr) << "] Finished sending file: " << file_id_ << "\n";
             file_.close();
-            if (on_finish_) 
+            if (on_finish_)
             {
                 on_finish_();
             }
@@ -101,19 +99,19 @@ namespace Rat
         packet.set_destination_id("server_0");
         packet.set_encrypted(true);
         packet.set_file_path(file_path_);
-        auto* chunk = packet.mutable_chunked_data();
+        auto *chunk = packet.mutable_chunked_data();
         chunk->set_data_id(file_id_);
         chunk->set_sequence_number(sequence_);
         chunk->set_total_chunks(total_chunks_);
         chunk->set_payload(buffer_.data(), bytes_read);
         chunk->set_success(true);
 
-        std::cout << "[" << std::time(nullptr) << "] Debug sending chunk: " << sequence_ + 1 << " / " << total_chunks_ 
+        std::cout << "[" << std::time(nullptr) << "] Debug sending chunk: " << sequence_ + 1 << " / " << total_chunks_
                   << " (" << (sequence_ + 1) / float(total_chunks_) * 100 << "%)" << "\n";
 
         // Send packet
-        networkManager_.send(socket_, packet, [this](const boost::system::error_code& ec) 
-        {
+        networkManager_.send(socket_, packet, [this](const boost::system::error_code &ec)
+                             {
             if (ec) {
                 std::cerr << "[" << std::time(nullptr) << "] Send failed: " << ec.message() << "\n";
                 boost::asio::deadline_timer timer(networkManager_.get_io_context());
@@ -159,7 +157,6 @@ namespace Rat
                 {
                     processNextChunk();
                 });
-            });
-        });
+            }); });
     }
 } // namespace Rat

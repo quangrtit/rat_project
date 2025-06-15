@@ -14,7 +14,7 @@
 namespace Rat
 {
     // Check if a string contains only digits
-    bool is_number(const std::string& s)
+    bool is_number(const std::string &s)
     {
         if (s.empty())
         {
@@ -27,7 +27,7 @@ namespace Rat
     // Get username from UID
     std::string getUserFromUID(uid_t uid)
     {
-        struct passwd* pw = getpwuid(uid);
+        struct passwd *pw = getpwuid(uid);
 
         if (pw)
         {
@@ -40,9 +40,15 @@ namespace Rat
     // Get total system memory from /proc/meminfo
     long getTotalMemory()
     {
+        static long cachedMemTotal = 0;
+        if (cachedMemTotal != 0)
+        {
+            return cachedMemTotal;
+        }
+
         std::ifstream meminfo("/proc/meminfo");
         std::string line;
-        long memTotal = 1;
+        long memTotal = 0;
 
         while (std::getline(meminfo, line))
         {
@@ -58,6 +64,11 @@ namespace Rat
             }
         }
 
+        if (memTotal == 0)
+        {
+            std::cerr << "Warning: Could not read total memory from /proc/meminfo.\n";
+        }
+        cachedMemTotal = memTotal;
         return memTotal;
     }
 
@@ -65,7 +76,7 @@ namespace Rat
     std::vector<ProcessInfo> listProcesses()
     {
         std::vector<ProcessInfo> processes;
-        DIR* procDir = opendir("/proc");
+        DIR *procDir = opendir("/proc");
 
         if (!procDir)
         {
@@ -74,7 +85,7 @@ namespace Rat
 
         long totalMem = getTotalMemory();
 
-        struct dirent* entry;
+        struct dirent *entry;
         while ((entry = readdir(procDir)) != nullptr)
         {
             if (entry->d_type == DT_DIR && is_number(entry->d_name))
@@ -113,6 +124,23 @@ namespace Rat
 
                 std::string cmdline;
                 std::getline(cmdFile, cmdline, '\0');
+                if (cmdFile)
+                {
+                    // Read the rest of the file if not at EOF
+                    std::string rest;
+                    while (std::getline(cmdFile, rest, '\0'))
+                    {
+                        cmdline += '\0';
+                        cmdline += rest;
+                    }
+                }
+                // Replace null bytes with spaces for readability
+                std::replace(cmdline.begin(), cmdline.end(), '\0', ' ');
+                // Trim trailing spaces
+                while (!cmdline.empty() && cmdline[cmdline.size() - 1] == ' ')
+                {
+                    cmdline.erase(cmdline.size() - 1);
+                }
                 if (cmdline.empty())
                 {
                     continue;
@@ -121,7 +149,7 @@ namespace Rat
                 ProcessInfo info;
                 info.pid = pid;
                 info.user = getUserFromUID(uid);
-                info.memPercent = (float)rss / totalMem * 100.0f;
+                info.memPercent = (totalMem > 0) ? ((float)rss / totalMem * 100.0f) : 0.0f;
                 info.command = cmdline;
 
                 processes.push_back(info);
@@ -133,13 +161,13 @@ namespace Rat
     }
 
     // Format process list into a single string
-    std::string formatProcessList(const std::vector<ProcessInfo>& processes)
+    std::string formatProcessList(const std::vector<ProcessInfo> &processes)
     {
         std::ostringstream oss;
 
-        for (const auto& p : processes)
+        for (const auto &p : processes)
         {
-            std::string shortCmd = p.command.substr(0, 20) + (p.command.length() > 20 ? "..." : "");
+            std::string shortCmd = p.command.substr(0, std::min(p.command.length(), size_t(19))) + (p.command.length() > 20 ? "..." : "");
             oss << p.pid << " " << p.user << " "
                 << std::fixed << std::setprecision(2) << p.memPercent << "% "
                 << shortCmd << "\n";

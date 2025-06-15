@@ -216,6 +216,9 @@ Protobuf_PROTOC_LIBRARY_DEBUG:FILEPATH=/usr/local/protobuf-static/lib/libprotoc.
 //Path to a library.
 Protobuf_PROTOC_LIBRARY_RELEASE:FILEPATH=/usr/local/protobuf-static/lib/libprotoc.a
 
+//No help, variable specified on the command line.
+TARGET_PLATFORM:UNINITIALIZED=centos7
+
 
 ########################
 # INTERNAL cache entries

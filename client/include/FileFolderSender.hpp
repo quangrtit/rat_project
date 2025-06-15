@@ -13,17 +13,17 @@
 
 namespace Rat
 {
-    class FileFolderSender: public std::enable_shared_from_this<FileFolderSender>
+    class FileFolderSender : public std::enable_shared_from_this<FileFolderSender>
     {
     public:
         FileFolderSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket,
-                         NetworkManager& networkManager,
-                         const uint64_t& client_id,
-                         const std::string& file_folder_data);
+                         NetworkManager &networkManager,
+                         const uint64_t &client_id,
+                         const std::string &file_folder_data);
 
         ~FileFolderSender() = default;
 
-        void sendFileFolders(const std::string& data_id,
+        void sendFileFolders(const std::string &data_id,
                              std::function<void()> on_finish,
                              std::function<void()> on_disconnect);
 
@@ -31,7 +31,7 @@ namespace Rat
         void processNextChunk();
 
         std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_;
-        NetworkManager& networkManager_;
+        NetworkManager &networkManager_;
         uint64_t client_id_;
         std::string file_folder_data_;
         std::string data_id_;

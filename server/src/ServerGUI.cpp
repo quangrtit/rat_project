@@ -1,6 +1,6 @@
 #include "ServerGUI.hpp"
 
-namespace Rat 
+namespace Rat
 {
     // Initialize static members
     std::map<uint64_t, ServerGUI::ProgressInfo> ServerGUI::progress_map_;
@@ -10,7 +10,7 @@ namespace Rat
 
     ServerGUI::~ServerGUI() {}
 
-    void ServerGUI::displayClients(const std::unordered_map<std::shared_ptr<SslSocket>, uint64_t>& clients)
+    void ServerGUI::displayClients(const std::unordered_map<std::shared_ptr<SslSocket>, uint64_t> &clients)
     {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << BLUE << "+------------------------------------------+" << RESET << "\n";
@@ -19,7 +19,7 @@ namespace Rat
         std::cout << BOLD << "| IP Address       | Client ID             |" << RESET << "\n";
         std::cout << BOLD << BLUE << "+------------------+-----------------------+" << RESET << "\n";
 
-        for (const auto& client : clients) 
+        for (const auto &client : clients)
         {
             std::string ip = client.first->lowest_layer().remote_endpoint().address().to_string();
             std::cout << "| " << std::left << std::setw(16) << ip
@@ -28,22 +28,23 @@ namespace Rat
 
         std::cout << BOLD << BLUE << "+------------------+-----------------------+" << RESET << "\n\n";
     }
-    
-    void ServerGUI::displayMenu() 
+
+    void ServerGUI::displayMenu()
     {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << YELLOW << "Available Commands:" << RESET << "\n";
-        std::cout << GREEN << "list_clients                                   : List all client is connnecting" << RESET << "\n";
+        std::cout << GREEN << "list_clients                                   : List all client is connecting" << RESET << "\n";
         std::cout << GREEN << "list_files_folders <ip/id> <path_level_hidden> : List files/folders in path have level and option hidden files folders" << RESET << "\n";
         std::cout << GREEN << "transfer_file <ip/id> <path>                   : Transfer file <path> from client have <ip/id>" << RESET << "\n";
         std::cout << GREEN << "list_processes <ip/id>                         : List running processes from <ip/id>" << RESET << "\n";
-        std::cout << GREEN << "kill_process <pid>                             : Kill process with <pid>" << RESET << "\n";
+        std::cout << GREEN << "kill_process <ip/id> <pid>                    : Kill process in <ip/id> with <pid>" << RESET << "\n";
         std::cout << GREEN << "help                                           : List command can use" << RESET << "\n";
         std::cout << GREEN << "exit                                           : Stop server" << RESET << "\n";
         // std::cout << BOLD << "Enter command: " << RESET;
     }
 
-    void ServerGUI::displayResult(uint64_t client_id, const std::string& ip, const std::string& command, const std::string& result) {
+    void ServerGUI::displayResult(uint64_t client_id, const std::string &ip, const std::string &command, const std::string &result)
+    {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
         std::cout << BOLD << BLUE << "| Response from Client ID: " << std::setw(10) << client_id << " IP: " << ip << " |" << RESET << "\n";
@@ -53,55 +54,57 @@ namespace Rat
         std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n\n";
     }
 
-    void ServerGUI::displayError(const std::string& error) 
+    void ServerGUI::displayError(const std::string &error)
     {
         std::lock_guard<std::mutex> lock(console_mutex_);
         std::cout << BOLD << RED << "Error: " << error << RESET << "\n\n";
     }
 
-    void ServerGUI::displayProgress(uint64_t client_id, const std::string& ip, const std::string& filename,
-                               uint64_t sequence_number, uint64_t total_chunks) 
-                               {
+    void ServerGUI::displayProgress(uint64_t client_id, const std::string &ip, const std::string &filename,
+                                    uint64_t sequence_number, uint64_t total_chunks)
+    {
         std::lock_guard<std::mutex> lock(console_mutex_);
 
-        if (sequence_number == total_chunks) 
+        if (sequence_number >= total_chunks)
         {
-            if (header_displayed_) 
+            if (header_displayed_)
             {
-                
+
                 header_displayed_ = false;
             }
             std::cout.flush();
             return;
         }
-        // if(!header_displayed_) 
+        // if(!header_displayed_)
         // {
         //     std::cout << "yes header dispayed\n" << std::endl;
         // }
-        if (!header_displayed_) 
+        if (!header_displayed_)
         {
-           
+
             std::cout << "\033[0J";
             std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
             std::cout << BOLD << BLUE << "| File Transfer Progress                                      |" << RESET << "\n";
             std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
-            
+
             std::cout << "| Client ID: " << std::setw(4) << client_id
-                    << " | IP: " << std::setw(15) << ip
-                    << " | File: " << std::setw(15) << filename << " |\n";
-   
+                      << " | IP: " << std::setw(15) << ip
+                      << " | File: " << std::setw(15) << filename << " |\n";
+
             float percentage = (sequence_number + 1) / (float)total_chunks * 100.0f;
             int bar_width = 30;
             int filled = static_cast<int>(percentage / 100.0f * bar_width);
             std::string bar(filled, '#');
             bar.append(bar_width - filled, '-');
-            std::cout << "| [" << bar << "] " 
-                    << std::fixed << std::setprecision(1) << std::setw(5) << percentage << "%"
-                    << " (" << sequence_number + 1 << "/" << total_chunks << " chunks)" << " |\n";
+            std::cout << "| [" << bar << "] "
+                      << std::fixed << std::setprecision(1) << std::setw(5) << percentage << "%"
+                      << " (" << sequence_number + 1 << "/" << total_chunks << " chunks)" << " |\n";
             std::cout << BOLD << BLUE << "+-------------------------------------------------------------+" << RESET << "\n";
             header_displayed_ = true;
-        } else {
-            // if(sequence_number == total_chunks) 
+        }
+        else
+        {
+            // if(sequence_number == total_chunks)
             // {
             //     std::cout << "\033[1B";
             //     return;
@@ -118,9 +121,9 @@ namespace Rat
             int filled = static_cast<int>(percentage / 100.0f * bar_width);
             std::string bar(filled, '#');
             bar.append(bar_width - filled, '-');
-            std::cout << "| [" << bar << "] " 
-                    << std::fixed << std::setprecision(1) << std::setw(5) << percentage << "%"
-                    << " (" << sequence_number + 1 << "/" << total_chunks << " chunks)" << " |\n";
+            std::cout << "| [" << bar << "] "
+                      << std::fixed << std::setprecision(1) << std::setw(5) << percentage << "%"
+                      << " (" << sequence_number + 1 << "/" << total_chunks << " chunks)" << " |\n";
 
             // Move cursor down footer (1 line down)
             std::cout << "\033[1B";
@@ -133,10 +136,11 @@ namespace Rat
         header_displayed_ = false;
     }
 
-    void ServerGUI::displayProcessList(uint64_t client_id, const std::string& ip, const std::string& process_data)
+    void ServerGUI::displayProcessList(uint64_t client_id, const std::string &ip, const std::string &process_data)
     {
         std::lock_guard<std::mutex> lock(console_mutex_);
-        std::cout << BOLD << GREEN << "=== Process List from Client " << client_id << " (" << ip << ") ===\n" << RESET;
+        std::cout << BOLD << GREEN << "=== Process List from Client " << client_id << " (" << ip << ") ===\n"
+                  << RESET;
 
         // Parse process data into lines
         std::vector<std::string> lines;
@@ -156,7 +160,7 @@ namespace Rat
         size_t memWidth = 8;  // Minimum width for Memory
         size_t cmdWidth = 15; // Minimum width for Command
 
-        for (const auto& l : lines)
+        for (const auto &l : lines)
         {
             std::stringstream ls(l);
             std::string pid, user, mem, cmd;
@@ -168,21 +172,30 @@ namespace Rat
         }
 
         // Print header
-        std::cout << BLUE << std::left << std::setw(pidWidth) << "PID" 
-                  << std::setw(userWidth) << "User" 
-                  << std::setw(memWidth) << "Memory%" 
+        std::cout << BLUE << std::left << std::setw(pidWidth) << "PID"
+                  << std::setw(userWidth) << "User"
+                  << std::setw(memWidth) << "Memory%"
                   << "Command" << RESET << "\n";
         std::cout << std::string(pidWidth + userWidth + memWidth + cmdWidth, '-') << "\n";
 
         // Print data with color
-        for (const auto& l : lines)
+        for (const auto &l : lines)
         {
             std::stringstream ls(l);
             std::string pid, user, mem, cmd;
             ls >> pid >> user >> mem >> cmd;
 
             // Highlight high memory usage (> 5%) in yellow
-            std::string memColor = (std::stod(mem) > 5.0) ? YELLOW : RESET;
+            double memValue = 0.0;
+            try
+            {
+                memValue = std::stod(mem);
+            }
+            catch (const std::exception &)
+            {
+                memValue = 0.0;
+            }
+            std::string memColor = (memValue > 5.0) ? YELLOW : RESET;
             std::cout << BLUE << std::left << std::setw(pidWidth) << pid
                       << std::setw(userWidth) << user
                       << memColor << std::setw(memWidth) << mem
@@ -191,13 +204,14 @@ namespace Rat
 
         std::cout << std::endl;
     }
-    void ServerGUI::displayFileFolderList(uint64_t client_id, const std::string& ip_id, const std::string& file_folder_list)
+    void ServerGUI::displayFileFolderList(uint64_t client_id, const std::string &ip_id, const std::string &file_folder_list)
     {
         std::cout << "File/Folder list for Client " << client_id << " (" << ip_id << "):\n";
 
+        // Parse lines into a vector of pairs (level, name)
+        std::vector<std::pair<int, std::string>> entries;
         std::istringstream iss(file_folder_list);
         std::string line;
-
         while (std::getline(iss, line))
         {
             size_t colonPos = line.find(':');
@@ -206,10 +220,33 @@ namespace Rat
                 std::string levelStr = line.substr(0, colonPos);
                 std::string name = line.substr(colonPos + 1);
                 int level = std::stoi(levelStr);
-
-                std::string indent(level * 2, ' ');
-                std::cout << indent << "├── " << name << "\n";
+                entries.emplace_back(level, name);
             }
+        }
+
+        // Print with correct tree branch symbols
+        for (size_t i = 0; i < entries.size(); ++i)
+        {
+            int level = entries[i].first;
+            const std::string &name = entries[i].second;
+
+            // Determine if this is the last entry at this level
+            bool isLast = true;
+            for (size_t j = i + 1; j < entries.size(); ++j)
+            {
+                if (entries[j].first == level)
+                {
+                    isLast = false;
+                    break;
+                }
+                if (entries[j].first < level)
+                {
+                    break;
+                }
+            }
+
+            std::string indent(level * 2, ' ');
+            std::cout << indent << (isLast ? "└── " : "├── ") << name << "\n";
         }
         std::cout << std::endl;
     }

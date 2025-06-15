@@ -1,0 +1,5 @@
+if(EXISTS "/home/quang/rat_project/unit_tests/build/rat_tests_tests-b12d07c.cmake")
+  include("/home/quang/rat_project/unit_tests/build/rat_tests_tests-b12d07c.cmake")
+else()
+  add_test(rat_tests_NOT_BUILT-b12d07c rat_tests_NOT_BUILT-b12d07c)
+endif()

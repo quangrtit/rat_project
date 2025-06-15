@@ -12,23 +12,33 @@
 #include "FileFolderSender.hpp"
 #include "Packet.pb.h"
 
-namespace Rat 
+#ifdef UNIT_TESTING
+class ClientTest;
+#endif
+
+#ifdef UNIT_TESTING
+#define TEST_FRIEND friend class ::ClientTest;
+#else
+#define TEST_FRIEND
+#endif
+namespace Rat
 {
 
-    class Client 
+    class Client
     {
+        TEST_FRIEND
     public:
-        Client(const std::string& host, uint16_t port);
+        Client(const std::string &host, uint16_t port);
         ~Client();
         void start();
         void stop();
 
     private:
         // void initClientID(const std::string& path = "/usr/local/etc/rat-client/client_id.txt");
-        void initClientID(const std::string& path = "./client_id.txt");
+        void initClientID(const std::string &path = "./client_id.txt");
         void tryConnect();
         void sendClientId();
-        
+
         void scheduleReconnect();
         void handleCommands();
         void handleUserInput();
@@ -36,7 +46,7 @@ namespace Rat
         uint64_t this_id_ = -1;
         // boost::asio::io_context io_context_;
         std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_;
-        
+
         std::string host_;
         uint16_t port_;
         bool stopping_;

@@ -1,0 +1,5 @@
+add_test( [==[NetworkManager send and receive]==] /home/quang/rat_project/unit_tests/test_common/build/rat_tests [==[NetworkManager send and receive]==]  )
+set_tests_properties( [==[NetworkManager send and receive]==] PROPERTIES WORKING_DIRECTORY /home/quang/rat_project/unit_tests/test_common/build)
+add_test( [==[NetworkManager error handling]==] /home/quang/rat_project/unit_tests/test_common/build/rat_tests [==[NetworkManager error handling]==]  )
+set_tests_properties( [==[NetworkManager error handling]==] PROPERTIES WORKING_DIRECTORY /home/quang/rat_project/unit_tests/test_common/build)
+set( rat_tests_TESTS [==[NetworkManager send and receive]==] [==[NetworkManager error handling]==])

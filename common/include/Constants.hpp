@@ -8,8 +8,8 @@
 namespace Rat
 {
     const uint16_t DEFAULT_PORT = 443;
-    const size_t MAX_BUFFER_SIZE = 64 * 1024;
-    const size_t CHUNK_SIZE = 8 * 1024;
+    const size_t MAX_BUFFER_SIZE = 128 * 1024;
+    const size_t CHUNK_SIZE = 32 * 1024;
     const size_t MAX_CLIENT = 1000;
     // const std::string KEY_AES = "";
     const std::string LOG_DIR = "var/log/rat";

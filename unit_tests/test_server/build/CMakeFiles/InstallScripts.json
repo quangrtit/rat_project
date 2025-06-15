@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/quang/rat_project/unit_tests/test_server/build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

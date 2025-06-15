@@ -1,28 +1,24 @@
 #ifndef UTILS_HPP
-#define UTILS_HPP 
+#define UTILS_HPP
 
-#include <vector> 
+#include <vector>
 #include <iostream>
 #include <string>
 #include <iomanip>
 #include <ctime>
-#include <sstream> 
+#include <sstream>
 #include <chrono>
-namespace Rat 
+namespace Rat
 {
-    class Utils 
+    class Utils
     {
-    public: 
-
+    public:
         Utils();
 
         ~Utils();
 
         static std::string getCurrentTimeString();
-
-        
     };
 }
-
 
 #endif // UTILS_HPP

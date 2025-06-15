@@ -178,6 +178,7 @@ namespace Rat
         // std::cout << "Debug byte transfer size" << "gogogogogoggogogo" << std::endl;
         auto size_buffer = std::make_shared<std::vector<char>>(sizeof(uint32_t));
         boost::asio::async_read(*socket, boost::asio::buffer(*size_buffer),
+            boost::asio::transfer_exactly(sizeof(uint32_t)),
             [this, socket, size_buffer, callback](const ErrorCode& ec, std::size_t /*bytes_transferred*/) 
             {
                 // std::cout << "Debug byte transfer size" << size_buffer->data() << std::endl;
@@ -199,7 +200,8 @@ namespace Rat
                 }
 
                 auto data_buffer = std::make_shared<std::vector<char>>(packet_size);
-                boost::asio::async_read(*socket, boost::asio::buffer(*data_buffer),
+                boost::asio::async_read(*socket, boost::asio::buffer(*data_buffer), 
+                boost::asio::transfer_exactly(packet_size),
                     [data_buffer, callback](const ErrorCode& ec, std::size_t bytes_transferred) 
                     {
                         if (ec) 

@@ -1,0 +1,41 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/rat_tests.dir/link.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/Client.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/Client.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/FileFolderSender.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/FileFolderSender.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/FileFolderUtils.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/FileFolderUtils.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/FileSender.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/FileSender.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/ProcessSender.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/ProcessSender.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/ProcessUtils.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/ProcessUtils.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/Utils.cpp.o"
+  "CMakeFiles/rat_tests.dir/home/quang/rat_project/client/src/Utils.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/main_test.cpp.o"
+  "CMakeFiles/rat_tests.dir/main_test.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_Client.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_Client.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_FileFolderSender.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_FileFolderSender.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_FileFolderUtils.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_FileFolderUtils.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_FileSender.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_FileSender.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_ProcessSender.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_ProcessSender.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_ProcessUtils.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_ProcessUtils.cpp.o.d"
+  "CMakeFiles/rat_tests.dir/test_Utils.cpp.o"
+  "CMakeFiles/rat_tests.dir/test_Utils.cpp.o.d"
+  "rat_tests"
+  "rat_tests.pdb"
+  "rat_tests_tests-b12d07c.cmake"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/rat_tests.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

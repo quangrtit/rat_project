@@ -1,14 +1,14 @@
 #include "ProcessSender.hpp"
 #include <iostream>
 #include <ctime>
-#include <cmath> 
+#include <cmath>
 
 namespace Rat
 {
     ProcessSender::ProcessSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket,
-                                 NetworkManager& networkManager,
-                                 const uint64_t& client_id,
-                                 const std::string& process_data)
+                                 NetworkManager &networkManager,
+                                 const uint64_t &client_id,
+                                 const std::string &process_data)
         : socket_(std::move(socket)),
           networkManager_(networkManager),
           client_id_(client_id),
@@ -17,7 +17,7 @@ namespace Rat
         // buffer_.resize(CHUNK_SIZE);
     }
 
-    void ProcessSender::sendProcesses(const std::string& data_id,
+    void ProcessSender::sendProcesses(const std::string &data_id,
                                       std::function<void()> on_finish,
                                       std::function<void()> on_disconnect)
     {
@@ -39,9 +39,7 @@ namespace Rat
         std::cout << "[" << std::time(nullptr) << "] Debug all chunks: " << total_chunks_ << "\n";
 
         boost::asio::post(networkManager_.get_io_context(), [this]()
-        {
-            processNextChunk();
-        });
+                          { processNextChunk(); });
     }
 
     void ProcessSender::processNextChunk()
@@ -73,7 +71,7 @@ namespace Rat
         packet.set_destination_id("server_0");
         packet.set_encrypted(true);
 
-        auto* chunk = packet.mutable_chunked_data();
+        auto *chunk = packet.mutable_chunked_data();
         chunk->set_data_id(data_id_);
         chunk->set_sequence_number(sequence_);
         chunk->set_total_chunks(total_chunks_);
@@ -83,8 +81,8 @@ namespace Rat
         std::cout << "[" << std::time(nullptr) << "] Debug sending chunk: " << sequence_ + 1 << " / " << total_chunks_
                   << " (" << ((sequence_ + 1) / float(total_chunks_)) * 100 << "%)\n";
 
-        networkManager_.send(socket_, packet, [this](const boost::system::error_code& ec)
-        {
+        networkManager_.send(socket_, packet, [this](const boost::system::error_code &ec)
+                             {
             if (ec)
             {
                 std::cerr << "[" << std::time(nullptr) << "] Send failed: " << ec.message() << "\n";
@@ -97,7 +95,6 @@ namespace Rat
             boost::asio::post(networkManager_.get_io_context(), [this]()
             {
                 processNextChunk();
-            });
-        });
+            }); });
     }
 }

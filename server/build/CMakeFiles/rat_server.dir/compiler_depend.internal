@@ -3,9 +3,9 @@
 
 CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o
  /home/quang/rat_project/server/src/FileReceiver.cpp
- /home/quang/rat_project/common/build/proto/Packet.pb.h
  /home/quang/rat_project/common/include/Constants.hpp
  /home/quang/rat_project/common/include/NetworkManager.hpp
+ /home/quang/rat_project/common/proto/build_ubuntu/Packet.pb.h
  /home/quang/rat_project/server/include/FileReceiver.hpp
  /home/quang/rat_project/server/include/ServerGUI.hpp
  /usr/include/alloca.h
@@ -1662,9 +1662,9 @@ CMakeFiles/rat_server.dir/src/FileReceiver.cpp.o
 
 CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o
  /home/quang/rat_project/server/src/FilesFoldersHandler.cpp
- /home/quang/rat_project/common/build/proto/Packet.pb.h
  /home/quang/rat_project/common/include/Constants.hpp
  /home/quang/rat_project/common/include/NetworkManager.hpp
+ /home/quang/rat_project/common/proto/build_ubuntu/Packet.pb.h
  /home/quang/rat_project/server/include/DataHandler.hpp
  /home/quang/rat_project/server/include/FilesFoldersHandler.hpp
  /usr/include/alloca.h
@@ -3307,9 +3307,9 @@ CMakeFiles/rat_server.dir/src/FilesFoldersHandler.cpp.o
 
 CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o
  /home/quang/rat_project/server/src/ProcessHandler.cpp
- /home/quang/rat_project/common/build/proto/Packet.pb.h
  /home/quang/rat_project/common/include/Constants.hpp
  /home/quang/rat_project/common/include/NetworkManager.hpp
+ /home/quang/rat_project/common/proto/build_ubuntu/Packet.pb.h
  /home/quang/rat_project/server/include/DataHandler.hpp
  /home/quang/rat_project/server/include/ProcessHandler.hpp
  /usr/include/alloca.h
@@ -4952,9 +4952,9 @@ CMakeFiles/rat_server.dir/src/ProcessHandler.cpp.o
 
 CMakeFiles/rat_server.dir/src/Server.cpp.o
  /home/quang/rat_project/server/src/Server.cpp
- /home/quang/rat_project/common/build/proto/Packet.pb.h
  /home/quang/rat_project/common/include/Constants.hpp
  /home/quang/rat_project/common/include/NetworkManager.hpp
+ /home/quang/rat_project/common/proto/build_ubuntu/Packet.pb.h
  /home/quang/rat_project/server/include/DataHandler.hpp
  /home/quang/rat_project/server/include/FileReceiver.hpp
  /home/quang/rat_project/server/include/FilesFoldersHandler.hpp
@@ -9547,9 +9547,9 @@ CMakeFiles/rat_server.dir/src/Utils.cpp.o
 
 CMakeFiles/rat_server.dir/src/main.cpp.o
  /home/quang/rat_project/server/src/main.cpp
- /home/quang/rat_project/common/build/proto/Packet.pb.h
  /home/quang/rat_project/common/include/Constants.hpp
  /home/quang/rat_project/common/include/NetworkManager.hpp
+ /home/quang/rat_project/common/proto/build_ubuntu/Packet.pb.h
  /home/quang/rat_project/server/include/DataHandler.hpp
  /home/quang/rat_project/server/include/FileReceiver.hpp
  /home/quang/rat_project/server/include/FilesFoldersHandler.hpp
@@ -11211,8 +11211,8 @@ CMakeFiles/rat_server.dir/src/main.cpp.o
  /usr/local/protobuf-static/include/google/protobuf/wire_format_lite.h
 
 rat_server
- /home/quang/rat_project/common/build/librat_common.a
- /home/quang/rat_project/common/build/proto/libproto.a
+ /home/quang/rat_project/common/build_ubuntu/librat_common.a
+ /home/quang/rat_project/common/proto/build_ubuntu/libproto.a
  /lib/x86_64-linux-gnu/libc.so.6
  /lib/x86_64-linux-gnu/libm.so.6
  /lib/x86_64-linux-gnu/libmvec.so.1

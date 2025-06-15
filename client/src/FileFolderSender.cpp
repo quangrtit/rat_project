@@ -81,7 +81,7 @@ namespace Rat
         chunk->set_success(true);
 
         std::cout << "[" << std::time(nullptr) << "] Debug sending file/folder chunk: " << sequence_ + 1 << " / " << total_chunks_
-                  << " (" << ((sequence_ + 1) / float(total_chunks_)) * 100 << "%)\n";
+                  << " (" << (static_cast<float>(sequence_ + 1) / float(total_chunks_)) * 100 << "%)\n";
 
         networkManager_.send(socket_, packet, [this](const boost::system::error_code& ec)
         {

